@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manas AI Chatbot</title>
+
+  <!-- Load auth utils -->
+  <script src="auth.js" defer></script>
+
+  <!-- Redirect if not logged in -->
+  <script defer>
+    document.addEventListener("DOMContentLoaded", () => {
+      window.ManasAuth.redirectIfNotLoggedIn("chatbot_preview.html");
+    });
+  </script>
+
+  <link rel="stylesheet" href="chatbot.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">Project Manas</div>
+    <nav class="nav-links">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="forum.html">Forum</a>
+      <a href="stories.html">Stories</a>
+      <button class="clear-btn" onclick="clearChat()">Clear Chat</button>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+  </header>
+
+  <!-- CHAT UI -->
+  <section class="chat-section">
+    <div class="chat-container" id="chatContainer">
+      <div class="bot-msg">Hi, I’m <b>ManasAI</b>. How are you feeling today?</div>
+    </div>
+
+    <div id="typingIndicator" class="bot-msg" style="display:none;">
+      ManasAI is typing...
+    </div>
+
+    <form id="chatForm">
+      <input type="text" id="userInput" placeholder="Type your thoughts..." required>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+
+  <footer class="footer">
+    <p>ManasAI is for emotional support only — not a substitute for professional therapy.</p>
+  </footer>
+
+<script>
+  const BACKEND_URL = "https://manas-backend-9gic.onrender.com";
+const chatContainer = document.getElementById("chatContainer");
+const form = document.getElementById("chatForm");
+const input = document.getElementById("userInput");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const userMsg = input.value.trim();
+  if (!userMsg) return;
+
+  appendMessage("user-msg", userMsg);
+  input.value = "";
+  document.getElementById("typingIndicator").style.display = "block";
+
+  const formData = new FormData();
+  formData.append("message", userMsg);
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/chatbot`, { method: "POST", body: formData });
+    const data = await res.json();
+    document.getElementById("typingIndicator").style.display = "none";
+    appendMessage("bot-msg", data.reply);
+  } catch {
+    document.getElementById("typingIndicator").style.display = "none";
+    appendMessage("bot-msg", "Server error. Try again later.");
+  }
+});
+
+function appendMessage(className, text) {
+  const div = document.createElement("div");
+  div.className = className;
+  div.innerHTML = text;
+  chatContainer.appendChild(div);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function clearChat() {
+  chatContainer.innerHTML = "";
+  appendMessage("bot-msg", "Chat cleared! How else can I help?");
+}
+
+function logout() {
+  localStorage.removeItem("username");
+  localStorage.removeItem("mentorEmail"); // IMPORTANT FIX
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

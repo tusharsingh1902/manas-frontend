@@ -1,0 +1,107 @@
+body {
+  font-family: Poppins, sans-serif;
+  background: #f7fafa;
+  margin: 0;
+  color: #2f4858;
+}
+
+.navbar {
+  padding: 15px 60px;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.nav-links a, .logout-btn {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #1f7a8c;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.inbox-section {
+  padding: 40px;
+}
+
+.chat-list {
+  margin-top: 20px;
+}
+
+.chat-item {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  border: 1px solid #dde7ea;
+  transition: 0.2s;
+}
+
+.chat-item:hover {
+  background: #e9f6f7;
+}
+
+.chat-item h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #16697a;
+}
+
+.chat-item p {
+  margin: 5px 0 3px;
+  color: #58737a;
+}
+
+.chat-item small {
+  color: #8aa1a8;
+}
+
+/* --- UNIVERSAL MOBILE FIXES (Paste at bottom of CSS files) --- */
+@media (max-width: 768px) {
+
+  /* 1. Fix the Navbar (Stack links vertically) */
+  .navbar {
+    flex-direction: column;   /* Stack Logo on top of Links */
+    height: auto;             /* Let it grow tall */
+    padding: 10px;
+  }
+  
+  .nav-links {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;   /* Stack links vertically */
+    gap: 10px;
+    align-items: center;      /* Center them */
+  }
+
+  /* 2. Prevent Horizontal Scrolling (The #1 Clumsy Factor) */
+  body, html {
+    overflow-x: hidden;       /* Stop the page from wiggling left/right */
+    width: 100%;
+  }
+
+  /* 3. General Containers (Make them full width) */
+  .container, .main-content, .hero, .section {
+    width: 95% !important;    /* Use full screen width */
+    padding: 10px !important; /* Reduce padding */
+    margin: 0 auto;
+    flex-direction: column;   /* Stack content vertically */
+  }
+
+  /* 4. Fix Grids (For Mentors/Stories pages) */
+  .grid, .card-container {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: 1fr; /* Force 1 column instead of 3 */
+  }
+  
+  /* 5. Fix Cards */
+  .card {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+}

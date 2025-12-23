@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat | Project Manas</title>
+  <link rel="stylesheet" href="chat.css" />
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">Project Manas</div>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="#" onclick="goToInbox()">Back to Inbox</a>
+    <button onclick="logout()" class="logout-btn">Logout</button>
+  </nav>
+</header>
+
+<section class="chat-section">
+
+  <div class="chat-header">
+    <h2 id="partnerName">Chat</h2>
+  </div>
+
+  <div id="messages" class="messages-box">
+    <p class="loading">Loading chat...</p>
+  </div>
+
+  <div class="input-area">
+    <input type="text" id="msgInput" placeholder="Type a message..." onkeypress="handleEnter(event)"/>
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+</section>
+
+<script>
+const BACKEND_URL = "https://manas-backend-9gic.onrender.com";
+const chatId = localStorage.getItem("currentChatId");
+const role = localStorage.getItem("userType"); 
+const myUsername = localStorage.getItem("username"); 
+const partnerName = localStorage.getItem("chatPartner");
+
+let isFirstLoad = true;
+
+if (!chatId || !myUsername) {
+  alert("Session Error. Redirecting to inbox.");
+  goToInbox();
+}
+
+if (partnerName) {
+  document.getElementById("partnerName").textContent = partnerName;
+}
+
+async function loadChat() {
+  const msgBox = document.getElementById("messages");
+  // Check if user is scrolled to the bottom before we add new messages
+  const wasAtBottom = msgBox.scrollHeight - msgBox.scrollTop <= msgBox.clientHeight + 50;
+
+  try {
+    // ---------------------------------------------------------
+    // 🚨 FIX 1: Added ${BACKEND_URL} here
+    // Before: fetch(`/chat/${chatId}`)  <-- WRONG (Looks on Frontend)
+    // ---------------------------------------------------------
+    const res = await fetch(`${BACKEND_URL}/chat/${chatId}`);
+    const data = await res.json();
+
+    if (!data.messages || data.messages.length === 0) {
+      if (msgBox.innerHTML.includes("Loading")) {
+          msgBox.innerHTML = "<p style='text-align:center; color:#888;'>No messages yet. Say hi!</p>";
+      }
+      return;
+    }
+
+    // Optimization: Don't redraw if message count hasn't changed
+    const currentCount = msgBox.querySelectorAll('.msg').length;
+    if (data.messages.length === currentCount) {
+        return; 
+    }
+
+    const oldScroll = msgBox.scrollTop;
+    msgBox.innerHTML = "";
+
+    data.messages.forEach(m => {
+      const div = document.createElement("div");
+      // Check if the message is mine
+      const isMine = (m.sender === myUsername);
+
+      div.className = isMine ? "msg msg-right" : "msg msg-left";
+
+      // Convert time to IST
+      const timeIST = new Date(m.timestamp).toLocaleTimeString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true
+      });
+
+      div.innerHTML = `
+        <p>${m.text}</p>
+        <span>${timeIST}</span>
+      `;
+
+      msgBox.appendChild(div);
+    });
+
+    // Auto-scroll logic
+    if (isFirstLoad || wasAtBottom) {
+        msgBox.scrollTop = msgBox.scrollHeight;
+        isFirstLoad = false;
+    } else {
+        msgBox.scrollTop = oldScroll;
+    }
+
+    // ---------------------------------------------------------
+    // 🚨 FIX 2: Added ${BACKEND_URL} for marking as read too
+    // ---------------------------------------------------------
+    const readEndpoint = role === "mentor" 
+        ? `${BACKEND_URL}/chat/mark_read/mentor/${chatId}` 
+        : `${BACKEND_URL}/chat/mark_read/student/${chatId}`;
+    
+    fetch(readEndpoint, { method: "POST" });
+
+  } catch (err) {
+    console.error("Error loading chat:", err);
+  }
+}
+
+async function sendMessage() {
+  const input = document.getElementById("msgInput");
+  const text = input.value.trim();
+  if (!text) return;
+
+  const formData = new FormData();
+  formData.append("chat_id", chatId);
+  formData.append("sender", myUsername);
+  formData.append("text", text);
+
+  try {
+    // This part was already correct!
+    await fetch(`${BACKEND_URL}/chat/send`, {
+      method: "POST",
+      body: formData
+    });
+    
+    input.value = "";
+    // Force a reload immediately so you see your own message
+    loadChat(); 
+  } catch(err) {
+    alert("Failed to send message");
+  }
+}
+
+function handleEnter(e) {
+    if(e.key === "Enter") sendMessage();
+}
+
+function goToInbox() {
+  if (role === "mentor") window.location.href = "mentor_inbox.html";
+  else window.location.href = "student_inbox.html";
+}
+
+function logout() {
+  localStorage.clear();
+  window.location.href = "login.html";
+}
+
+// Start the loop
+loadChat();
+setInterval(loadChat, 3000); // Check for new messages every 3 seconds
+</script>
+</body>
+</html>

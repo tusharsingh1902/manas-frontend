@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professionals | Project Manas</title>
+  <!-- Load auth utils -->
+  <script src="auth.js" defer></script>
+
+  <!-- Redirect if not logged in -->
+  <script defer>
+    document.addEventListener("DOMContentLoaded", () => {
+      window.ManasAuth.redirectIfNotLoggedIn("professionals_preview.html");
+    });
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="professionals.css" />
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="logo">Project Manas</div>
+  <nav class="nav-links">
+    <a href="forum.html">Forum</a>
+    <a href="stories.html">Stories</a>
+    <a href="chatbot.html">Chatbot</a>
+    <a href="student_inbox.html" class="nav-inbox">Inbox</a>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </nav>
+</header>
+
+<section class="professionals-section">
+  <h1>Find Support</h1>
+  <p class="subtitle">Choose the type of support that feels right for you.</p>
+
+  <div class="tabs-container">
+    <button class="tab-btn active" onclick="switchTab('mentors')">Peer Mentors</button>
+    <button class="tab-btn" onclick="switchTab('experts')">Medical Professionals</button>
+  </div>
+
+  <div id="mentorList" class="mentor-list">
+    <p style="text-align:center; width:100%;">Loading mentors...</p>
+  </div>
+
+  <div id="expertList" class="mentor-list hidden"></div>
+
+  <div class="ai-section">
+    <h2>Not ready to talk to a person?</h2>
+    <p>Try Manas AI for a private, judgement-free conversation.</p>
+    <button class="ai-btn" onclick="goToAI()">Talk to Manas AI</button>
+  </div>
+
+</section>
+
+<div id="profileModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    
+    <div class="profile-header">
+        <div id="mAvatar" class="profile-avatar">A</div>
+        <h2 id="mName">Name</h2>
+        <p id="mRole" style="color:#666;">Role</p>
+    </div>
+
+    <div id="mDetails">
+        <div class="detail-row"><strong>Bio:</strong> <span id="mBio">...</span></div>
+        <div class="detail-row"><strong>City:</strong> <span id="mCity">Not specified</span></div>
+        <div class="detail-row"><strong>College:</strong> <span id="mCollege">Not specified</span></div>
+        <div class="detail-row"><strong>Age:</strong> <span id="mAge">Hidden</span></div>
+        <div class="detail-row"><strong>Joined:</strong> <span id="mJoined">Recent</span></div>
+    </div>
+
+    <button id="mChatBtn" class="chat-btn" style="margin-top: 20px; width: 100%;">Start Chat</button>
+  </div>
+</div>
+
+<script>
+const BACKEND_URL = "https://manas-backend-9gic.onrender.com";
+let allMentorsData = []; 
+const username = localStorage.getItem("username");
+
+if(!username) window.location.href = "login.html";
+
+function switchTab(tabName) {
+    const btns = document.querySelectorAll('.tab-btn');
+    
+    btns[0].classList.toggle('active', tabName === 'mentors');
+    btns[1].classList.toggle('active', tabName === 'experts');
+
+    const mentorDiv = document.getElementById('mentorList');
+    const expertDiv = document.getElementById('expertList');
+
+    if (tabName === 'mentors') {
+        mentorDiv.classList.remove('hidden');
+        expertDiv.classList.add('hidden');
+    } else {
+        mentorDiv.classList.add('hidden');
+        expertDiv.classList.remove('hidden');
+    }
+}
+
+async function loadMentors() {
+    try {
+        const res = await fetch(`${BACKEND_URL}/mentors/all`);
+        const data = await res.json();
+        allMentorsData = data.mentors; 
+
+        const list = document.getElementById("mentorList");
+        list.innerHTML = "";
+
+        if(allMentorsData.length === 0) {
+            list.innerHTML = "<p>No mentors registered yet.</p>";
+            return;
+        }
+
+        allMentorsData.forEach((m, index) => {
+            const card = document.createElement("div");
+            card.className = "mentor-card";
+            card.innerHTML = `
+                <div class="mentor-info">
+                    <h2 class="mentor-name clickable-name" onclick="showProfile(${index})">${m.name}</h2>
+                    <p class="role">${m.occupation}</p>
+                    <p class="description">${m.bio}</p>
+                    <p class="meta"><strong>Joined:</strong> Recent</p>
+                </div>
+                <div class="actions">
+                    <button class="chat-btn" onclick="startPrivateChat('${m.email}', '${m.name}')">
+                        Start Private Chat
+                    </button>
+                </div>
+            `;
+            list.appendChild(card);
+        });
+    } catch(err) {
+        console.error(err);
+    }
+}
+
+const experts = [
+    { name: "Dr. Anjali Desai", role: "Clinical Psychologist", exp: "10 Yrs", loc: "Mumbai", fees: "₹1500/hr" },
+    { name: "Dr. Rajesh Kumar", role: "Psychiatrist", exp: "15 Yrs", loc: "Delhi", fees: "₹2000/hr" },
+    { name: "Ms. Sneha Roy", role: "Therapist", exp: "5 Yrs", loc: "Bangalore", fees: "₹1000/hr" },
+    { name: "Dr. Vikram Sethi", role: "Trauma Specialist", exp: "12 Yrs", loc: "Pune", fees: "₹1800/hr" }
+];
+
+function loadExperts() {
+    const list = document.getElementById("expertList");
+    list.innerHTML = "";
+
+    experts.forEach(doc => {
+        const card = document.createElement("div");
+        card.className = "mentor-card expert-card";
+        card.innerHTML = `
+            <div class="mentor-info">
+                <h2 class="mentor-name">${doc.name}</h2>
+                <p class="expert-role">${doc.role}</p>
+                <p class="expert-meta">📍 ${doc.loc} • 💼 ${doc.exp}</p>
+                <p class="description">Specializes in anxiety, depression, and student mental health.</p>
+                <p class="meta"><strong>Fees:</strong> ${doc.fees}</p>
+            </div>
+            <div class="actions">
+                <button class="btn-book" onclick="alert('Appointment request sent to ${doc.name}!')">Book Appointment</button>
+                <button class="btn-call" onclick="alert('Calling ${doc.name}...')">Schedule Call</button>
+            </div>
+        `;
+        list.appendChild(card);
+    });
+}
+
+function showProfile(index) {
+    const m = allMentorsData[index];
+    const modal = document.getElementById("profileModal");
+
+    document.getElementById("mName").innerText = m.name;
+    document.getElementById("mAvatar").innerText = m.name.charAt(0).toUpperCase();
+    document.getElementById("mRole").innerText = m.occupation;
+    document.getElementById("mBio").innerText = m.bio || "No bio available.";
+    
+    document.getElementById("mCity").innerText = m.city || "Not specified";
+    document.getElementById("mCollege").innerText = m.college || "Not specified";
+    document.getElementById("mAge").innerText = m.age || "Hidden";
+    
+    const btn = document.getElementById("mChatBtn");
+    btn.onclick = function() {
+        startPrivateChat(m.email, m.name);
+    };
+
+    modal.classList.add("active");
+}
+
+function closeModal() {
+    document.getElementById("profileModal").classList.remove("active");
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById("profileModal");
+    if (event.target == modal) {
+        closeModal();
+    }
+}
+
+async function startPrivateChat(mentorEmail, mentorName) {
+    const student = localStorage.getItem("username");
+    
+    const formData = new FormData();
+    formData.append("student_username", student);
+    formData.append("mentor_email", mentorEmail);
+
+    try {
+        const res = await fetch(`${BACKEND_URL}/chat/start`, {
+            method: "POST",
+            body: formData
+        });
+        const data = await res.json();
+
+        localStorage.setItem("currentChatId", data.chat_id);
+        localStorage.setItem("chatPartner", mentorName);
+        localStorage.setItem("role", "student");
+
+        window.location.href = "chat.html";
+    } catch(err) {
+        alert("Error starting chat");
+    }
+}
+
+function goToAI() { window.location.href = "chatbot.html"; }
+function logout() { localStorage.clear(); window.location.href = "login.html"; }
+
+loadMentors();
+loadExperts();
+</script>
+<script src="auth.js"></script>
+</body>
+</html>

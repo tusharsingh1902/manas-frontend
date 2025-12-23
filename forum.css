@@ -1,0 +1,339 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background-color: #f8fdfd;
+  color: #2f4858;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 60px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f7a8c;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #2f4858;
+  margin-right: 20px;
+  font-weight: 500;
+}
+
+.logout-btn {
+  background-color: #1f7a8c;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #16697a;
+}
+
+.forum-section {
+  max-width: 800px;
+  margin: 40px auto;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.forum-section h1 {
+  color: #16697a;
+  font-size: 2rem;
+}
+
+.forum-section .intro {
+  color: #5c6b73;
+  margin-bottom: 30px;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+form input {
+  width: 70%;
+  padding: 10px;
+  border: 1px solid #d1e9e9;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+form button {
+  background-color: #1f7a8c;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #16697a;
+}
+
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.post {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: left;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.post p {
+  margin-bottom: 10px;
+  color: #2f4858;
+  line-height: 1.5;
+}
+
+.mentor-link {
+  color: #1f7a8c;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.mentor-link:hover {
+  text-decoration: underline;
+}
+
+.reply-btn {
+  background: none;
+  color: #1f7a8c;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  transition: color 0.2s ease;
+  font-weight: 500;
+}
+
+.reply-btn:hover {
+  color: #16697a;
+}
+
+.reply-box {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.reply-box input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #d1e9e9;
+}
+
+.reply-box button {
+  background-color: #1f7a8c;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+
+.badge {
+  display: inline-block;
+  background-color: #1f7a8c;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  vertical-align: middle;
+}
+
+.replies {
+  margin-top: 10px;
+  border-left: 2px solid #d1e9e9;
+  padding-left: 15px;
+}
+
+.reply {
+  background-color: #f2fafa;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 6px;
+  text-align: left;
+}
+
+.reply p {
+  margin: 0;
+  color: #2f4858;
+  font-size: 0.9rem;
+}
+
+.reply small {
+  color: #5c6b73;
+  font-size: 0.8rem;
+  display: block;
+  margin-top: 4px;
+}
+
+.chat-icon-btn {
+  background: white;
+  border: 1px solid #1f7a8c;
+  color: #1f7a8c;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: auto;
+}
+
+.chat-icon-btn:hover {
+  background-color: #1f7a8c;
+  color: white;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+.profile-avatar {
+  width: 70px;
+  height: 70px;
+  background: #caf0f8;
+  color: #0077b6;
+  border-radius: 50%;
+  margin: 0 auto 15px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.modal-btn {
+  background-color: #1f7a8c;
+  color: white;
+  border: none;
+  padding: 10px 0;
+  border-radius: 6px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 15px;
+}
+
+.modal-btn:hover {
+  background-color: #16697a;
+}
+
+/* --- UNIVERSAL MOBILE FIXES (Paste at bottom of CSS files) --- */
+@media (max-width: 768px) {
+
+  /* 1. Fix the Navbar (Stack links vertically) */
+  .navbar {
+    flex-direction: column;   /* Stack Logo on top of Links */
+    height: auto;             /* Let it grow tall */
+    padding: 10px;
+  }
+  
+  .nav-links {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;   /* Stack links vertically */
+    gap: 10px;
+    align-items: center;      /* Center them */
+  }
+
+  /* 2. Prevent Horizontal Scrolling (The #1 Clumsy Factor) */
+  body, html {
+    overflow-x: hidden;       /* Stop the page from wiggling left/right */
+    width: 100%;
+  }
+
+  /* 3. General Containers (Make them full width) */
+  .container, .main-content, .hero, .section {
+    width: 95% !important;    /* Use full screen width */
+    padding: 10px !important; /* Reduce padding */
+    margin: 0 auto;
+    flex-direction: column;   /* Stack content vertically */
+  }
+
+  /* 4. Fix Grids (For Mentors/Stories pages) */
+  .grid, .card-container {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: 1fr; /* Force 1 column instead of 3 */
+  }
+  
+  /* 5. Fix Cards */
+  .card {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+}

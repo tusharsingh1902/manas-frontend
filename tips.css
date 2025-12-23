@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8fdfd;
+  color: #2f4858;
+  margin: 0;
+}
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 60px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f7a8c;
+  cursor: pointer;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #2f4858;
+  margin-left: 20px;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: #1f7a8c;
+}
+
+.tips-page {
+  text-align: center;
+  padding: 60px 30px;
+}
+
+.tips-page h1 {
+  color: #16697a;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #5c6b73;
+  max-width: 700px;
+  margin: 0 auto 40px;
+}
+
+.tips-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.tip-card {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tip-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.tip-card h3 {
+  color: #1f7a8c;
+  margin-bottom: 10px;
+}
+
+.tip-card p {
+  color: #5c6b73;
+  line-height: 1.5;
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  color: #5c6b73;
+  font-size: 0.9rem;
+  margin-top: 40px;
+}
+
+/* --- UNIVERSAL MOBILE FIXES (Paste at bottom of CSS files) --- */
+@media (max-width: 768px) {
+
+  /* 1. Fix the Navbar (Stack links vertically) */
+  .navbar {
+    flex-direction: column;   /* Stack Logo on top of Links */
+    height: auto;             /* Let it grow tall */
+    padding: 10px;
+  }
+  
+  .nav-links {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;   /* Stack links vertically */
+    gap: 10px;
+    align-items: center;      /* Center them */
+  }
+
+  /* 2. Prevent Horizontal Scrolling (The #1 Clumsy Factor) */
+  body, html {
+    overflow-x: hidden;       /* Stop the page from wiggling left/right */
+    width: 100%;
+  }
+
+  /* 3. General Containers (Make them full width) */
+  .container, .main-content, .hero, .section {
+    width: 95% !important;    /* Use full screen width */
+    padding: 10px !important; /* Reduce padding */
+    margin: 0 auto;
+    flex-direction: column;   /* Stack content vertically */
+  }
+
+  /* 4. Fix Grids (For Mentors/Stories pages) */
+  .grid, .card-container {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: 1fr; /* Force 1 column instead of 3 */
+  }
+  
+  /* 5. Fix Cards */
+  .card {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+}

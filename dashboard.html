@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | Project Manas</title>
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+
+<body>
+
+   
+    <header class="navbar">
+    <div class="logo">Project Manas</div>
+    <nav class="nav-links">
+        <a href="forum.html">Forum</a>
+        <a href="stories_after.html">Stories</a>
+        <a href="chatbot.html">Chatbot</a>
+        <a href="student_inbox.html" class="nav-inbox">
+          Inbox
+          <span id="student-inbox-badge" class="inbox-dot" style="display:none;"></span>
+        </a>
+
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+    </header>
+
+  <section class="dashboard">
+    <div class="welcome">
+      <h1 id="welcome-heading">Welcome Back </h1>
+      <p>We're glad to have you here. You can talk to mentors, share your thoughts, or explore positive stories.</p>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="card" onclick="goTo('forum.html')">
+        <h3> Peer Support Forum</h3>
+        <p>Connect with students who understand what you're going through.</p>
+      </div>
+
+      <div class="card" onclick="goTo('stories_after.html')">
+        <h3>Stories of Hope</h3>
+        <p>Read journeys from students who overcame challenges.</p>
+      </div>
+
+      <div class="card" onclick="goTo('chatbot.html')">
+        <h3>Manas AI</h3>
+        <p>Talk with our friendly chatbot for quick mental health guidance.</p>
+      </div>
+
+      <div class="card" onclick="goTo('professionals.html')">
+        <h3>Mentors</h3>
+        <p>Talk to the mentors who can guide you with there experience and knowledge.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 Project Manas • A Safe Space for Every Student</p>
+  </footer>
+
+  <script>
+  const username = localStorage.getItem("username");
+
+  const heading = document.getElementById("welcome-heading");
+
+  if (username) {
+    heading.textContent = `Welcome back, ${username}`;
+  } else {
+    heading.textContent = "Welcome Back";
+  }
+
+  function goTo(page) {
+    window.location.href = page;
+  }
+
+  function logout() {
+    localStorage.removeItem("username");
+    window.location.href = "login.html";
+  }
+  async function loadStudentInboxBadge() {
+  const username = localStorage.getItem("username");
+  if (!username) return;
+
+  const badge = document.getElementById("student-inbox-badge");
+  if (!badge) return;
+
+  try {
+    const res = await fetch(`/chat/student/${username}`);
+    const data = await res.json();
+
+    let unread = 0;
+    data.chats.forEach(c => unread += c.unread_for_student || 0);
+
+    if (unread > 0) {
+      badge.textContent = unread > 9 ? "9+" : unread;
+      badge.style.display = "inline-flex";
+    } else {
+      badge.style.display = "none";
+    }
+
+  } catch (err) {
+    console.error("Inbox badge error:", err);
+  }
+}
+
+loadStudentInboxBadge();
+setInterval(loadStudentInboxBadge, 4000);
+</script>
+
+<script src="auth.js"></script>
+</body>
+</html>

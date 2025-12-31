@@ -81,6 +81,7 @@
 
   <script>
     const BACKEND_URL = "https://manas-backend-9gic.onrender.com";
+    
     const username = localStorage.getItem("username") || localStorage.getItem("mentorEmail");
     const userType = localStorage.getItem("userType");
     const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -123,7 +124,8 @@
       const msgBadge = document.getElementById("msgBadge");
 
       try {
-        const res = await fetch(`/chat/mentor/${mentorEmail}`);
+        const res = await fetch(`${BACKEND_URL}/chat/mentor/${mentorEmail}`);
+        
         if(!res.ok) return; 
         const data = await res.json();
 
@@ -227,7 +229,7 @@
     }
 
     async function fetchReplies(postId) {
-      const res = await fetch(`/forum/replies/${postId}`);
+      const res = await fetch(`${BACKEND_URL}/forum/replies/${postId}`);
       const data = await res.json();
       const repliesDiv = document.getElementById(`replies-${postId}`);
       repliesDiv.innerHTML = "";
@@ -249,7 +251,7 @@
 
     fetchPosts();
     loadInboxBadge();
-    setInterval(loadInboxBadge, 5000);
-  </script>
+    setInterval(loadInboxBadge, 5000); 
+</script>
 </body>
 </html>

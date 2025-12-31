@@ -41,19 +41,20 @@
 <script>
 const BACKEND_URL = "https://manas-backend-9gic.onrender.com";
 
-const studentUsername = localStorage.getItem("username");
+const username = localStorage.getItem("username");
 const userType = localStorage.getItem("userType");
 
-localStorage.setItem("role", "student");
-
-if (!studentUsername || userType === "mentor") {
-  alert("Please login as a student.");
+if (!username || userType !== "mentor") {
+  alert("Session expired. Please login as a mentor.");
   window.location.href = "login.html";
 }
 
+const mentorEmail = username;
+localStorage.setItem("role", "mentor");
+
 async function loadChats() {
   try {
-    const res = await fetch(`${BACKEND_URL}/chat/student/${studentUsername}`);
+    const res = await fetch(`${BACKEND_URL}/chat/mentor/${mentorEmail}`);
     const data = await res.json();
 
     const chatList = document.getElementById("chatList");
@@ -63,29 +64,26 @@ async function loadChats() {
     }
 
     if (!data.chats || data.chats.length === 0) {
-      chatList.innerHTML = "<p>You haven't chatted with any mentors yet.</p>";
+      chatList.innerHTML = "<p>No students have contacted you yet.</p>";
       return;
     }
-    
+
     chatList.innerHTML = "";
 
     data.chats.forEach(chat => {
-      const mentorName = chat.mentor;
+      const studentName = chat.student;
       const lastMsg = chat.last_message || "(no messages yet)";
-      const unread = chat.unread_for_student || 0;
+      const unread = chat.unread_for_mentor || 0;
 
       const div = document.createElement("div");
       div.className = "chat-item";
-      
-      if (unread > 0) div.style.fontWeight = "bold";
 
       div.innerHTML = `
-        <h3>${mentorName}</h3>
+        <h3>${studentName}</h3>
         <p class="last-msg">${lastMsg}</p>
         ${unread > 0 ? `<span class="unread-badge">${unread}</span>` : ""}
       `;
-
-      div.onclick = () => previewChat(chat.chat_id, mentorName);
+      div.onclick = () => previewChat(chat.chat_id, studentName);
 
       chatList.appendChild(div);
     });
@@ -94,14 +92,15 @@ async function loadChats() {
   }
 }
 
-async function previewChat(chatId, mentorEmail) {
-  localStorage.setItem("currentChatId", chatId);
-  localStorage.setItem("chatPartner", mentorEmail);
-
+async function previewChat(chatId, studentName) {
   const preview = document.getElementById("previewBox");
   preview.innerHTML = "<p class='loading'>Loading messages...</p>";
 
+  localStorage.setItem("currentChatId", chatId);
+  localStorage.setItem("chatPartner", studentName);
+
   try {
+  
     const res = await fetch(`${BACKEND_URL}/chat/${chatId}`);
     const data = await res.json();
 
@@ -116,13 +115,15 @@ async function previewChat(chatId, mentorEmail) {
 
         const timeIST = new Date(m.timestamp).toLocaleString("en-IN", {
             timeZone: "Asia/Kolkata",
+            day: "2-digit",
+            month: "short",
             hour: "2-digit",
             minute: "2-digit",
             hour12: true
         });
 
         div.innerHTML = `
-          <strong>${m.sender === studentUsername ? "You" : mentorEmail}:</strong>
+          <strong>${m.sender === mentorEmail ? "You" : studentName}:</strong>
           <p>${m.text}</p>
           <span>${timeIST}</span>
         `;
@@ -131,15 +132,16 @@ async function previewChat(chatId, mentorEmail) {
       });
     }
 
-    fetch(`${BACKEND_URL}/chat/mark_read/student/${chatId}`, { method: "POST" });
+    fetch(`${BACKEND_URL}/chat/mark_read/mentor/${chatId}`, { method: "POST" });
 
     const btn = document.getElementById("openChatBtn");
     btn.style.display = "block";
     btn.onclick = () => {
       window.location.href = "chat.html";
     };
-  } catch(err) {
-      preview.innerHTML = "<p>Error loading preview.</p>";
+
+  } catch (err) {
+    preview.innerHTML = "<p>Error loading preview.</p>";
   }
 }
 

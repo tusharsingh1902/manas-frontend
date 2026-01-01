@@ -230,6 +230,7 @@ body {
   body, html {
     overflow-x: hidden;       /* Stop the page from wiggling left/right */
     width: 100%;
+    font-size: 0.85rem;
   }
 
   /* 3. General Containers (Make them full width) */

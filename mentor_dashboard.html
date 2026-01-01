@@ -250,8 +250,29 @@
     }
 
     fetchPosts();
-    loadInboxBadge();
-    setInterval(loadInboxBadge, 5000); 
+let mentorBadgeInterval;
+
+function startMentorPolling() {
+  loadInboxBadge(); 
+  if (!mentorBadgeInterval) {
+    mentorBadgeInterval = setInterval(loadInboxBadge, 5000); 
+  }
+}
+
+function stopMentorPolling() {
+  clearInterval(mentorBadgeInterval);
+  mentorBadgeInterval = null;
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    stopMentorPolling();
+  } else {
+    startMentorPolling();
+  }
+});
+
+startMentorPolling();
 </script>
 </body>
 </html>

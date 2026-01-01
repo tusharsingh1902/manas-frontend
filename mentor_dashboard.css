@@ -296,7 +296,7 @@ textarea {
 
   /* 3. General Containers (Full Width) */
   .container, .main-content, .hero, .section, .dashboard {
-    width: 95% !important;
+    width: 100%;
     padding: 10px !important;
     margin: 0 auto;
     flex-direction: column;

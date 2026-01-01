@@ -151,7 +151,29 @@ function logout() {
 }
 
 loadChats();
-setInterval(loadChats, 3000); 
+let inboxInterval;
+
+function startInboxPolling() {
+  loadChats(); 
+  if (!inboxInterval) {
+    inboxInterval = setInterval(loadChats, 4000); 
+  }
+}
+
+function stopInboxPolling() {
+  clearInterval(inboxInterval);
+  inboxInterval = null;
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    stopInboxPolling();
+  } else {
+    startInboxPolling();
+  }
+});
+
+startInboxPolling();
 </script>
 </body>
 </html>

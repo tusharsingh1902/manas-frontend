@@ -175,12 +175,12 @@ body {
   /* 2. Prevent Horizontal Scrolling (The #1 Clumsy Factor) */
   body, html {
     overflow-x: hidden;       /* Stop the page from wiggling left/right */
-    width: 80%;
+    width: 100%;
   }
 
   /* 3. General Containers (Make them full width) */
   .container, .main-content, .hero, .section {
-    width: 80% !important;    /* Use full screen width */
+    width: 100% !important;    /* Use full screen width */
     padding: 10px !important; /* Reduce padding */
     margin: 0 auto;
     flex-direction: column;   /* Stack content vertically */
@@ -195,7 +195,7 @@ body {
   
   /* 5. Fix Cards */
   .card {
-    width: 100%;
+    width: 80%;
     margin-bottom: 15px;
   }
 }

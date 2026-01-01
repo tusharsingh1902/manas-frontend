@@ -181,8 +181,8 @@ a {
 
   /* 1. Freeze the screen height (No full page scrolling) */
   body, html {
-    height: 100vh; /* Force screen height */
-    font-size: 0.85rem;
+    height: 80vh; /* Force screen height */
+    font-size: 0.65rem;
     overflow: hidden; /* Cut off anything outside */
     display: flex;
     flex-direction: column;

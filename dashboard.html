@@ -7,7 +7,9 @@
   <link rel="stylesheet" href="dashboard.css" />
 </head>
 
-<body> 
+<body>
+
+   
     <header class="navbar">
     <div class="logo">Project Manas</div>
     <nav class="nav-links">
@@ -108,8 +110,29 @@
     }
   }
 
-  loadStudentInboxBadge();
-  setInterval(loadStudentInboxBadge, 4000);
+let badgeInterval;
+
+function startBadgePolling() {
+  loadStudentInboxBadge(); 
+  if (!badgeInterval) {
+    badgeInterval = setInterval(loadStudentInboxBadge, 4000); // Check every 4s
+  }
+}
+
+function stopBadgePolling() {
+  clearInterval(badgeInterval);
+  badgeInterval = null;
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    stopBadgePolling(); 
+  } else {
+    startBadgePolling(); 
+  }
+});
+
+startBadgePolling();
 </script>
 <script src="auth.js"></script>
 </body>

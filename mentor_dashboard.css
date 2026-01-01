@@ -296,7 +296,7 @@ textarea {
 
   /* 3. General Containers (Full Width) */
   .container, .main-content, .hero, .section, .dashboard {
-    width: 100%;
+    width: 100% !important;
     padding: 10px !important;
     margin: 0 auto;
     flex-direction: column;
@@ -306,6 +306,7 @@ textarea {
   .grid, .card-container, .quick-links {
     display: flex;
     flex-direction: column;   /* Stack cards vertically */
+    grid-template-columns: 1fr; 
     gap: 15px;
   }
   

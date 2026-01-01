@@ -167,7 +167,31 @@ function logout() {
 
 // Start the loop
 loadChat();
-setInterval(loadChat, 3000); // Check for new messages every 3 seconds
+let chatInterval;
+
+function startPolling() {
+  loadMessages(); 
+  if (!chatInterval) {
+    chatInterval = setInterval(loadMessages, 3000); 
+  }
+}
+
+function stopPolling() {
+  clearInterval(chatInterval);
+  chatInterval = null;
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    stopPolling(); 
+    console.log("App hidden: Polling stopped to save battery.");
+  } else {
+    startPolling(); 
+    console.log("App active: Polling resumed.");
+  }
+});
+
+startPolling();
 </script>
 </body>
 </html>

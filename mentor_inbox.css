@@ -248,8 +248,40 @@ body {
   }
   
   /* 5. Fix Cards */
+  .inbox-container {
+    display: flex;
+    height: calc(100vh - 80px);
+    padding: 10px 10px 10px;
+    gap: 10px;
+  }
+  
   .card {
     width: 100%;
     margin-bottom: 15px;
+  }
+
+  h1, #welcome-heading, #welcome-text {
+    font-size: 1.5rem !important; 
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  h2, h3 {
+    font-size: 1.2rem !important;
+    margin-bottom: 8px;
+  }
+
+  p, .intro, .motivation {
+    font-size: 0.95rem !important;
+    line-height: 1.5;
+  }
+  
+  .logo {
+    font-size: 1.4rem;
+  }
+
+  .nav-links a, .nav-links button {
+    font-size: 0.85rem; 
+    padding: 8px 12px;  
   }
 }

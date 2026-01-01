@@ -303,97 +303,81 @@ input:focus {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- MODERN MOBILE APP DESIGN (Replace your old media query with this) --- */
+/* --- MOBILE RESPONSIVENESS FOR LOGIN PAGE --- */
 @media (max-width: 768px) {
   
-  /* 0. Reset Body Background for seamless look */
-  body {
-    background-color: #ffffff; /* Matches the form background */
-    display: block; /* Remove centering flex behaviors if set on body */
-  }
-
-  /* 1. Go Full Screen (No more "Floating Card") */
+  /* 1. Stack the Login Card Vertically */
   .login-card {
-    width: 100%;
-    min-height: 100vh;       /* Fill the whole screen height */
-    margin: 0;               /* Remove margins */
-    border-radius: 0;        /* Remove corners */
-    box-shadow: none;        /* Remove shadow for flat app look */
-    display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Top-to-bottom stack */
+    width: 90%;             /* Use 90% of screen width */
+    height: auto;           /* Let height grow as needed */
+    margin: 20px auto;      /* Center it */
+    overflow: hidden;       /* Keep corners rounded */
   }
 
-  /* 2. The Header Banner (Blue Area) */
+  /* 2. Shrink the Left Side (Header Image Area) */
   .login-left {
     width: 100%;
-    height: auto;
-    min-height: 160px;       /* Give it enough height to breathe */
-    padding: 30px 20px;
-    border-radius: 0 0 30px 30px; /* Sexy curve at the bottom */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    height: 140px;          /* Make it short */
+    padding: 15px;
     text-align: center;
-    /* Ensure your background color/gradient is set here if not inherited */
   }
 
-  .left-text h2 {
-    font-size: 1.8rem;       /* Bigger, bolder title */
-    margin-bottom: 8px;
-  }
-
-  .left-text p {
-    display: block !important; /* Bring back the subtext! */
-    font-size: 0.95rem;
-    opacity: 0.9;
-  }
-
-  /* Hide the large illustration and quote to keep it clean */
-  .illustration-wrapper img, .quote {
+  /* Hide the large illustration to save space */
+  .illustration-wrapper img {
     display: none; 
   }
 
-  /* 3. The Form Area (White) */
+  /* Adjust text size */
+  .left-text {
+    width: 100%;
+  }
+  .left-text h2 {
+    font-size: 1.3rem;      /* Smaller title */
+    margin-bottom: 5px;
+  }
+  .left-text p, .quote {
+    display: none;          /* Hide extra text to keep it clean */
+  }
+
+  /* 3. Expand the Right Side (Form Area) */
   .login-right {
     width: 100%;
-    flex: 1;                 /* Take up all remaining space */
-    padding: 30px 25px;      /* More padding on sides */
-    background: #fff;
+    padding: 20px;
   }
 
-  /* 4. Modern "Pill" Toggle Buttons */
-  .toggle-container {
-    background-color: #f0f4f8; /* Light grey track */
-    padding: 5px;
-    border-radius: 50px;     /* Full rounded corners */
-    margin-bottom: 25px;
-  }
-
-  .toggle-btn {
-    border-radius: 50px !important;
-    padding: 12px 0;         /* Taller click area */
-    font-weight: 600;
-  }
-
-  /* 5. Big, Finger-Friendly Inputs */
-  .input-group {
-    margin-bottom: 20px;
-  }
-
-  .input-group input {
-    height: 50px;            /* Taller input fields */
-    border-radius: 12px;     /* Softer corners */
-    font-size: 16px;         /* Prevents iOS zooming on focus */
-    padding-left: 15px;
-  }
-
-  /* 6. Big Action Button */
-  .btn-primary {
+  /* 4. Fix Toggle Buttons (Login/Register) */
+  .toggle-container, .tab-buttons {
+    display: flex;
+    flex-direction: row;    /* Keep buttons side-by-side */
     width: 100%;
-    height: 55px;            /* Nice big button */
-    border-radius: 15px;
-    font-size: 1.1rem;
-    margin-top: 10px;
+    gap: 5px;
   }
+  
+  .toggle-btn, .tab {
+    flex: 1;                /* Make buttons equal width */
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
+
+.popup-message {
+  position: fixed;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1f7a8c;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.popup-message.show {
+  bottom: 30px;
+  opacity: 1;
 }

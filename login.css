@@ -317,7 +317,7 @@ input:focus {
 
   /* 2. Shrink the Left Side (Header Image Area) */
   .login-left {
-    width: 100%;
+    width: 80%;
     height: 140px;          /* Make it short */
     padding: 15px;
     text-align: center;
@@ -342,7 +342,7 @@ input:focus {
 
   /* 3. Expand the Right Side (Form Area) */
   .login-right {
-    width: 100%;
+    width: 80%;
     padding: 20px;
   }
 

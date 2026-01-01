@@ -178,10 +178,12 @@ a {
 
 /* --- MOBILE CHAT UI (Paste at bottom of chat.css) --- */
 @media (max-width: 768px) {
-
+html{
+  font-size: 14px;
+}
   /* 1. Freeze the screen height (No full page scrolling) */
   body, html {
-    height: 80vh; /* Force screen height */
+    height: 90vh; /* Force screen height */
     font-size: 0.65rem;
     overflow: hidden; /* Cut off anything outside */
     display: flex;

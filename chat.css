@@ -221,6 +221,7 @@ a {
   /* 4. Chat Area */
   #chat-window {
     flex: 1;
+    height: 90vh;
     overflow-y: auto;
     padding: 10px;
     padding-bottom: 70px; /* Space for input */
@@ -232,13 +233,13 @@ a {
 
   /* 5. Shrink Message Bubbles */
   .message {
-    font-size: 0.9rem !important; /* Force smaller text in bubbles */
-    padding: 8px 12px !important; /* Compact bubbles */
+    font-size: 0.7rem !important; /* Force smaller text in bubbles */
+    padding: 6px 10px !important; /* Compact bubbles */
     max-width: 80% !important;    /* Allow wider bubbles on phones */
   }
   
   .timestamp {
-    font-size: 0.65rem !important; /* Tiny timestamp */
+    font-size: 0.5rem !important; /* Tiny timestamp */
   }
 
   /* 6. Input Bar */

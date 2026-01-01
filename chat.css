@@ -33,12 +33,12 @@ a {
 .nav-links button {
   margin-left: 16px;
   color: #2f4858;
-  font-size: 15px;
+  font-size: 12px;
 }
 
 .logout-btn {
   background: #1f7a8c;
-  color: white;
+  color: white !important;
   padding: 6px 14px;
   border: none;
   border-radius: 6px;
@@ -53,7 +53,7 @@ a {
   display: flex;
   flex-direction: column;
   max-width: 720px;
-  width: 100%;
+  width: 90%;
   margin: 10px auto;
   background: #ffffff;
   border-radius: 12px;
@@ -62,7 +62,7 @@ a {
 }
 
 .chat-header {
-  height: 65px;
+  height: 45px;
   background: #ffffff;
   display: flex;
   align-items: center;

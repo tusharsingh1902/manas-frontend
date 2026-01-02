@@ -278,7 +278,9 @@ input {
 
 /* --- MOBILE OPTIMIZATION --- */
 @media (max-width: 768px) {
-
+  body {
+    font-size: 14px; 
+  }
   /* 1. Navbar Fixes */
   .navbar {
     padding: 15px 20px;
@@ -311,26 +313,26 @@ input {
   .login-card {
     flex-direction: column;
     width: 100%;
-    overflow: hidden; /* Prevents overflow issues */
+    overflow: hidden; 
   }
 
   /* 3. RESIZE LEFT SIDE (Illustration + Quote) */
   .login-left {
     display: flex;
     flex-direction: column; /* Ensure vertical stacking */
-    align-items: center;    /* Center align items */
+    align-items: center;   
     justify-content: center;
-    padding: 20px 15px;     /* Compact padding */
-    background-color: #e6f3f4; /* Ensure background color persists */
+    padding: 20px 15px;     
+    background-color: #e6f3f4; 
   }
 
   /* Shrink Image */
   .illustration-wrapper img {
-    max-width: 120px; /* Force image to be small */
+    max-width: 120px; 
     width: 100%;
     height: auto;
     margin-bottom: 10px;
-    display: block; /* Ensure it's not hidden */
+    display: block; 
   }
 
   /* Shrink Header Text */

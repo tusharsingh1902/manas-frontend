@@ -104,7 +104,13 @@ async function loadChat() {
         timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hour12: true
       });
 
-      div.innerHTML = `<p>${m.text} <br> <sub>${timeIST}</sub></p>`;
+     
+/* We put text and span on the same line. 
+   The &nbsp; adds a tiny safety space. */
+div.innerHTML = `
+  ${m.text}
+  <span class="check-time">${timeIST}</span>
+`;
       msgBox.appendChild(div);
     });
 

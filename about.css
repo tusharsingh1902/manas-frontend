@@ -158,14 +158,21 @@ section {
     flex-direction: column;
     gap: 15px;
   }
-
+  
   .offer-card {
-    max-width: none;
-    width: 100%;
+    flex: 0 0 auto !important; 
+    height: auto !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
     box-sizing: border-box;
-    text-align: left;
-    height: auto; 
-    padding: 15px 15px 10px 15px; 
+    padding: 15px !important;
+  }
+
+  .offer-card h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
   }
 
   .offer-card p {

@@ -318,6 +318,9 @@ body {
   body, html { width: 100%; overflow-x: hidden; font-size: 14px; }
   
   /* Navbar */
+  .hamburger {
+  display: flex !important;  /* Force it to show */
+}
   .navbar {
     padding: 15px 20px;
     justify-content: space-between;

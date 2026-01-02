@@ -1,0 +1,21 @@
+{
+  "name": "Project Manas",
+  "short_name": "Manas",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#f8fdfd",
+  "theme_color": "#1f7a8c",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

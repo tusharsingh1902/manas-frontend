@@ -193,6 +193,11 @@ input:focus { border-color: #1f7a8c; }
 }
 
 @media (max-width: 768px) {
+  html, body {
+    font-size: 14px; /* Base size slightly smaller */
+    overflow-x: hidden;
+    width: 100%;
+  }
   
   /* 1. Navbar & Menu */
   .navbar {
@@ -253,7 +258,7 @@ input:focus { border-color: #1f7a8c; }
   .send-btn {
     width: 38px;
     height: 38px;
-    
+    align: right;
   }
   .footer{display: none;}
 }

@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Manas AI Chatbot</title>
 
-  <!-- Load auth utils -->
   <script src="auth.js" defer></script>
 
-  <!-- Redirect if not logged in -->
   <script defer>
     document.addEventListener("DOMContentLoaded", () => {
       window.ManasAuth.redirectIfNotLoggedIn("chatbot_preview.html");
@@ -20,10 +18,16 @@
 
 <body>
 
-  <!-- NAVBAR -->
   <header class="navbar">
     <div class="logo">Project Manas</div>
-    <nav class="nav-links">
+    
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav class="nav-links" id="navLinks">
       <a href="dashboard.html">Dashboard</a>
       <a href="forum.html">Forum</a>
       <a href="stories.html">Stories</a>
@@ -32,19 +36,18 @@
     </nav>
   </header>
 
-  <!-- CHAT UI -->
   <section class="chat-section">
     <div class="chat-container" id="chatContainer">
       <div class="bot-msg">Hi, I’m <b>ManasAI</b>. How are you feeling today?</div>
     </div>
 
-    <div id="typingIndicator" class="bot-msg" style="display:none;">
+    <div id="typingIndicator" class="bot-msg typing" style="display:none;">
       ManasAI is typing...
     </div>
 
     <form id="chatForm">
-      <input type="text" id="userInput" placeholder="Type your thoughts..." required>
-      <button type="submit">Send</button>
+      <input type="text" id="userInput" placeholder="Type your thoughts..." autocomplete="off" required>
+      <button type="submit" class="send-btn">&#10148;</button>
     </form>
   </section>
 
@@ -54,51 +57,59 @@
 
 <script>
   const BACKEND_URL = "https://manas-backend-9gic.onrender.com";
-const chatContainer = document.getElementById("chatContainer");
-const form = document.getElementById("chatForm");
-const input = document.getElementById("userInput");
+  const chatContainer = document.getElementById("chatContainer");
+  const form = document.getElementById("chatForm");
+  const input = document.getElementById("userInput");
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const userMsg = input.value.trim();
-  if (!userMsg) return;
-
-  appendMessage("user-msg", userMsg);
-  input.value = "";
-  document.getElementById("typingIndicator").style.display = "block";
-
-  const formData = new FormData();
-  formData.append("message", userMsg);
-
-  try {
-    const res = await fetch(`${BACKEND_URL}/chatbot`, { method: "POST", body: formData });
-    const data = await res.json();
-    document.getElementById("typingIndicator").style.display = "none";
-    appendMessage("bot-msg", data.reply);
-  } catch {
-    document.getElementById("typingIndicator").style.display = "none";
-    appendMessage("bot-msg", "Server error. Try again later.");
+  /* --- MENU TOGGLE --- */
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
   }
-});
 
-function appendMessage(className, text) {
-  const div = document.createElement("div");
-  div.className = className;
-  div.innerHTML = text;
-  chatContainer.appendChild(div);
-  chatContainer.scrollTop = chatContainer.scrollHeight;
-}
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const userMsg = input.value.trim();
+    if (!userMsg) return;
 
-function clearChat() {
-  chatContainer.innerHTML = "";
-  appendMessage("bot-msg", "Chat cleared! How else can I help?");
-}
+    appendMessage("user-msg", userMsg);
+    input.value = "";
+    
+    const typing = document.getElementById("typingIndicator");
+    typing.style.display = "block";
+    chatContainer.scrollTop = chatContainer.scrollHeight; // Scroll to bottom
 
-function logout() {
-  localStorage.removeItem("username");
-  localStorage.removeItem("mentorEmail"); // IMPORTANT FIX
-  window.location.href = "login.html";
-}
+    const formData = new FormData();
+    formData.append("message", userMsg);
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/chatbot`, { method: "POST", body: formData });
+      const data = await res.json();
+      typing.style.display = "none";
+      appendMessage("bot-msg", data.reply);
+    } catch {
+      typing.style.display = "none";
+      appendMessage("bot-msg", "Server error. Try again later.");
+    }
+  });
+
+  function appendMessage(className, text) {
+    const div = document.createElement("div");
+    div.className = className;
+    div.innerHTML = text;
+    chatContainer.appendChild(div);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
+
+  function clearChat() {
+    chatContainer.innerHTML = "";
+    appendMessage("bot-msg", "Chat cleared! How else can I help?");
+  }
+
+  function logout() {
+    localStorage.removeItem("username");
+    localStorage.removeItem("mentorEmail"); 
+    window.location.href = "login.html";
+  }
 </script>
 
 </body>

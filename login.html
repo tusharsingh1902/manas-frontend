@@ -108,6 +108,11 @@
 
   <script>
     const BACKEND_URL = "https://manas-backend-9gic.onrender.com";
+    /* --- TOGGLE MOBILE MENU --- */
+  function toggleMenu() {
+    const nav = document.getElementById('navLinks');
+    nav.classList.toggle('active');
+  }
   /* --- NEW: SWITCH STUDENT/MENTOR --- */
   function switchMainRole(role) {
     const studentSec = document.getElementById("student-section");

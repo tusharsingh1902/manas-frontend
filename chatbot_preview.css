@@ -83,13 +83,115 @@
   border-radius: 8px;
   cursor: pointer;
 }
+/* --- HAMBURGER MENU & MOBILE OPTIMIZATION --- */
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #1f7a8c;
+  border-radius: 2px;
+}
 
 @media (max-width: 768px) {
+
+  /* Global Reset */
+  body, html { width: 100%; overflow-x: hidden; font-size: 14px; }
+
+  /* Navbar (Force Row Layout) */
+  .navbar {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 15px 20px;
+    position: relative;
+  }
+
+  /* Mobile Menu */
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    border-top: 1px solid #f0f7f7;
+  }
+
+  .nav-links.active {
+    display: flex;
+    animation: slideDown 0.3s ease-out;
+  }
+
+  .nav-links a {
+    margin: 10px 0;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .btn-login {
+    width: auto; /* Don't stretch the login button in menu too much */
+    display: inline-block;
+  }
+
+  /* Show Hamburger & Animate */
+  .hamburger { display: flex; }
+  .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+  /* Chat Window Adjustments */
+  .chatbot-container {
+    padding: 20px 15px; /* Reduce padding */
+  }
+
   .chat-window {
-    max-width: 90%;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
   }
 
   .chat-area {
-    height: 350px;
+    height: 300px; /* Slightly shorter on mobile */
+    padding: 15px;
   }
+
+  /* Call To Action Area (Stack Input & Button) */
+  .chat-input-area {
+    flex-direction: column; /* Stack vertically */
+    gap: 10px;
+    padding: 15px;
+    background-color: #f8fdfd;
+  }
+
+  .chat-input-area input {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center; /* Center the "Login to talk" text */
+  }
+
+  .login-btn {
+    width: 100%;
+    margin-left: 0;
+    justify-content: center;
+  }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

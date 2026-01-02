@@ -120,6 +120,7 @@
       btnMentor.classList.add("active");
     }
   }
+    
   function showMentorLogin() {
     document.getElementById('mentor-login-form').classList.remove('hidden');
     document.getElementById('mentor-register-form').classList.add('hidden');
@@ -244,7 +245,7 @@
     const formData = new FormData(e.target);
 
     try {
-      const response = await fetch(`${BACKEND_URL}/login/anonymous`, { // Relative path
+      const response = await fetch(`${BACKEND_URL}/login/anonymous`, { 
         method: "POST",
         body: formData
       });

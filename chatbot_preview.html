@@ -12,17 +12,21 @@
 
   <header class="navbar">
     <div class="logo">Project Manas</div>
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="tips.html">Healthy Living</a>
-      <a href="professionals_preview.html">Professionals</a>
+    
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="forum.html">Forum</a>
       <a href="stories.html">Stories</a>
-      <a href="forum_preview.html">Forum</a>
-      <a href="about.html">About</a>
-      <a href="login.html" class="btn-login">Login</a>
+      <button class="clear-btn" onclick="clearChat()">Clear Chat</button>
+      <button class="logout-btn" onclick="logout()">Logout</button>
     </nav>
   </header>
-
   <section class="chatbot-container">
     <div class="chat-window">
 
@@ -72,6 +76,10 @@
 
   <script src="auth.js"></script>
 <script>
+  /* --- MENU TOGGLE --- */
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+  }
   // If user IS logged in → go to full chatbot
   window.ManasAuth.redirectIfLoggedIn("chatbot.html");
 </script>

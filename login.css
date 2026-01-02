@@ -315,29 +315,31 @@ input {
     flex-direction: column; /* Stack Top (Illustration) -> Bottom (Form) */
   }
 
-  /* 5. RESIZE ILLUSTRATION (Don't Hide) */
+  /* 5. RESIZE ILLUSTRATION */
   .login-left {
-    display: flex;       /* Show it! */
-    padding: 30px 20px;  /* Less padding than desktop */
+    display: flex;       /* Keep visible */
+    padding: 25px 20px;  /* Reduce padding */
   }
 
   .illustration-wrapper img {
-    max-width: 180px;    /* Make image smaller on phone */
-  }
-
-  .left-text h2 {
-    font-size: 1.3rem;   /* Smaller heading */
-    margin-bottom: 5px;
-  }
-  
-  .left-text p {
-    font-size: 0.9rem;
+    max-width: 150px;    /* Smaller image */
     margin-bottom: 10px;
   }
 
+  .left-text h2 {
+    font-size: 1.2rem;   /* Smaller heading */
+    margin-bottom: 8px;
+  }
+  
+  /* CRITICAL CHANGE: Hide the description paragraph */
+  .left-text p {
+    display: none; 
+  }
+
   .quote {
-    font-size: 0.85rem;  /* Compact quote */
+    font-size: 0.85rem;
     padding: 8px;
+    margin-top: 5px;     /* Small gap since 'p' is gone */
   }
 
   /* 6. Form Area Adjustments */
@@ -346,11 +348,10 @@ input {
   }
   
   .login-section {
-    padding: 0;          /* Remove outer padding on mobile */
+    padding: 0;
     align-items: flex-start;
   }
   
-  /* 7. Fix Toggle Spacing */
   .main-role-toggle {
     margin-bottom: 20px;
   }

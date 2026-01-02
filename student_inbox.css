@@ -17,7 +17,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 60px;
+  padding: 15px 20px;
   background-color: #ffffff;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
@@ -237,9 +237,17 @@ body {
 
   /* 4. Navbar Tweaks */
   .navbar {
-    padding: 10px 15px;
-    flex-direction: row; /* Keep row, but smaller */
+    flex-direction: row !important; /* Keep them in a line */
+    justify-content: flex-start; /* Align left */
+    align-items: center;
   }
+  
+  /* Push Logout button to the far right */
+  .nav-links {
+    margin-left: auto; /* This pushes the logout button to the right */
+    width: auto !important; /* Stop it from taking full width */
+  }
+}
   
   .logo { font-size: 1.2rem; }
   
@@ -249,5 +257,4 @@ body {
   }
   
   /* Hide the 'Dashboard' link on mobile if space is tight */
-  .nav-links a { display: none; }
-}
+  

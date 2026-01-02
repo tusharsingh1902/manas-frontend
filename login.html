@@ -42,7 +42,12 @@
         <h1>Welcome to Project Manas</h1>
         <p class="subtitle">Choose how you'd like to connect</p>
 
-          <div class="option mentor-login">
+        <div class="main-role-toggle">
+          <button id="main-btn-student" class="toggle-pill active" onclick="switchMainRole('student')">Student</button>
+          <button id="main-btn-mentor" class="toggle-pill" onclick="switchMainRole('mentor')">Mentor</button>
+        </div>
+
+        <div id="mentor-section" class="option mentor-login" style="display: none;">
           <h3>Login as Friend / Mentor</h3>
 
           <div class="tab-buttons">
@@ -63,9 +68,9 @@
           </form>
         </div>
 
-        <div class="option anonymous">
+        <div id="student-section" class="option anonymous">
           <h3>Anonymous Login As Student</h3>
-          <p>Stay anonymous with a nickname and password — no personal info required.</p>
+          <p class="mobile-hide-text">Stay anonymous with a nickname and password — no personal info required.</p>
 
           <div class="toggle-container">
             <button id="login-tab" class="toggle-btn" onclick="showLogin()">Login</button>
@@ -96,6 +101,25 @@
 
   <script>
     const BACKEND_URL = "https://manas-backend-9gic.onrender.com";
+  /* --- NEW: SWITCH STUDENT/MENTOR --- */
+  function switchMainRole(role) {
+    const studentSec = document.getElementById("student-section");
+    const mentorSec = document.getElementById("mentor-section");
+    const btnStudent = document.getElementById("main-btn-student");
+    const btnMentor = document.getElementById("main-btn-mentor");
+
+    if (role === 'student') {
+      studentSec.style.display = "block";
+      mentorSec.style.display = "none";
+      btnStudent.classList.add("active");
+      btnMentor.classList.remove("active");
+    } else {
+      studentSec.style.display = "none";
+      mentorSec.style.display = "block";
+      btnStudent.classList.remove("active");
+      btnMentor.classList.add("active");
+    }
+  }
   function showMentorLogin() {
     document.getElementById('mentor-login-form').classList.remove('hidden');
     document.getElementById('mentor-register-form').classList.add('hidden');

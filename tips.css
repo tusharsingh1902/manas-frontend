@@ -7,44 +7,17 @@ body {
   margin: 0;
 }
 
-
+/* --- NAVBAR (DESKTOP DEFAULT) --- */
 .navbar {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    padding: 15px 20px;
-    position: relative;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 60px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  position: relative;
+}
 
-  /* Mobile Menu */
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    background-color: #ffffff;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0;
-    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-    z-index: 1000;
-    border-top: 1px solid #f0f7f7;
-  }
-
-  .nav-links.active {
-    display: flex;
-    animation: slideDown 0.3s ease-out;
-  }
-
-  .nav-links a {
-    margin: 10px 0;
-    font-size: 16px;
-    width: 100%;
-    text-align: center;
-    padding: 10px;
-  }
 .logo {
   font-size: 1.5rem;
   font-weight: 700;
@@ -52,6 +25,29 @@ body {
   cursor: pointer;
 }
 
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #2f4858;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: #1f7a8c;
+}
+
+.btn-login {
+  background-color: #1f7a8c;
+  color: white !important;
+  padding: 8px 18px;
+  border-radius: 6px;
+}
+
+/* --- TIPS CONTENT --- */
 .tips-page {
   text-align: center;
   padding: 60px 30px;
@@ -83,6 +79,7 @@ body {
   border-radius: 12px;
   box-shadow: 0 3px 10px rgba(0,0,0,0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
 }
 
 .tip-card:hover {
@@ -93,11 +90,13 @@ body {
 .tip-card h3 {
   color: #1f7a8c;
   margin-bottom: 10px;
+  margin-top: 0;
 }
 
 .tip-card p {
   color: #5c6b73;
   line-height: 1.5;
+  margin-bottom: 0;
 }
 
 .footer {
@@ -109,11 +108,14 @@ body {
   font-size: 0.9rem;
   margin-top: 40px;
 }
+
+/* --- HAMBURGER ICON (Desktop: Hidden) --- */
 .hamburger {
   display: none;
   flex-direction: column;
   cursor: pointer;
   gap: 5px;
+  z-index: 1100;
 }
 
 .hamburger span {
@@ -121,77 +123,91 @@ body {
   height: 3px;
   background-color: #1f7a8c;
   border-radius: 2px;
+  transition: all 0.3s ease;
 }
-/* --- MOBILE TIPS OPTIMIZATION --- */
 
+
+/* --- MOBILE OPTIMIZATION --- */
 @media (max-width: 768px) {
 
   /* 1. Global Reset */
   body, html { width: 100%; overflow-x: hidden; font-size: 14px; }
 
-  /* 2. Navbar: Keep it side-by-side (Row) */
+  /* 2. Navbar */
   .navbar {
-    display: flex !important;
-    flex-direction: row !important;       /* Force Row */
-    justify-content: space-between !important; /* Logo Left, Link Right */
-    align-items: center !important;
     padding: 15px 20px;
-    height: auto;
+    justify-content: space-between;
   }
-  
+
+  /* 3. Mobile Menu (Hidden by default) */
   .nav-links {
-    margin: 0;
-    display: block; /* Just show the link normally */
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    border-top: 1px solid #f0f7f7;
+    gap: 0;
   }
-  
+
+  .nav-links.active {
+    display: flex;
+    animation: slideDown 0.3s ease-out;
+  }
+
   .nav-links a {
     margin: 0;
-    font-size: 1rem;
-    padding: 8px 12px;
-    background-color: #f0f7f7; /* Nice pill background for the link */
-    border-radius: 20px;
-    color: #1f7a8c;
-  }
-
-  /* 3. Page Title & Intro */
-  .tips-page {
-    padding: 30px 15px; /* Reduce padding */
-  }
-
-  .tips-page h1 {
-    font-size: 1.6rem;
-    margin-bottom: 15px;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #fcfcfc;
   }
   
-  .subtitle {
-    font-size: 0.95rem;
-    margin-bottom: 30px;
+  .btn-login {
+    width: auto;
+    background: transparent;
+    color: #1f7a8c !important;
+    font-weight: 700;
   }
 
-  /* 4. Tips Grid -> Vertical Stack */
+  /* 4. Hamburger Show & Animate */
+  .hamburger { display: flex; }
+  
+  /* X Animation */
+  .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+  /* 5. Page Content */
+  .tips-page {
+    padding: 30px 15px;
+  }
+
+  .tips-page h1 { font-size: 1.6rem; }
+  
+  .subtitle { font-size: 0.95rem; margin-bottom: 25px; }
+
+  /* 6. Tips Grid (Stack Vertically) */
   .tips-container {
     display: flex;
-    flex-direction: column; /* Stack cards vertically */
+    flex-direction: column;
     gap: 15px;
-    padding: 0;
   }
 
-  /* 5. Card Styling */
   .tip-card {
     width: 100%;
-    box-sizing: border-box; /* Prevent padding from widening card */
-    padding: 20px;
-    text-align: left; /* Easier to read on phone */
-    margin: 0;
+    box-sizing: border-box;
   }
-  
-  .tip-card h3 {
-    font-size: 1.2rem;
-    margin-top: 0;
-  }
-  
-  .tip-card p {
-    margin-bottom: 0;
-    font-size: 0.95rem;
-  }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

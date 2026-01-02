@@ -218,9 +218,9 @@ a {
   }
 
   .messages-box {
-    flex: 1 !important;            /* Fill space */
+    flex: 1 !important;      
     padding: 10px !important;
-    padding-bottom: 70px !important; /* Space for input */
+    padding-bottom: 120px !important; /* Space for input */
     background: #eef6f6 !important;
   }
 
@@ -260,6 +260,6 @@ a {
     padding: 0 16px !important;
     font-size: 14px !important;
     margin-left: 8px !important;
-    padding-right: 12px !important;
+    margin-right: 12px !important;
   }
 }

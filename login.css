@@ -282,10 +282,8 @@ input {
   /* 1. Navbar Fixes */
   .navbar {
     padding: 15px 20px;
-    justify-content: space-between;
   }
 
-  /* 2. Menu Logic */
   .nav-links {
     display: none;
     position: absolute;
@@ -297,62 +295,90 @@ input {
     align-items: center;
     padding: 20px 0;
     box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-    border-top: 1px solid #f0f7f7;
     z-index: 1000;
   }
 
   .nav-links.active { display: flex; }
   .nav-links a { margin: 10px 0; width: 100%; text-align: center; }
 
-  /* 3. Hamburger Animation */
+  /* Hamburger Animation */
   .hamburger { display: flex; }
   .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
   .hamburger.active span:nth-child(2) { opacity: 0; }
   .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-  /* 4. LAYOUT CHANGE: Stack Content */
+  /* 2. LAYOUT CHANGE: Stack Content Vertically */
   .login-card {
-    flex-direction: column; 
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden; /* Prevents overflow issues */
   }
 
-  /* 5. RESIZE LEFT SIDE (Illustration) */
+  /* 3. RESIZE LEFT SIDE (Illustration + Quote) */
   .login-left {
-    display: flex;      
-    padding: 20px 15px; /* Tighter padding */ 
+    display: flex;
+    flex-direction: column; /* Ensure vertical stacking */
+    align-items: center;    /* Center align items */
+    justify-content: center;
+    padding: 20px 15px;     /* Compact padding */
+    background-color: #e6f3f4; /* Ensure background color persists */
   }
 
+  /* Shrink Image */
   .illustration-wrapper img {
-    max-width: 140px; 
+    max-width: 120px; /* Force image to be small */
+    width: 100%;
+    height: auto;
     margin-bottom: 10px;
+    display: block; /* Ensure it's not hidden */
   }
 
+  /* Shrink Header Text */
   .left-text h2 {
-    font-size: 1.1rem; /* Smaller Font */
+    font-size: 1.1rem; 
     margin-bottom: 5px;
+    text-align: center;
   }
   
-  /* FORCE HIDE DESCRIPTION */
+  /* HIDE THE DESCRIPTION TEXT */
   .left-text p {
     display: none !important; 
   }
 
+  /* Keep Quote Visible but Small */
   .quote {
-    font-size: 0.8rem; /* Smaller Font */
+    display: block !important;
+    font-size: 0.75rem; /* Reduce font size */
     padding: 8px;
     margin-top: 5px;
+    text-align: center;
   }
 
-  /* 6. RESIZE RIGHT SIDE (Forms) */
+  /* 4. RESIZE RIGHT SIDE (Forms) */
   .login-right {
     padding: 25px 20px;
   }
   
   .login-right h1 {
-    font-size: 1.4rem; /* Smaller Welcome Text */
+    font-size: 1.4rem;
+    text-align: center;
   }
 
   .subtitle {
     font-size: 0.85rem;
+    text-align: center;
+    display: block;
+  }
+
+  /* 5. FIX TOGGLE BUTTONS */
+  .main-role-toggle {
+    margin-bottom: 20px;
+    padding: 4px; /* Slightly tighter padding */
+  }
+
+  .toggle-pill {
+    padding: 8px; /* Smaller padding inside buttons */
+    font-size: 0.9rem;
   }
 
   /* Compact Input Fields */
@@ -362,18 +388,13 @@ input {
   }
   
   /* Compact Buttons */
-  .btn-primary, .toggle-pill {
+  .btn-primary {
     padding: 10px;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
 
-  /* General Layout */
   .login-section {
     padding: 0;
     align-items: flex-start;
-  }
-  
-  .main-role-toggle {
-    margin-bottom: 15px;
   }
 }

@@ -11,7 +11,14 @@
 
   <header class="navbar">
     <div class="logo">Project Manas</div>
-    <nav class="nav-links">
+    
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav class="nav-links" id="navLinks">
       <a href="index.html">Home</a>
       <a href="professionals_preview.html">Professionals</a>
       <a href="stories.html">Stories</a>
@@ -20,6 +27,13 @@
       <a href="login.html" class="btn-login">Login</a>
     </nav>
   </header>
+
+  <script>
+    function toggleMenu() {
+        document.getElementById('navLinks').classList.toggle('active');
+        document.querySelector('.hamburger').classList.toggle('active'); // Animates X
+    }
+  </script>
 
   <section class="about-hero">
     <div class="about-hero-text">

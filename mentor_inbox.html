@@ -83,22 +83,21 @@ async function loadChats() {
         <p class="last-msg">${lastMsg}</p>
         ${unread > 0 ? `<span class="unread-badge">${unread}</span>` : ""}
       `;
-      /* --- SMART CLICK HANDLER --- */
+            /* --- SMART CLICK LOGIC --- */
       div.onclick = () => {
-        // 1. Always save the session details
+        // 1. Save session details first
         localStorage.setItem("currentChatId", chat.chat_id);
-        localStorage.setItem("chatPartner", mentorName);
+        localStorage.setItem("chatPartner", studentName);
       
         // 2. Check Screen Size
         if (window.innerWidth <= 768) {
-          // MOBILE: Skip preview, go straight to chat
+          // MOBILE: Go directly to the full chat page
           window.location.href = "chat.html";
         } else {
-          // DESKTOP: Show the preview side-panel
-          previewChat(chat.chat_id, mentorName);
+          // DESKTOP: Show the preview panel
+          previewChat(chat.chat_id, studentName);
         }
       };
-
       chatList.appendChild(div);
     });
   } catch (err) {

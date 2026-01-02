@@ -20,15 +20,31 @@
 <body>
 
 <header class="navbar">
-  <div class="logo">Project Manas</div>
-  <nav class="nav-links">
-    <a href="forum.html">Forum</a>
-    <a href="stories.html">Stories</a>
-    <a href="chatbot.html">Chatbot</a>
-    <a href="student_inbox.html" class="nav-inbox">Inbox</a>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-  </nav>
-</header>
+    <div class="logo">Project Manas</div>
+    
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="forum.html">Forum</a>
+      <a href="stories.html">Stories</a>
+      <a href="chatbot.html">Chatbot</a>
+      <a href="student_inbox.html" class="nav-inbox">
+          Inbox <span class="inbox-dot" style="display:none;"></span>
+      </a>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+  </header>
+
+  <script>
+    function toggleMenu() {
+        document.getElementById('navLinks').classList.toggle('active');
+        document.querySelector('.hamburger').classList.toggle('active'); // Animates X
+    }
+  </script>
 
 <section class="professionals-section">
   <h1>Find Support</h1>

@@ -136,97 +136,109 @@ body {
 }
 
 
+/* --- FIXED MOBILE DASHBOARD (Paste at bottom of student_dashboard.css) --- */
 @media (max-width: 768px) {
+
+  /* 1. Global Font & Layout Reset */
+  html, body {
+    font-size: 14px; /* Base size slightly smaller */
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  /* 2. Compact Navbar (The "Cluster" Look) */
   .navbar {
-    flex-direction: column;   
+    flex-direction: column;   /* Logo on Top */
     padding: 15px 10px;
     gap: 15px;
+    height: auto;
   }
   
-  .nav-links {
-    width: 100%;
-    margin-top: 0;
-    display: flex;
-    flex-direction: row;      
-    flex-wrap: wrap;          
-    justify-content: center;  
-    gap: 10px;                
+  .logo {
+    font-size: 1.4rem;        /* Smaller Logo */
   }
 
-  
-  .nav-links a, .nav-links button {
-    font-size: 0.9rem;
-    padding: 8px 16px;        
-    background-color: rgba(255, 255, 255, 0.1); 
-    border-radius: 20px;      /* Pill shape */
-    text-decoration: none;
-    white-space: nowrap;      /* Don't break text inside buttons */
+  .nav-links {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: row;      /* Keep links side-by-side */
+    flex-wrap: wrap;          /* Allow wrapping to 2 lines */
+    justify-content: center;  /* Center them */
+    gap: 8px;                 /* Space between pills */
   }
-  
-  /* Make Logout stand out */
+
+  /* 3. The "Pill" Links */
+  .nav-links a {
+    font-size: 12px;
+    padding: 8px 14px;
+    background-color: #f0f4f8; /* Light gray pill background */
+    border-radius: 20px;
+    border: 1px solid #e1e8ed;
+    margin: 0;
+  }
+
+  /* Make Inbox Badge fit inside the pill */
+  .inbox-dot {
+    width: 6px;
+    height: 6px;
+    min-width: auto;
+    padding: 3px;
+    font-size: 9px;
+    margin-left: 5px;
+    vertical-align: middle;
+  }
+
+  /* Mobile Logout Button */
   .logout-btn {
-    background-color: #e74c3c !important;
-    color: white;
-    border: none;
-  }
-  
-  .nav-links {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;   
-    gap: 10px;
-    align-items: center;     
+    font-size: 12px;
+    padding: 8px 14px;
+    background-color: #e63946; /* Red for logout */
+    border-radius: 20px;
   }
 
-  /* 2. Prevent Horizontal Scrolling (The #1 Clumsy Factor) */
-  body, html {
-    overflow-x: hidden;      
-    width: 100%;
+  /* 4. Dashboard Content */
+  .dashboard {
+    padding: 20px 15px; /* Reduce massive desktop padding */
   }
 
-  /* 3. General Containers (Make them full width) */
-  .container, .main-content, .hero, .section {
-    width: 100% !important;   
-    padding: 10px !important; 
-    margin: 0 auto;
-    flex-direction: column;   
-  }
-
-  .grid, .card-container {
-    display: flex;
-    flex-direction: column;
-    grid-template-columns: 1fr; 
-  }
-  
-  /* 5. Fix Cards */
-  .card {
-    width: 80%;
-    margin-bottom: 15px;
-  }
- 
-  h1, #welcome-heading, #welcome-text {
-    font-size: 1.5rem !important; 
-    margin-bottom: 10px;
-    line-height: 1.3;
-  }
-
-  h2, h3 {
-    font-size: 1.2rem !important;
+  /* Typography Fixes */
+  .welcome h1 {
+    font-size: 1.6rem; /* Shrink huge heading */
     margin-bottom: 8px;
   }
-  
-  p, .intro, .motivation {
-    font-size: 0.95rem !important;
+
+  .welcome p {
+    font-size: 0.95rem;
     line-height: 1.5;
-  }
-  
-  /* Shrink the Logo slightly */
-  .logo {
-    font-size: 1.4rem;
+    margin-bottom: 25px;
   }
 
-  .nav-links a, .nav-links button {
-    font-size: 0.85rem; /* Slightly smaller text for buttons */
-    padding: 8px 12px;  /* Tighter padding */
+  /* 5. Cards (Full Width Stack) */
+  .dashboard-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .card {
+    width: 100%; /* Full width */
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: left; /* Easier to read on phone */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+    color: #666;
   }
 }

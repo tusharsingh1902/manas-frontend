@@ -46,10 +46,16 @@
 </head>
 
 <body>
-
   <header class="navbar">
     <div class="logo">Project Manas</div>
-    <nav class="nav-links">
+    
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav class="nav-links" id="navLinks">
       <a href="professionals.html">Professionals</a>
       <a href="forum.html">Forum</a>
       <a href="chatbot.html">Chatbot</a>
@@ -119,6 +125,10 @@
 
   <script>
     const BACKEND_URL = "https://manas-backend-9gic.onrender.com";
+    function toggleMenu() {
+        document.getElementById('navLinks').classList.toggle('active');
+        document.querySelector('.hamburger').classList.toggle('active'); 
+    }
 if (!localStorage.getItem("username") && !localStorage.getItem("mentorEmail")) {
     window.location.href = "stories.html";
 }

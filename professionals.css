@@ -364,48 +364,138 @@ body {
   flex-shrink: 0;
 }
 
-/* --- UNIVERSAL MOBILE FIXES (Paste at bottom of CSS files) --- */
+/* --- HAMBURGER & MOBILE PROFESSIONALS FIXES --- */
+
+/* 1. Hamburger Icon */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+  z-index: 1100;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #1f7a8c;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+/* 2. MOBILE STYLES */
 @media (max-width: 768px) {
 
-  /* 1. Fix the Navbar (Stack links vertically) */
+  /* Global Reset */
+  body, html { width: 100%; overflow-x: hidden; font-size: 14px; }
+
+  /* Navbar (Force Row Layout) */
   .navbar {
-    flex-direction: column;   /* Stack Logo on top of Links */
-    height: auto;             /* Let it grow tall */
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 15px 20px;
+    position: relative;
+  }
+
+  /* Mobile Menu */
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    border-top: 1px solid #f0f7f7;
+  }
+
+  .nav-links.active {
+    display: flex;
+    animation: slideDown 0.3s ease-out;
+  }
+
+  .nav-links a {
+    margin: 10px 0;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
     padding: 10px;
   }
-  
-  .nav-links {
+
+  .logout-btn {
+    width: auto;
     margin-top: 10px;
-    display: flex;
-    flex-direction: column;   /* Stack links vertically */
-    gap: 10px;
-    align-items: center;      /* Center them */
   }
 
-  /* 2. Prevent Horizontal Scrolling (The #1 Clumsy Factor) */
-  body, html {
-    overflow-x: hidden;       /* Stop the page from wiggling left/right */
+  /* Show Hamburger & Animate */
+  .hamburger { display: flex; }
+  .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+  /* Page Layout */
+  .professionals-section {
+    padding: 0 15px;
+    margin-top: 20px;
+  }
+
+  .professionals-section h1 { font-size: 1.8rem; }
+
+  /* Mentor/Expert Cards (Stack Content) */
+  .mentor-card {
+    flex-direction: column; /* Stack Info on top, Buttons below */
+    padding: 15px;
+    gap: 15px;
     width: 100%;
+    box-sizing: border-box;
   }
 
-  /* 3. General Containers (Make them full width) */
-  .container, .main-content, .hero, .section {
-    width: 95% !important;    /* Use full screen width */
-    padding: 10px !important; /* Reduce padding */
-    margin: 0 auto;
-    flex-direction: column;   /* Stack content vertically */
+  .mentor-info {
+    max-width: 100%; /* Use full width */
   }
 
-  /* 4. Fix Grids (For Mentors/Stories pages) */
-  .grid, .card-container {
-    display: flex;
-    flex-direction: column;
-    grid-template-columns: 1fr; /* Force 1 column instead of 3 */
+  .mentor-name { font-size: 1.3rem; }
+
+  /* Buttons inside Cards */
+  .actions {
+    width: 100%;
+    flex-direction: row; /* Keep buttons side-by-side if they fit */
+    justify-content: flex-start;
+    flex-wrap: wrap; /* Wrap if screen is very small */
+    gap: 10px;
   }
   
-  /* 5. Fix Cards */
-  .card {
-    width: 100%;
+  .chat-btn, .btn-book, .btn-call {
+    flex: 1; /* Make buttons grow to fill width */
+    text-align: center;
+    padding: 10px;
+  }
+
+  /* Modal Fixes */
+  .modal-content {
+    width: 90%;
+    max-height: 85vh; /* Prevent modal from being too tall */
+    overflow-y: auto; /* Allow scrolling inside modal */
+    padding: 20px;
+  }
+
+  .detail-row {
+    flex-direction: column; /* Stack Label and Value */
+    gap: 2px;
     margin-bottom: 15px;
   }
+  
+  .detail-row strong { width: 100%; margin-bottom: 2px; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

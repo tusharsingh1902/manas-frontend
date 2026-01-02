@@ -1,11 +1,12 @@
 {
   "name": "Project Manas",
   "short_name": "Manas",
+  "description": "A safe, anonymous mental health support platform for students. Connect with peer mentors, chat with AI, and find professional help.",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#f8fdfd",
   "theme_color": "#1f7a8c",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "icon-192.png",

@@ -12,7 +12,6 @@ body {
   color: #2f4858;
 }
 
-
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -235,11 +234,19 @@ body {
   }
 
   /* 4. Navbar Tweaks for Mobile */
+  
   .navbar {
-    padding: 10px 15px;
-    flex-direction: row; 
-    justify-content: space-between;
+    flex-direction: row !important; /* Keep them in a line */
+    justify-content: flex-start; /* Align left */
+    align-items: center;
   }
+  
+  /* Push Logout button to the far right */
+  .nav-links {
+    margin-left: auto; /* This pushes the logout button to the right */
+    width: auto !important; /* Stop it from taking full width */
+  }
+}
   
   .logo { font-size: 1.2rem; }
   
@@ -248,7 +255,4 @@ body {
     font-size: 12px;
     margin-left: 10px;
   }
-  
-  /* Hide the Dashboard link to save space */
-  .nav-links a { display: none; }
 }

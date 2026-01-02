@@ -397,7 +397,12 @@ input:focus {
   to { opacity: 1; transform: translateY(0); }
 }
   
-  .navbar { padding: 10px; justify-content: center; }
+  .navbar {
+    padding: 15px 20px;        
+    justify-content: space-between !important; 
+    align-items: center;
+    position: relative;        
+  }
   .nav-links { display: none; } /* Hide navbar links */
 
   .login-section {

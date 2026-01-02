@@ -297,6 +297,23 @@ input:focus {
   background-color: #ffffff;
   border-top: 1px solid #e2e8f0;
 }
+/* --- HAMBURGER MENU STYLES --- */
+
+/* 1. The Icon (Hidden on Desktop) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #1f7a8c;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
@@ -339,6 +356,46 @@ input:focus {
   
   /* 1. Reset Page */
   body, html { width: 100%; overflow-x: hidden; font-size: 14px; }
+  .hamburger {
+    display: flex;
+  }
+
+  /* Style the Links as a Dropdown */
+  .nav-links {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 60px; /* Below the navbar */
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    z-index: 1000; /* Sit on top of everything */
+    border-top: 1px solid #f0f7f7;
+  }
+
+  /* The "Show" Class (Toggled by JS) */
+  .nav-links.active {
+    display: flex;
+    animation: slideDown 0.3s ease-out;
+  }
+
+  .nav-links a {
+    margin: 10px 0;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+}
+
+/* Dropdown Animation */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
   
   .navbar { padding: 10px; justify-content: center; }
   .nav-links { display: none; } /* Hide navbar links */

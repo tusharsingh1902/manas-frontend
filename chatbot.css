@@ -219,13 +219,13 @@ input:focus { border-color: #1f7a8c; }
 
   /* 2. Full Screen Chat (Native App Feel) */
   .chat-section {
-    width: 100%;
+    width: 90%;
     max-width: none;
     margin: 0;
     border-radius: 0;
     box-shadow: none;
     border: none;
-    height: 100%; /* Take remaining space */
+    height: 90%; /* Take remaining space */
     padding: 15px;
   }
 

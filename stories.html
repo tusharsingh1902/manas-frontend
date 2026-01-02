@@ -12,7 +12,14 @@
 
   <header class="navbar">
     <div class="logo">Project Manas</div>
-    <nav class="nav-links">
+    
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav class="nav-links" id="navLinks">
       <a href="index.html">Home</a>
       <a href="professionals_preview.html">Professionals</a>
       <a href="forum_preview.html">Forum</a>
@@ -21,7 +28,6 @@
       <a href="login.html" class="btn-login">Login</a>
     </nav>
   </header>
-
   <section class="stories-hero">
     <h1>Stories of Hope</h1>
     <p>Real experiences shared by students who found strength, courage, and clarity through their journey.</p>
@@ -78,4 +84,7 @@
 <script>
   // If user IS logged in → go to full chatbot
   window.ManasAuth.redirectIfLoggedIn("stories_after.html");
+  function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
 </script>

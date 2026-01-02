@@ -4,12 +4,28 @@
   color: #2f4858;
   font-weight: 500;
 }
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+  z-index: 1100;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #1f7a8c;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
 
 .nav-links a:hover {
   color: #1f7a8c;
 }
 
-.btn-logout {
+.logout-btn {
   background-color: #1f7a8c;
   color: white;
   margin-left:10px;
@@ -17,7 +33,7 @@
   border-radius: 6px;
   text-decoration: none;
 }
-.btn-logout:hover{
+.logout-btn:hover{
   color: white;
   background-color: #16697a;
 }
@@ -134,48 +150,95 @@
   margin-bottom: 20px;
 }
 
-/* --- UNIVERSAL MOBILE FIXES (Paste at bottom of CSS files) --- */
 @media (max-width: 768px) {
 
-  /* 1. Fix the Navbar (Stack links vertically) */
+  /* Global Reset */
+  body, html { width: 100%; overflow-x: hidden; font-size: 14px; }
+
+  /* Navbar */
   .navbar {
-    flex-direction: column;   /* Stack Logo on top of Links */
-    height: auto;             /* Let it grow tall */
-    padding: 10px;
+    padding: 15px 20px;
+    justify-content: space-between;
+    position: relative;
   }
-  
+
+  /* Mobile Menu */
   .nav-links {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;   /* Stack links vertically */
-    gap: 10px;
-    align-items: center;      /* Center them */
-  }
-
-  /* 2. Prevent Horizontal Scrolling (The #1 Clumsy Factor) */
-  body, html {
-    overflow-x: hidden;       /* Stop the page from wiggling left/right */
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
     width: 100%;
-  }
-
-  /* 3. General Containers (Make them full width) */
-  .container, .main-content, .hero, .section {
-    width: 95% !important;    /* Use full screen width */
-    padding: 10px !important; /* Reduce padding */
-    margin: 0 auto;
-    flex-direction: column;   /* Stack content vertically */
-  }
-
-  /* 4. Fix Grids (For Mentors/Stories pages) */
-  .grid, .card-container {
-    display: flex;
+    background-color: #ffffff;
     flex-direction: column;
-    grid-template-columns: 1fr; /* Force 1 column instead of 3 */
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    border-top: 1px solid #f0f7f7;
+  }
+
+  .nav-links.active {
+    display: flex;
+    animation: slideDown 0.3s ease-out;
+  }
+
+  .nav-links a, .logout-btn {
+    margin: 10px 0;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
   }
   
-  /* 5. Fix Cards */
-  .card {
-    width: 100%;
-    margin-bottom: 15px;
+  /* Reset logout button styles for mobile list */
+  .logout-btn {
+    width: auto;
+    padding: 10px 20px;
   }
+
+  /* Show Hamburger */
+  .hamburger { display: flex; }
+
+  /* Hamburger Animation (X shape) */
+  .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+  /* Hero Section */
+  .stories-hero {
+    padding: 40px 20px;
+  }
+  
+  .stories-hero h1 { font-size: 1.8rem; }
+  
+  /* Featured Story */
+  .featured-story {
+    padding: 30px 20px;
+  }
+  
+  .featured-box {
+    padding: 20px;
+  }
+
+  /* Story Grid (Stack Cards) */
+  .stories-grid {
+    flex-direction: column; /* Stack top-to-bottom */
+    gap: 15px;
+  }
+
+  .story-card {
+    width: 100%;
+    box-sizing: border-box; /* Prevent padding from widening card */
+    margin: 0;
+  }
+
+  /* CTA Section */
+  .cta-share {
+    padding: 40px 20px;
+  }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

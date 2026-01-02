@@ -85,7 +85,19 @@ async function loadChats() {
         ${unread > 0 ? `<span class="unread-badge">${unread}</span>` : ""}
       `;
 
-      div.onclick = () => previewChat(chat.chat_id, mentorName);
+            /* --- SMART CLICK HANDLER --- */
+      div.onclick = () => {
+        // 1. Always save the session details
+        localStorage.setItem("currentChatId", chat.chat_id);
+        localStorage.setItem("chatPartner", mentorName);
+      
+        // 2. Check Screen Size
+        if (window.innerWidth <= 768) {
+          window.location.href = "chat.html";
+        } else {
+          previewChat(chat.chat_id, mentorName);
+        }
+      };
 
       chatList.appendChild(div);
     });

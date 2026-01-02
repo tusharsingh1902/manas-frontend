@@ -209,7 +209,7 @@ a {
   /* 4. Chat Window (Using .messages-box) */
   .chat-section {
     width: 100% !important;
-    height: 100% !important;
+    height: 90% !important;
     margin: 0 !important;
     border: none !important;
     border-radius: 0 !important;
@@ -227,7 +227,7 @@ a {
   /* 5. Tiny Bubbles (Using .msg) */
   .msg {
     font-size: 13px !important;    /* Force smaller text */
-    padding: 8px 12px !important;  
+    padding: 6px 9px !important;  
     max-width: 85% !important;
     margin-bottom: 8px !important;
   }
@@ -258,7 +258,8 @@ a {
   .input-area button {
     height: 36px !important;
     padding: 0 16px !important;
-    font-size: 13px !important;
+    font-size: 14px !important;
     margin-left: 8px !important;
+    padding-right: 12px !important;
   }
 }

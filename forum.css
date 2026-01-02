@@ -18,6 +18,21 @@ body {
   z-index: 10;
 }
 
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #1f7a8c;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
 .logo {
   font-size: 1.5rem;
   font-weight: 700;
@@ -292,48 +307,135 @@ form button:hover {
   background-color: #16697a;
 }
 
-/* --- UNIVERSAL MOBILE FIXES (Paste at bottom of CSS files) --- */
+/* --- HAMBURGER & MOBILE FORUM FIXES --- */
+
+/* 1. Hamburger Icon (Hidden on Desktop) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #1f7a8c;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* 2. MOBILE STYLES */
 @media (max-width: 768px) {
 
-  /* 1. Fix the Navbar (Stack links vertically) */
+  /* Global Reset */
+  body, html { width: 100%; overflow-x: hidden; font-size: 14px; }
+
+  /* Navbar */
   .navbar {
-    flex-direction: column;   /* Stack Logo on top of Links */
-    height: auto;             /* Let it grow tall */
+    padding: 15px 20px;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  /* Dropdown Menu */
+  .nav-links {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    border-top: 1px solid #f0f7f7;
+  }
+
+  .nav-links.active {
+    display: flex;
+    animation: slideDown 0.3s ease-out;
+  }
+
+  .nav-links a {
+    margin: 10px 0;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
     padding: 10px;
   }
-  
-  .nav-links {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;   /* Stack links vertically */
-    gap: 10px;
-    align-items: center;      /* Center them */
+
+  /* Show Hamburger */
+  .hamburger { display: flex; }
+
+  /* Forum Layout */
+  .forum-section {
+    margin: 20px auto;
+    padding: 0 15px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
-  /* 2. Prevent Horizontal Scrolling (The #1 Clumsy Factor) */
-  body, html {
-    overflow-x: hidden;       /* Stop the page from wiggling left/right */
+  .forum-section h1 { font-size: 1.5rem; }
+
+  /* Input Area (Stack it) */
+  form {
+    flex-direction: column; /* Input on top, Button below */
     width: 100%;
   }
 
-  /* 3. General Containers (Make them full width) */
-  .container, .main-content, .hero, .section {
-    width: 95% !important;    /* Use full screen width */
-    padding: 10px !important; /* Reduce padding */
-    margin: 0 auto;
-    flex-direction: column;   /* Stack content vertically */
+  form input {
+    width: 100%; /* Full width */
+    box-sizing: border-box;
+    height: 45px;
   }
 
-  /* 4. Fix Grids (For Mentors/Stories pages) */
-  .grid, .card-container {
-    display: flex;
+  form button {
+    width: 100%;
+    height: 45px;
+  }
+
+  /* Posts */
+  .post {
+    padding: 15px;
+  }
+  
+  .post-header {
+    flex-wrap: wrap; /* Allow name/badge/chat to wrap if long */
+  }
+
+  .chat-icon-btn {
+    margin-left: 0; /* Don't force right align on small screens */
+    margin-top: 5px; /* Push to next line if needed */
+  }
+  
+  /* Reply Box (Stack it) */
+  .reply-box {
     flex-direction: column;
-    grid-template-columns: 1fr; /* Force 1 column instead of 3 */
   }
   
-  /* 5. Fix Cards */
-  .card {
+  .reply-box input {
     width: 100%;
-    margin-bottom: 15px;
+    box-sizing: border-box;
+    height: 40px;
   }
+  
+  .reply-box button {
+    width: 100%;
+    height: 40px;
+  }
+
+  /* Modal (Popups) */
+  .modal-content {
+    width: 85%;
+    padding: 20px;
+    max-width: none;
+  }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

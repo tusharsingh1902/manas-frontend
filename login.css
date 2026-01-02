@@ -141,6 +141,7 @@ body {
 .mentor-login form {
   display: flex;
   flex-direction: column;
+  gap: 12px;
 }
 
 .or {
@@ -302,102 +303,125 @@ input:focus {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- OPTIMIZED MOBILE LOGIN (Paste at bottom of login.css) --- */
+/* --- TOGGLE STYLES (Paste anywhere in CSS) --- */
+.main-role-toggle {
+  display: flex;
+  background: #eef6f6;
+  padding: 5px;
+  border-radius: 30px;
+  margin-bottom: 25px;
+  width: 100%;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.toggle-pill {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px;
+  border-radius: 25px;
+  font-weight: 600;
+  color: #5c6b73;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle-pill.active {
+  background: #1f7a8c;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* --- MOBILE OPTIMIZATION --- */
 @media (max-width: 768px) {
-
-  /* 1. Reset Global Layout */
-  body, html {
-    font-size: 14px;
-    background-color: #ffffff; /* White background feels cleaner on mobile */
-    overflow-x: hidden;
-  }
-
-  /* 2. Simplified Navbar */
-  .navbar {
-    padding: 15px;
-    justify-content: center; /* Center the logo */
-  }
   
-  .nav-links {
-    display: none; /* Hide links to remove clutter */
-  }
+  /* 1. Reset Page */
+  body, html { width: 100%; overflow-x: hidden; font-size: 14px; }
+  
+  .navbar { padding: 10px; justify-content: center; }
+  .nav-links { display: none; } /* Hide navbar links */
 
-  /* 3. Login Section Container */
   .login-section {
     padding: 10px;
-    align-items: flex-start; /* Align to top */
-    min-height: auto;
+    align-items: flex-start;
   }
 
-  /* 4. The Card (Full Width & Clean) */
+  /* 2. Stack the Card */
   .login-card {
     flex-direction: column;
-    box-shadow: none; /* Remove shadow for "flat" app feel */
     width: 100%;
     margin: 0;
-    border-radius: 0;
+    box-shadow: none; /* Flat look for mobile */
   }
 
-  /* 5. HIDE THE LEFT PANEL COMPLETELY */
+  /* 3. COMPACT BANNER (Left Side) */
   .login-left {
+    padding: 15px;
+    flex-direction: row; /* Make Image and Quote side-by-side */
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    min-height: auto;
+    background: #e0f0f2;
+    text-align: left;
+  }
+
+  /* Shrink the image significantly */
+  .illustration-wrapper img {
+    width: 80px; 
+    margin: 0;
+  }
+  
+  /* Hide the large text paragraphs on mobile */
+  .left-text h2, .left-text p {
     display: none; 
   }
 
-  /* 6. Form Area (The Focus) */
+  /* Show ONLY the Quote (Formatted nicely) */
+  .quote {
+    font-size: 11px;
+    padding: 8px;
+    margin: 0;
+    background: white;
+    flex: 1; /* Take remaining space */
+  }
+
+  /* 4. FORM AREA */
   .login-right {
-    padding: 10px 15px;
-    width: 100%;
-    box-sizing: border-box;
+    padding: 20px 15px;
   }
 
-  .login-right h1 {
-    font-size: 1.5rem;
-    margin-bottom: 5px;
-  }
+  .login-right h1 { font-size: 1.4rem; }
+  .subtitle { margin-bottom: 20px; }
+  
+  /* Hide extra text inside student section to save space */
+  .mobile-hide-text { display: none; }
 
-  .subtitle {
-    font-size: 0.9rem;
-    margin-bottom: 25px;
-  }
-
-  /* 7. Toggle Buttons (Pills) */
-  .tab-buttons, .toggle-container {
-    width: 100%;
-    max-width: none; /* Stretch full width */
-    background-color: #f0f7f7;
-    padding: 4px;
-    gap: 0;
-  }
-
-  .tab, .toggle-btn {
-    padding: 12px;
-    font-size: 14px;
-    border-radius: 6px;
-  }
-
-  /* 8. Inputs & Buttons (Touch Friendly) */
+  /* 5. INPUT FIXES (Standard Size) */
   input {
-    height: 45px; /* Taller for fingers */
-    font-size: 16px; /* Prevent zoom */
-    margin-bottom: 15px;
+    height: 42px;         /* Standard touch height */
+    padding: 0 12px;      /* Comfortable padding */
+    font-size: 15px;
+    margin-bottom: 12px;
+    box-sizing: border-box; /* Ensure padding doesn't increase width */
   }
 
   .btn-primary {
-    height: 48px;
-    font-size: 16px;
-    margin-top: 10px;
+    height: 45px;
+    font-size: 15px;
+    margin-top: 5px;
   }
 
-  /* 9. Spacing Between Sections */
-  .option {
-    margin-bottom: 40px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 20px;
+  /* 6. Inner Toggles (Login/Register) */
+  .tab-buttons, .toggle-container {
+    width: 100%;
+    margin-bottom: 15px;
   }
-
-  /* Remove border from last option */
-  .option:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
+  
+  .tab, .toggle-btn {
+    padding: 8px;
+    font-size: 13px;
   }
 }

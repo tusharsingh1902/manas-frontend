@@ -9,30 +9,47 @@ body {
 
 
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 60px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 15px 20px;
+    position: relative;
+  }
 
+  /* Mobile Menu */
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    border-top: 1px solid #f0f7f7;
+  }
+
+  .nav-links.active {
+    display: flex;
+    animation: slideDown 0.3s ease-out;
+  }
+
+  .nav-links a {
+    margin: 10px 0;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
 .logo {
   font-size: 1.5rem;
   font-weight: 700;
   color: #1f7a8c;
   cursor: pointer;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: #2f4858;
-  margin-left: 20px;
-  font-weight: 500;
-}
-
-.nav-links a:hover {
-  color: #1f7a8c;
 }
 
 .tips-page {

@@ -104,7 +104,7 @@ async function loadChat() {
         timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hour12: true
       });
 
-      div.innerHTML = `<p>${m.text}</p><span>${timeIST}</span>`;
+      div.innerHTML = `<p>${m.text}  <sub>${timeIST}</sub></p>`;
       msgBox.appendChild(div);
     });
 
@@ -160,7 +160,7 @@ function handleEnter(e) {
 let chatInterval;
 
 function startPolling() {
-  loadChat(); // ✅ FIX: Use correct function name
+  loadChat(); // 
   if (!chatInterval) {
     chatInterval = setInterval(loadChat, 3000); 
   }

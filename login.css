@@ -276,16 +276,13 @@ input {
   transition: all 0.3s ease;
 }
 
-/* --- MOBILE OPTIMIZATION --- */
+/* --- MOBILE OPTIMIZATION (UPDATED) --- */
 @media (max-width: 768px) {
-  body {
-    font-size: 14px; 
-  }
-  /* 1. Navbar Fixes */
-  .navbar {
-    padding: 15px 20px;
-  }
 
+  /* 1. Navbar: Keep it neat */
+  .navbar {
+    padding: 10px 20px;
+  }
   .nav-links {
     display: none;
     position: absolute;
@@ -299,104 +296,101 @@ input {
     box-shadow: 0 10px 15px rgba(0,0,0,0.1);
     z-index: 1000;
   }
-
   .nav-links.active { display: flex; }
-  .nav-links a { margin: 10px 0; width: 100%; text-align: center; }
-
-  /* Hamburger Animation */
   .hamburger { display: flex; }
-  .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-  .hamburger.active span:nth-child(2) { opacity: 0; }
-  .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-  /* 2. LAYOUT CHANGE: Stack Content Vertically */
+  /* 2. MAIN CARD: Vertical Stack */
   .login-card {
-    flex-direction: column;
+    flex-direction: column !important;
     width: 100%;
-    overflow: hidden; 
+    border-radius: 0; /* Full width looks better on mobile without corners */
+    box-shadow: none; /* Flatter look for mobile */
   }
 
-  /* 3. RESIZE LEFT SIDE (Illustration + Quote) */
+  /* 3. LEFT SIDE (The Illustration Header) */
   .login-left {
-    display: flex;
-    flex-direction: column; /* Ensure vertical stacking */
-    align-items: center;   
-    justify-content: center;
-    padding: 20px 15px;     
-    background-color: #e6f3f4; 
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    
+    /* REDUCED PADDING: This brings the top and bottom in tighter */
+    padding: 20px 15px 15px 15px !important; 
+    
+    width: 100% !important;
+    box-sizing: border-box;
+    background-color: #e6f3f4;
   }
 
-  /* Shrink Image */
+  /* 4. THE IMAGE: Make it small and remove bottom gap */
   .illustration-wrapper img {
-    max-width: 120px; 
-    width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-    display: block; 
+    max-width: 120px !important; /* Force small size */
+    width: auto;
+    margin-bottom: 5px !important; 
   }
 
-  /* Shrink Header Text */
+  /* 5. THE TITLE: "Find Comfort..." */
   .left-text h2 {
-    font-size: 1.1rem; 
-    margin-bottom: 5px;
-    text-align: center;
+    font-size: 1.1rem !important; /* Smaller font */
+    color: #16697a;
+    
+    /* REMOVE GAP: No space above or below the title */
+    margin: 0 !important; 
+    padding: 0 !important;
   }
-  
-  /* HIDE THE DESCRIPTION TEXT */
+
+  /* 6. HIDE DESCRIPTION: This specifically targets the paragraph */
   .left-text p {
-    display: none !important; 
+    display: none !important; /* Force hide */
   }
 
-  /* Keep Quote Visible but Small */
+  /* 7. THE QUOTE: Small and tight */
   .quote {
-    display: block !important;
-    font-size: 0.75rem; /* Reduce font size */
-    padding: 8px;
-    margin-top: 5px;
-    text-align: center;
+    font-size: 0.75rem !important;
+    margin-top: 8px !important; /* Small gap between Title and Quote */
+    padding: 5px 10px;
+    background: rgba(255,255,255,0.5); /* Lighter background for mobile */
   }
 
-  /* 4. RESIZE RIGHT SIDE (Forms) */
+  /* 8. RIGHT SIDE (Forms) */
   .login-right {
-    padding: 25px 20px;
+    padding: 20px 20px 40px 20px !important; /* Add bottom padding for scrolling */
+    width: 100% !important;
+    box-sizing: border-box;
   }
   
   .login-right h1 {
     font-size: 1.4rem;
     text-align: center;
+    margin-top: 0;
   }
 
   .subtitle {
     font-size: 0.85rem;
     text-align: center;
-    display: block;
   }
 
-  /* 5. FIX TOGGLE BUTTONS */
+  /* 9. TOGGLES & INPUTS */
   .main-role-toggle {
-    margin-bottom: 20px;
-    padding: 4px; /* Slightly tighter padding */
-  }
-
-  .toggle-pill {
-    padding: 8px; /* Smaller padding inside buttons */
-    font-size: 0.9rem;
-  }
-
-  /* Compact Input Fields */
-  input {
-    padding: 10px;
-    font-size: 0.9rem;
+    margin-bottom: 15px;
+    padding: 4px;
+    display: flex; /* Ensure flex is active to keep pills side-by-side */
   }
   
-  /* Compact Buttons */
-  .btn-primary {
-    padding: 10px;
-    font-size: 0.95rem;
+  .toggle-pill {
+    padding: 8px;
+    font-size: 0.85rem;
   }
 
-  .login-section {
-    padding: 0;
-    align-items: flex-start;
+  input {
+    padding: 10px;
+    font-size: 16px; /* 16px prevents iOS from zooming in on inputs */
+  }
+  
+  .btn-primary {
+    padding: 12px;
+  }
+  .mobile-hide-text {
+    display: none !important;
   }
 }

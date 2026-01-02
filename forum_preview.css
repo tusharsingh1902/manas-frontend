@@ -135,10 +135,26 @@ body {
   font-size: 0.8rem;
   color: #5c6b73;
 }
+/* --- HAMBURGER MENU & MOBILE OPTIMIZATION --- */
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #1f7a8c;
+  border-radius: 2px;
+}
 
 /* --- UNIVERSAL MOBILE FIXES (Paste at bottom of CSS files) --- */
 @media (max-width: 768px) {
-
+  body, html { width: 100%; overflow-x: hidden; font-size: 14px; }
+  
   /* 1. Fix the Navbar (Stack links vertically) */
   .navbar {
     flex-direction: column;   /* Stack Logo on top of Links */

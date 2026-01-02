@@ -7,7 +7,7 @@ body {
   color: #2f4858;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden; /* Prevent body scroll, handle inside chat-container */
 }
 
@@ -234,6 +234,12 @@ input:focus { border-color: #1f7a8c; }
     padding-bottom: calc(20px + env(safe-area-inset-bottom)); 
   }
 
+  form {
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    background-color:
+    position: sticky; 
+    bottom: 0;
+  }
   /* 3. Input & Button Mobile Sizing */
   input {
     height: 40px;

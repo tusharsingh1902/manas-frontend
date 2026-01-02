@@ -212,7 +212,48 @@ body {
 
 /* --- MOBILE INBOX FIX (Paste at bottom of student_inbox.css) --- */
 @media (max-width: 768px) {
+  /* --- GLOBAL FONT REDUCTION (Mobile Only) --- */
+  
+  /* 1. Base Text Size */
+  body, html {
+    font-size: 13px !important; /* Sets base size smaller (Desktop is usually 16px) */
+  }
 
+  /* 2. Section Titles ("Your Mentors") */
+  .chat-list-panel h2 {
+    font-size: 16px !important; 
+    margin-bottom: 12px !important;
+  }
+
+  /* 3. Navbar Text */
+  .logo {
+    font-size: 18px !important;
+  }
+  .logout-btn {
+    font-size: 11px !important;
+    padding: 5px 10px !important;
+  }
+
+  /* 4. Chat List Items (The most important part) */
+  .chat-item {
+    padding: 8px 10px !important; /* Tighter padding */
+  }
+
+  .chat-item h3 {
+    font-size: 14px !important; /* Name */
+    margin-bottom: 2px !important;
+  }
+
+  .chat-item .last-msg {
+    font-size: 12px !important; /* Message Preview */
+    line-height: 1.3 !important;
+  }
+
+  /* 5. Unread Badge */
+  .unread-badge {
+    font-size: 10px !important;
+    padding: 1px 5px !important;
+  }
   /* 1. Reset Container */
   .inbox-container {
     flex-direction: column;

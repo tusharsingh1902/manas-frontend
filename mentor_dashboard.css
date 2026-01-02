@@ -300,8 +300,7 @@ textarea {
 
   /* Fix Inbox Badge inside the pill */
   .inbox-badge {
-    position: static; /* Flow with text */
-    display: inline-flex !important;
+    position: static;
     vertical-align: middle;
     margin-left: 5px;
     width: auto;

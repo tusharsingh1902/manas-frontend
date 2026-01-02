@@ -218,15 +218,20 @@ input:focus { border-color: #1f7a8c; }
   .nav-links.active { display: flex; }
 
   /* 2. Full Screen Chat (Native App Feel) */
+  /* Inside @media (max-width: 768px) */
+  
   .chat-section {
-    width: 90%;
+    width: 100%;
     max-width: none;
     margin: 0;
     border-radius: 0;
     box-shadow: none;
     border: none;
-    height: 90%; /* Take remaining space */
+    height: 100%;
+    
+    /* CRITICAL FIX: Push content up away from the Home Bar */
     padding: 15px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom)); 
   }
 
   /* 3. Input & Button Mobile Sizing */

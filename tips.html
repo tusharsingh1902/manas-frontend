@@ -9,9 +9,22 @@
 <body>
 
   <header class="navbar">
-    <div class="logo" onclick="goHome()">Project Manas</div>
-    <nav class="nav-links">
+    <div class="logo">Project Manas</div>
+    
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav class="nav-links" id="navLinks">
       <a href="index.html">Home</a>
+      <a href="professionals_preview.html">Professionals</a>
+      <a href="stories.html">Stories</a>
+      <a href="forum_preview.html">Forum</a>
+      <a href="about.html">About</a>
+      <a href="login.html" class="btn-login">Login</a>
+      
     </nav>
   </header>
 
@@ -79,6 +92,10 @@
   </footer>
 
 <script>
+   /* --- MENU TOGGLE --- */
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+  }
 function goHome() {
   window.location.href = "index.html";
 }

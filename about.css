@@ -3,6 +3,22 @@
   padding: 80px 30px;
   text-align: center;
 }
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+  z-index: 1100;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #1f7a8c;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
 
 .about-hero h1 {
   color: #16697a;
@@ -153,10 +169,81 @@ section {
 }
 
 @media (max-width: 768px) {
-  .about-hero h1 {
-    font-size: 1.9rem;
+
+  /* Global Reset */
+  body, html { width: 100%; overflow-x: hidden; font-size: 14px; }
+
+  /* Navbar */
+  .navbar {
+    padding: 15px 20px;
+    justify-content: space-between;
+    position: relative;
   }
-  .offer-card {
+
+  /* Mobile Menu */
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    border-top: 1px solid #f0f7f7;
+  }
+
+  .nav-links.active {
+    display: flex;
+    animation: slideDown 0.3s ease-out;
+  }
+
+  .nav-links a {
+    margin: 10px 0;
+    font-size: 16px;
+    width: 100%;
     text-align: center;
+    padding: 10px;
   }
+
+  /* Show Hamburger */
+  .hamburger { display: flex; }
+
+  /* Hamburger Animation (X shape) */
+  .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+  /* Hero Section */
+  .about-hero {
+    padding: 50px 20px;
+  }
+  
+  .about-hero h1 { font-size: 1.8rem; }
+  
+  /* Offer Grid (Stack Cards) */
+  .offer-grid {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .offer-card {
+    max-width: none; /* Let it stretch */
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left; /* Easier to read on phone */
+  }
+
+  /* Sections */
+  .container {
+    padding: 0 10px;
+  }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

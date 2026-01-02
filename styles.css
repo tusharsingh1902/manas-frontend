@@ -7,7 +7,6 @@ body {
   color: #2f4858;
 }
 
-
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -21,6 +20,21 @@ body {
   font-size: 1.5rem;
   font-weight: 700;
   color: #1f7a8c;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #1f7a8c;
+  border-radius: 2px;
+  transition: all 0.3s ease;
 }
 
 .nav-links a {
@@ -300,45 +314,97 @@ body {
 /* --- UNIVERSAL MOBILE FIXES (Paste at bottom of CSS files) --- */
 @media (max-width: 768px) {
 
-  /* 1. Fix the Navbar (Stack links vertically) */
+  /* Global Reset */
+  body, html { width: 100%; overflow-x: hidden; font-size: 14px; }
+  
+  /* Navbar */
   .navbar {
-    flex-direction: column;   /* Stack Logo on top of Links */
-    height: auto;             /* Let it grow tall */
+    padding: 15px 20px;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .nav-links {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    border-top: 1px solid #f0f7f7;
+  }
+
+  .nav-links.active {
+    display: flex;
+    animation: slideDown 0.3s ease-out;
+  }
+
+  .nav-links a {
+    margin: 10px 0;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
     padding: 10px;
   }
+
+  /* Hero Section */
+  .hero {
+    flex-direction: column-reverse; /* Image on Top, Text Below (Optional, or keep column) */
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .hero-text { padding: 0; }
+  .hero-text h1 { font-size: 2rem; margin-bottom: 10px; }
+  .hero-text p { font-size: 1rem; margin-bottom: 20px; }
   
-  .nav-links {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;   /* Stack links vertically */
-    gap: 10px;
-    align-items: center;      /* Center them */
+  .hero-img img {
+    width: 250px; /* Smaller image */
+    margin-bottom: 20px;
   }
 
-  /* 2. Prevent Horizontal Scrolling (The #1 Clumsy Factor) */
-  body, html {
-    overflow-x: hidden;       /* Stop the page from wiggling left/right */
-    width: 100%;
-  }
-
-  /* 3. General Containers (Make them full width) */
-  .container, .main-content, .hero, .section {
-    width: 95% !important;    /* Use full screen width */
-    padding: 10px !important; /* Reduce padding */
-    margin: 0 auto;
-    flex-direction: column;   /* Stack content vertically */
-  }
-
-  /* 4. Fix Grids (For Mentors/Stories pages) */
-  .grid, .card-container {
+  /* Buttons */
+  .hero-buttons {
     display: flex;
     flex-direction: column;
-    grid-template-columns: 1fr; /* Force 1 column instead of 3 */
+    gap: 10px;
   }
   
-  /* 5. Fix Cards */
-  .card {
+  .btn-first, .btn-second {
     width: 100%;
-    margin-bottom: 15px;
+    margin: 0;
+    padding: 12px;
   }
+
+  /* Feature Grid (Stack Cards) */
+  .feature-grid {
+    grid-template-columns: 1fr; /* 1 Column */
+    padding: 0 20px;
+    gap: 15px;
+  }
+
+  .feature-card {
+    padding: 20px;
+    text-align: left; /* Easier to read on phone */
+  }
+
+  /* Stories & Chatbot */
+  .stories, .chatbot-preview, .tips, .cta {
+    padding: 40px 20px;
+  }
+
+  .story-cards { gap: 15px; }
+  .story { width: 100%; box-sizing: border-box; }
+  
+  .chat-demo { width: 100%; box-sizing: border-box; padding: 15px; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

@@ -9,8 +9,6 @@ body {
   display: flex;
   flex-direction: column;
 }
-
-/* --- NAVBAR --- */
 .navbar {
   display: flex;
   justify-content: space-between;

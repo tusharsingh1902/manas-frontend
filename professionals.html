@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Professionals | Project Manas</title>
-  <!-- Load auth utils -->
+  <title>Community Support | Project Manas</title>
   <script src="auth.js" defer></script>
 
   <script defer>
@@ -15,8 +14,8 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="professionals.css" />
   <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1f7a8c">
-<link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="theme-color" content="#1f7a8c">
+  <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 
 <body>
@@ -44,26 +43,21 @@
   <script>
     function toggleMenu() {
         document.getElementById('navLinks').classList.toggle('active');
-        document.querySelector('.hamburger').classList.toggle('active'); // Animates X
+        document.querySelector('.hamburger').classList.toggle('active'); 
     }
   </script>
 
 <section class="professionals-section">
   <h1>Find Support</h1>
-  <p class="subtitle">Choose the type of support that feels right for you.</p>
+  <p class="subtitle">Connect with supportive peers and mentors in our student community.</p>
 
-  <div class="tabs-container">
-    <button class="tab-btn active" onclick="switchTab('mentors')">Peer Mentors</button>
-    <button class="tab-btn" onclick="switchTab('experts')">Medical Professionals</button>
-  </div>
+  <h2 style="text-align:center; margin-top: 20px; color: #444;">Peer Mentors</h2>
 
   <div id="mentorList" class="mentor-list">
     <p style="text-align:center; width:100%;">Loading mentors...</p>
   </div>
 
-  <div id="expertList" class="mentor-list hidden"></div>
-
-  <div class="ai-section">
+  <div class="ai-section" style="margin-top: 40px;">
     <h2>Not ready to talk to a person?</h2>
     <p>Try Manas AI for a private, judgement-free conversation.</p>
     <button class="ai-btn" onclick="goToAI()">Talk to Manas AI</button>
@@ -100,23 +94,7 @@ const username = localStorage.getItem("username");
 
 if(!username) window.location.href = "login.html";
 
-function switchTab(tabName) {
-    const btns = document.querySelectorAll('.tab-btn');
-    
-    btns[0].classList.toggle('active', tabName === 'mentors');
-    btns[1].classList.toggle('active', tabName === 'experts');
-
-    const mentorDiv = document.getElementById('mentorList');
-    const expertDiv = document.getElementById('expertList');
-
-    if (tabName === 'mentors') {
-        mentorDiv.classList.remove('hidden');
-        expertDiv.classList.add('hidden');
-    } else {
-        mentorDiv.classList.add('hidden');
-        expertDiv.classList.remove('hidden');
-    }
-}
+// REMOVED: switchTab(), expertList, and loadExperts() functions to comply with policy.
 
 async function loadMentors() {
     try {
@@ -128,7 +106,7 @@ async function loadMentors() {
         list.innerHTML = "";
 
         if(allMentorsData.length === 0) {
-            list.innerHTML = "<p>No mentors registered yet.</p>";
+            list.innerHTML = "<p style='text-align:center; padding:20px;'>No mentors registered yet.</p>";
             return;
         }
 
@@ -152,38 +130,8 @@ async function loadMentors() {
         });
     } catch(err) {
         console.error(err);
+        document.getElementById("mentorList").innerHTML = "<p style='text-align:center; color:red;'>Error loading mentors.</p>";
     }
-}
-
-const experts = [
-    { name: "Dr. Anjali Desai", role: "Clinical Psychologist", exp: "10 Yrs", loc: "Mumbai", fees: "₹1500/hr" },
-    { name: "Dr. Rajesh Kumar", role: "Psychiatrist", exp: "15 Yrs", loc: "Delhi", fees: "₹2000/hr" },
-    { name: "Ms. Sneha Roy", role: "Therapist", exp: "5 Yrs", loc: "Bangalore", fees: "₹1000/hr" },
-    { name: "Dr. Vikram Sethi", role: "Trauma Specialist", exp: "12 Yrs", loc: "Pune", fees: "₹1800/hr" }
-];
-
-function loadExperts() {
-    const list = document.getElementById("expertList");
-    list.innerHTML = "";
-
-    experts.forEach(doc => {
-        const card = document.createElement("div");
-        card.className = "mentor-card expert-card";
-        card.innerHTML = `
-            <div class="mentor-info">
-                <h2 class="mentor-name">${doc.name}</h2>
-                <p class="expert-role">${doc.role}</p>
-                <p class="expert-meta">📍 ${doc.loc} • 💼 ${doc.exp}</p>
-                <p class="description">Specializes in anxiety, depression, and student mental health.</p>
-                <p class="meta"><strong>Fees:</strong> ${doc.fees}</p>
-            </div>
-            <div class="actions">
-                <button class="btn-book" onclick="alert('Appointment request sent to ${doc.name}!')">Book Appointment</button>
-                <button class="btn-call" onclick="alert('Calling ${doc.name}...')">Schedule Call</button>
-            </div>
-        `;
-        list.appendChild(card);
-    });
 }
 
 function showProfile(index) {
@@ -245,8 +193,8 @@ async function startPrivateChat(mentorEmail, mentorName) {
 function goToAI() { window.location.href = "chatbot.html"; }
 function logout() { localStorage.clear(); window.location.href = "login.html"; }
 
+// Initialize only mentors
 loadMentors();
-loadExperts();
 </script>
 <script src="auth.js"></script>
 </body>

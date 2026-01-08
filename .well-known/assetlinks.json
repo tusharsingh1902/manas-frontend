@@ -1,8 +1,16 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "app.vercel.manas_frontend_psi.twa",
-        "sha256_cert_fingerprints": ["93:07:CF:E0:47:09:90:96:3A:5F:A2:36:53:C5:5C:0F:18:09:B4:26:45:64:4D:F4:6F:35:FC:82:08:9B:47:86"]
-      }
-    }]
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.vercel.manas_frontend_psi.twa",
+      "sha256_cert_fingerprints": [
+        "93:07:CF:E0:47:09:90:96:3A:5F:A2:36:53:C5:5C:0F:18:09:B4:26:45:64:4D:F4:6F:35:FC:82:08:9B:47:86",
+        "33:E1:A5:21:64:02:4D:5B:88:C0:A7:03:A3:C8:E8:9F:5C:99:A5:DB:4A:F9:1C:A0:22:3B:5E:1D:15:FD:44:96"
+      ]
+    }
+  }
+]

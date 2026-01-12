@@ -9,17 +9,15 @@
 <meta name="theme-color" content="#1f7a8c">
 <link rel="apple-touch-icon" href="icon-192.png">
   
-const storedData = localStorage.getItem("token");
+const role = localStorage.getItem("role");
+const token = localStorage.getItem("token");
 
-if (storedData) {
-    // Convert the string back into a real JavaScript Object
-    const userObj = JSON.parse(storedData); 
-
-    // Now you can check the username
-    if (userObj.username === "mentor") {
-        window.location.href = "/mentor_dashboard.html";
-    } else {
-        window.location.href = "/dashboard.html";
+// 2. Only redirect if they are actually logged in
+if (token && role) {
+    if (role === "mentor") {
+        window.location.href = "mentor_dashboard.html";
+    } else if (role === "student") {
+        window.location.href = "dashboard.html"; 
     }
 }
 </head>

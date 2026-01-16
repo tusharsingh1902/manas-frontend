@@ -60,9 +60,9 @@ if (partnerName) {
     // 1. Choose the correct endpoint based on your existing Backend routes
     let endpoint = "";
     if (role === "student") {
-        endpoint = `${BACKEND_URL}/chat/mark_read/student/${chatId}`;
+        endpoint = `${BACKEND_URL}/chat/mark_read/student/${encodeURIComponent(chatId)}`;
     } else if (role === "mentor") {
-        endpoint = `${BACKEND_URL}/chat/mark_read/mentor/${chatId}`;
+        endpoint = `${BACKEND_URL}/chat/mark_read/mentor/${encodeURIComponent(chatId)}`;
     } else {
         console.warn("Unknown role, cannot mark messages as read.");
         return;
@@ -103,7 +103,7 @@ async function loadChat() {
   const wasAtBottom = msgBox.scrollHeight - msgBox.scrollTop <= msgBox.clientHeight + 100;
 
   try {
-    const res = await fetch(`${BACKEND_URL}/chat/${chatId}`);
+    const res = await fetch(`${BACKEND_URL}/chat/${encodeURIComponent(chatId)}`);
     const data = await res.json();
 
     if (!data.messages || data.messages.length === 0) {

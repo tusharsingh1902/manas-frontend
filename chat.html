@@ -176,7 +176,7 @@ async function sendMessage() {
     formData.append("text", originalText);
 
     await fetch(`${BACKEND_URL}/chat/send`, { method: "POST", body: formData });
-    
+    tempDiv.remove();
     loadChat(); // Refresh to get official server timestamp
   } catch(err) {
     alert("Failed to send message");

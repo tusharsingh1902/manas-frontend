@@ -240,8 +240,8 @@ a { text-decoration: none; color: inherit; }
 
   /* 6. Slimmer Bubbles (Mobile) */
   .msg {
-    font-size: 15px !important;
-    padding: 8px 12px 6px 12px !important;
+    font-size: 14px !important;
+    padding: 6px 10px 4px 10px !important;
     max-width: 85% !important;
     margin-bottom: 8px !important;
     box-shadow: 0 1px 1px rgba(0,0,0,0.05);
@@ -250,7 +250,7 @@ a { text-decoration: none; color: inherit; }
   /* Timestamp Fix */
   .msg .check-time {
     font-size: 10px !important;
-    margin-top: 5px !important;
+    margin-top: 6px !important;
   }
 
   /* 7. Input Bar (Fixed to Bottom) */

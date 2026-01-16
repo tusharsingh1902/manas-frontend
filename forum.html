@@ -127,7 +127,7 @@ async function loadPosts() {
 }
 
 async function loadReplies(post_id) {
-  const res = await fetch(`/forum/replies/${post_id}`);
+  const res = await fetch(`${BACKEND_URL}/forum/replies/${post_id}`);
   const data = await res.json();
   const container = document.getElementById(`replies-${post_id}`);
   container.innerHTML = "";
@@ -183,7 +183,7 @@ async function sendReply(post_id) {
 
 async function fetchAndShowProfile(email) {
   try {
-    const res = await fetch(`/mentor/profile/${email}`);
+    const res = await fetch(`${BACKEND_URL}/mentor/profile/${email}`);
     if(!res.ok) return alert("Could not load profile.");
     
     const m = await res.json();

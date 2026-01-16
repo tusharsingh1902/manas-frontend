@@ -6,8 +6,8 @@
   <title>Mentor Dashboard | Project Manas</title>
   <link rel="stylesheet" href="mentor_dashboard.css" />
   <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1f7a8c">
-<link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="theme-color" content="#1f7a8c">
+  <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
   <header class="navbar">
@@ -37,8 +37,12 @@
       </p>
 
       <div class="quick-links">
+        
         <div class="card" onclick="scrollToForum()">
-          <h3>Community Forum</h3>
+          <h3>
+            Community Forum
+            <span id="forum-badge" style="display:none; background:#ff4444; color:white; font-size:0.7em; padding:2px 8px; border-radius:10px; margin-left:8px; vertical-align:middle;">New</span>
+          </h3>
           <p>View and respond to student posts</p>
         </div>
 
@@ -70,6 +74,11 @@
       </div>
 
       <hr />
+
+      <div class="filter-bar" style="margin-bottom: 20px; display: flex; gap: 10px;">
+        <button onclick="filterPosts('all')" id="btn-all" class="filter-btn active" style="padding: 8px 16px; border-radius: 20px; border: 1px solid #ccc; background: #1f7a8c; color: white;">All Posts</button>
+        <button onclick="filterPosts('mine')" id="btn-mine" class="filter-btn" style="padding: 8px 16px; border-radius: 20px; border: 1px solid #ccc; background: white; color: #333;">My Posts & Replies</button>
+      </div>
 
       <div id="forum-posts" class="posts-container">
         <p>Loading posts...</p>
@@ -104,7 +113,15 @@
         document.getElementById("welcome-text").textContent = `Welcome back, ${mentorEmail.split('@')[0]}!`;
     }
 
+    // 3. UPDATED: Clear notifications when scrolling
     function scrollToForum() {
+      // Clear badge logic
+      fetch(`${BACKEND_URL}/notifications/clear/${mentorEmail}`, { method: "POST" }).catch(console.error);
+      
+      // Hide badge visually immediately
+      const badge = document.getElementById("forum-badge");
+      if(badge) badge.style.display = "none";
+
       document.getElementById("forum-section").scrollIntoView({ behavior: "smooth" });
     }
 
@@ -121,73 +138,73 @@
       window.location.href = "login.html";
     }
 
-    async function loadInboxBadge() {
-      const navBadge = document.getElementById("inbox-count");
-      const msgBadge = document.getElementById("msgBadge");
+    /* --- NOTIFICATION LOGIC --- */
+    async function checkNotifications() {
+      if (!mentorEmail) return;
 
+      // 1. Check Inbox (Existing Logic)
       try {
         const res = await fetch(`${BACKEND_URL}/chat/mentor/${mentorEmail}`);
-        
-        if(!res.ok) return; 
-        const data = await res.json();
+        if(res.ok) {
+            const data = await res.json();
+            let unreadTotal = 0;
+            if (data.chats) {
+              data.chats.forEach(c => unreadTotal += c.unread_for_mentor || 0);
+            }
+            
+            const navBadge = document.getElementById("inbox-count");
+            const msgBadge = document.getElementById("msgBadge");
 
-        let unreadTotal = 0;
-        if (data.chats) {
-          data.chats.forEach(c => {
-            unreadTotal += c.unread_for_mentor || 0;
-          });
+            if (navBadge) {
+                navBadge.textContent = unreadTotal > 9 ? "9+" : unreadTotal;
+                navBadge.style.display = unreadTotal > 0 ? "inline-flex" : "none";
+            }
+            if (msgBadge) {
+                msgBadge.textContent = unreadTotal;
+                msgBadge.style.display = unreadTotal > 0 ? "inline-block" : "none";
+            }
         }
+      } catch (err) { console.log("Inbox check failed"); }
 
-        if (navBadge) {
-            navBadge.textContent = unreadTotal > 9 ? "9+" : unreadTotal;
-            navBadge.style.display = unreadTotal > 0 ? "inline-flex" : "none";
-        }
-        if (msgBadge) {
-            msgBadge.textContent = unreadTotal;
-            msgBadge.style.display = unreadTotal > 0 ? "inline-block" : "none";
-        }
+      // 2. Check Forum Replies (New Logic)
+      try {
+          const res = await fetch(`${BACKEND_URL}/notifications/check/${mentorEmail}`);
+          const data = await res.json();
+          const badge = document.getElementById("forum-badge");
 
-      } catch (err) {
-        console.log("Inbox check failed - server might be offline");
-      }
+          if (data.count > 0) {
+              badge.innerText = data.count + " New";
+              badge.style.display = "inline-block";
+          } else {
+              badge.style.display = "none";
+          }
+      } catch (err) { console.log("Forum check failed"); }
     }
 
-    document.getElementById("mentor-post-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const messageInput = document.getElementById("post-message");
-      const message = messageInput.value.trim();
-
-      if (!message) return;
-
-      const formData = new FormData();
-      formData.append("username", mentorEmail);
-      formData.append("message", message);
-
-      try {
-        const res = await fetch(`${BACKEND_URL}/forum/post`, {
-          method: "POST",
-          body: formData
-        });
-
-        if (res.ok) {
-          messageInput.value = "";
-          fetchPosts();
-        } else {
-          alert("Failed to post message.");
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    });
+    /* --- FORUM LOGIC (Refactored for Filtering) --- */
+    let allPosts = []; // Global storage
 
     async function fetchPosts() {
       try {
         const res = await fetch(`${BACKEND_URL}/forum/all`);
         const data = await res.json();
+        allPosts = data.posts; // Store
+        renderPosts(allPosts); // Render
+      } catch(err) {
+        document.getElementById("forum-posts").innerHTML = "<p>Unable to load posts.</p>";
+      }
+    }
+
+    function renderPosts(postsToRender) {
         const postsDiv = document.getElementById("forum-posts");
         postsDiv.innerHTML = "";
 
-        data.posts.forEach(post => {
+        if(postsToRender.length === 0) {
+            postsDiv.innerHTML = "<p>No posts found.</p>";
+            return;
+        }
+
+        postsToRender.forEach(post => {
             const postCard = document.createElement("div");
             postCard.className = "post-card";
             postCard.innerHTML = `
@@ -204,10 +221,35 @@
             <div id="replies-${post._id}" class="replies"></div>
             `;
             postsDiv.appendChild(postCard);
+            
+            // Auto-load replies (Standard behavior for this page)
             fetchReplies(post._id);
         });
-      } catch(err) {
-          document.getElementById("forum-posts").innerHTML = "<p>Unable to load posts.</p>";
+    }
+
+    // New Filter Logic
+    function filterPosts(type) {
+      const btnAll = document.getElementById("btn-all");
+      const btnMine = document.getElementById("btn-mine");
+
+      if (type === 'mine') {
+        // Toggle Styles
+        btnAll.style.background = "white"; btnAll.style.color = "#333";
+        btnMine.style.background = "#1f7a8c"; btnMine.style.color = "white";
+
+        // Filter: Show posts I created OR posts where I replied
+        // (Note: To strictly find posts I replied to requires complex logic, 
+        // so for now we filter posts *I created*)
+        const myPosts = allPosts.filter(p => p.username === mentorEmail);
+        renderPosts(myPosts);
+        
+      } else {
+        // Toggle Styles
+        btnAll.style.background = "#1f7a8c"; btnAll.style.color = "white";
+        btnMine.style.background = "white"; btnMine.style.color = "#333";
+
+        // Show All
+        renderPosts(allPosts);
       }
     }
 
@@ -234,6 +276,8 @@
       const res = await fetch(`${BACKEND_URL}/forum/replies/${postId}`);
       const data = await res.json();
       const repliesDiv = document.getElementById(`replies-${postId}`);
+      if(!repliesDiv) return;
+      
       repliesDiv.innerHTML = "";
 
       data.replies.forEach(r => {
@@ -251,30 +295,61 @@
       });
     }
 
+    document.getElementById("mentor-post-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const messageInput = document.getElementById("post-message");
+      const message = messageInput.value.trim();
+
+      if (!message) return;
+
+      const formData = new FormData();
+      formData.append("username", mentorEmail);
+      formData.append("message", message);
+
+      try {
+        const res = await fetch(`${BACKEND_URL}/forum/post`, {
+          method: "POST",
+          body: formData
+        });
+
+        if (res.ok) {
+          messageInput.value = "";
+          fetchPosts(); // Refresh list
+        } else {
+          alert("Failed to post message.");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    });
+
+    // Initial Load
     fetchPosts();
-let mentorBadgeInterval;
 
-function startMentorPolling() {
-  loadInboxBadge(); 
-  if (!mentorBadgeInterval) {
-    mentorBadgeInterval = setInterval(loadInboxBadge, 5000); 
-  }
-}
+    /* --- POLLING --- */
+    let mentorBadgeInterval;
 
-function stopMentorPolling() {
-  clearInterval(mentorBadgeInterval);
-  mentorBadgeInterval = null;
-}
+    function startMentorPolling() {
+      checkNotifications(); // Run immediately
+      if (!mentorBadgeInterval) {
+        mentorBadgeInterval = setInterval(checkNotifications, 4000); // Poll every 4s
+      }
+    }
 
-document.addEventListener("visibilitychange", () => {
-  if (document.hidden) {
-    stopMentorPolling();
-  } else {
+    function stopMentorPolling() {
+      clearInterval(mentorBadgeInterval);
+      mentorBadgeInterval = null;
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        stopMentorPolling();
+      } else {
+        startMentorPolling();
+      }
+    });
+
     startMentorPolling();
-  }
-});
-
-startMentorPolling();
-</script>
+  </script>
 </body>
 </html>

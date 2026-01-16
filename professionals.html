@@ -95,8 +95,6 @@ const username = localStorage.getItem("username");
 
 if(!username) window.location.href = "login.html";
 
-// REMOVED: switchTab(), expertList, and loadExperts() functions to comply with policy.
-
 async function loadMentors() {
     try {
         const res = await fetch(`${BACKEND_URL}/mentors/all`);
@@ -135,26 +133,45 @@ async function loadMentors() {
     }
 }
 
-function showProfile(index) {
-    const m = allMentorsData[index];
+async function showProfile(index) {
+    const basicInfo = allMentorsData[index]; // Data we already have
     const modal = document.getElementById("profileModal");
 
-    document.getElementById("mName").innerText = m.name;
-    document.getElementById("mAvatar").innerText = m.name.charAt(0).toUpperCase();
-    document.getElementById("mRole").innerText = m.occupation;
-    document.getElementById("mBio").innerText = m.bio || "No bio available.";
+    // 1. Show what we know immediately (so it feels fast)
+    document.getElementById("mName").innerText = basicInfo.name;
+    document.getElementById("mAvatar").innerText = basicInfo.name.charAt(0).toUpperCase();
+    document.getElementById("mRole").innerText = basicInfo.occupation;
+    document.getElementById("mBio").innerText = basicInfo.bio || "No bio available.";
     
-    document.getElementById("mCity").innerText = m.city || "Not specified";
-    document.getElementById("mCollege").innerText = m.college || "Not specified";
-    document.getElementById("mAge").innerText = m.age || "Hidden";
-    document.getElementById("mPosts").innerText = m.posts_count || "Not posted yet";
-    
-    const btn = document.getElementById("mChatBtn");
-    btn.onclick = function() {
-        startPrivateChat(m.email, m.name);
-    };
+    // Set placeholders while loading
+    document.getElementById("mPosts").innerText = "Loading...";
+    document.getElementById("mCity").innerText = "Loading...";
+    document.getElementById("mCollege").innerText = "Loading...";
 
     modal.classList.add("active");
+
+    // 2. Fetch Detailed Profile (This gets the Post Count!)
+    try {
+        const res = await fetch(`${BACKEND_URL}/mentor/profile/${basicInfo.email}`);
+        if(res.ok) {
+            const fullProfile = await res.json();
+            
+            // 3. Update UI with fresh data
+            document.getElementById("mPosts").innerText = fullProfile.posts_count + " posts";
+            document.getElementById("mCity").innerText = fullProfile.city || "Not specified";
+            document.getElementById("mCollege").innerText = fullProfile.college || "Not specified";
+            document.getElementById("mAge").innerText = fullProfile.age || "Hidden";
+            document.getElementById("mBio").innerText = fullProfile.bio || "No bio available."; // Update bio in case it changed
+        }
+    } catch (err) {
+        document.getElementById("mPosts").innerText = "Error";
+    }
+    
+    // Set up Chat Button
+    const btn = document.getElementById("mChatBtn");
+    btn.onclick = function() {
+        startPrivateChat(basicInfo.email, basicInfo.name);
+    };
 }
 
 function closeModal() {

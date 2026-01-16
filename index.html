@@ -9,18 +9,21 @@
 <meta name="theme-color" content="#1f7a8c">
 <link rel="apple-touch-icon" href="icon-192.png">
 <script>
-const role = localStorage.getItem("role");
-const token = localStorage.getItem("token");
+    const userType = localStorage.getItem("userType"); 
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-// 2. Only redirect if they are actually logged in
-if (token && role) {
-    if (role === "mentor") {
-        window.location.href = "mentor_dashboard.html";
-    } else if (role === "student") {
-        window.location.href = "dashboard.html"; 
+    if (isLoggedIn === "true" && userType) {
+        
+        console.log("User is logged in as:", userType);
+
+        if (userType === "student") {
+            window.location.href = "student_dashboard.html"; 
+        } 
+        else if (userType === "mentor") {
+            window.location.href = "mentor_dashboard.html"; 
+        }
     }
-}
-  </script>
+</script>
 </head>
 <body>
   <header class="navbar">

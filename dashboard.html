@@ -6,15 +6,20 @@
   <title>Dashboard | Project Manas</title>
   <link rel="stylesheet" href="dashboard.css" />
   <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1f7a8c">
-<link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="theme-color" content="#1f7a8c">
+  <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 
 <body>
     <header class="navbar">
     <div class="logo">Project Manas</div>
     <nav class="nav-links">
-        <a href="forum.html">Forum</a>
+        
+        <a href="#" onclick="goTo('forum.html')">
+            Forum
+            <span id="nav-forum-badge" style="display:none; background:#ff4444; color:white; border-radius:50%; padding:2px 6px; font-size:10px; position: relative; top: -2px;">0</span>
+        </a>
+
         <a href="stories_after.html">Stories</a>
         <a href="chatbot.html">Chatbot</a>
         <a href="student_inbox.html" class="nav-inbox">
@@ -33,8 +38,12 @@
     </div>
 
     <div class="dashboard-grid">
+      
       <div class="card" onclick="goTo('forum.html')">
-        <h3> Peer Support Forum</h3>
+        <h3> 
+            Peer Support Forum
+            <span id="card-forum-badge" style="display:none; background:#ff4444; color:white; font-size:0.7em; padding:2px 8px; border-radius:10px; margin-left:8px; vertical-align:middle;">New</span>
+        </h3>
         <p>Connect with students who understand what you're going through.</p>
       </div>
 
@@ -71,7 +80,15 @@
     heading.textContent = "Welcome Back";
   }
 
+  // 3. UPDATED: Modified goTo() to clear notifications
   function goTo(page) {
+    if (page === 'forum.html') {
+        const user = localStorage.getItem("username");
+        if(user) {
+            // Tell server: "I am reading the forum now, reset my count to 0"
+            fetch(`${BACKEND_URL}/notifications/clear/${user}`, { method: "POST" }).catch(console.error);
+        }
+    }
     window.location.href = page;
   }
 
@@ -80,6 +97,7 @@
     window.location.href = "login.html";
   }
 
+  /* --- INBOX BADGE LOGIC --- */
   async function loadStudentInboxBadge() {
     const username = localStorage.getItem("username");
     if (!username) return;
@@ -89,9 +107,7 @@
 
     try {
       const res = await fetch(`${BACKEND_URL}/chat/student/${username}`);
-      
       if (!res.ok) return;
-
       const data = await res.json();
 
       let unread = 0;
@@ -111,30 +127,70 @@
     }
   }
 
-let badgeInterval;
+  /* --- 4. NEW: FORUM BADGE LOGIC --- */
+  async function checkForumNotifications() {
+      const username = localStorage.getItem("username");
+      if (!username) return;
 
-function startBadgePolling() {
-  loadStudentInboxBadge(); 
-  if (!badgeInterval) {
-    badgeInterval = setInterval(loadStudentInboxBadge, 4000); // Check every 4s
+      try {
+          const res = await fetch(`${BACKEND_URL}/notifications/check/${username}`);
+          const data = await res.json();
+          
+          // We update TWO badges: The Navbar one and the Card one
+          const navBadge = document.getElementById("nav-forum-badge");
+          const cardBadge = document.getElementById("card-forum-badge");
+
+          if (data.count > 0) {
+              // Update Navbar Badge
+              if(navBadge) {
+                  navBadge.innerText = data.count;
+                  navBadge.style.display = "inline-block";
+              }
+              // Update Card Badge
+              if(cardBadge) {
+                  cardBadge.innerText = data.count + " new";
+                  cardBadge.style.display = "inline-block";
+              }
+          } else {
+              if(navBadge) navBadge.style.display = "none";
+              if(cardBadge) cardBadge.style.display = "none";
+          }
+      } catch (err) {
+          console.error("Error checking forum notifs:", err);
+      }
   }
-}
 
-function stopBadgePolling() {
-  clearInterval(badgeInterval);
-  badgeInterval = null;
-}
+  /* --- POLLING SYSTEM --- */
+  let appInterval;
 
-document.addEventListener("visibilitychange", () => {
-  if (document.hidden) {
-    stopBadgePolling(); 
-  } else {
-    startBadgePolling(); 
+  function startPolling() {
+    loadStudentInboxBadge();   // Check Messages
+    checkForumNotifications(); // Check Forum Replies
+
+    if (!appInterval) {
+      // Run both checks every 4 seconds
+      appInterval = setInterval(() => {
+        loadStudentInboxBadge();
+        checkForumNotifications();
+      }, 4000); 
+    }
   }
-});
 
-startBadgePolling();
-</script>
-<script src="auth.js"></script>
+  function stopPolling() {
+    clearInterval(appInterval);
+    appInterval = null;
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopPolling(); 
+    } else {
+      startPolling(); 
+    }
+  });
+
+  startPolling();
+  </script>
+  <script src="auth.js"></script>
 </body>
 </html>

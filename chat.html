@@ -53,6 +53,30 @@ if (!chatId || !myUsername) {
 if (partnerName) {
   document.getElementById("partnerName").textContent = partnerName;
 }
+  async function markMessagesRead() {
+    if (!chatId || !role) return;
+
+    // 1. Choose the correct endpoint based on your existing Backend routes
+    let endpoint = "";
+    if (role === "student") {
+        endpoint = `${BACKEND_URL}/chat/mark_read/student/${chatId}`;
+    } else if (role === "mentor") {
+        endpoint = `${BACKEND_URL}/chat/mark_read/mentor/${chatId}`;
+    } else {
+        console.warn("Unknown role, cannot mark messages as read.");
+        return;
+    }
+
+    // 2. Call the server to reset the counter 
+    try {
+        await fetch(endpoint, { method: "POST" });
+        console.log("Messages marked as read via:", endpoint);
+    } catch (err) {
+        console.error("Failed to mark messages as read:", err);
+    }
+}
+
+markMessagesRead();
 
 /* --- NAVIGATION LOGIC --- */
 function goBack() {

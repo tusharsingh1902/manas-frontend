@@ -8,7 +8,8 @@ body {
   color: #2f4858;
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Full viewport height */
+  height: 100vh; /* Fallback */
+  height: 100dvh; /* Mobile viewport fix */
 }
 
 /* --- 2. NAVBAR (Desktop) --- */
@@ -19,7 +20,8 @@ body {
   padding: 15px 60px;
   background-color: #ffffff;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  flex-shrink: 0; /* Prevents navbar from shrinking */
+  flex-shrink: 0;
+  z-index: 10; /* Ensure it stays on top */
 }
 
 .logo {
@@ -41,10 +43,9 @@ body {
   transition: color 0.3s ease;
 }
 
-.nav-links a:hover {
-  color: #1f7a8c;
-}
+.nav-links a:hover { color: #1f7a8c; }
 
+/* SHARED BUTTON STYLES */
 .logout-btn {
   background-color: #1f7a8c;
   color: white;
@@ -54,11 +55,9 @@ body {
   cursor: pointer;
   font-size: 0.9rem;
   transition: background-color 0.3s ease;
+  white-space: nowrap;
 }
-
-.logout-btn:hover {
-  background-color: #16697a;
-}
+.logout-btn:hover { background-color: #16697a; }
 
 .clear-btn {
   background-color: transparent;
@@ -69,12 +68,9 @@ body {
   cursor: pointer;
   font-size: 0.9rem;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
-
-.clear-btn:hover {
-  background-color: #ff6b6b;
-  color: white;
-}
+.clear-btn:hover { background-color: #ff6b6b; color: white; }
 
 /* --- 3. CHAT AREA --- */
 .chat-section {
@@ -88,7 +84,8 @@ body {
   box-shadow: 0 4px 20px rgba(0,0,0,0.06);
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Keeps scroll inside */
+  overflow: hidden;
+  position: relative;
 }
 
 .chat-container {
@@ -100,9 +97,10 @@ body {
   padding-right: 10px; 
   margin-bottom: 15px;
   scroll-behavior: smooth;
+  padding-bottom: 20px; /* Space above typing indicator */
 }
 
-/* Custom Scrollbar */
+/* Scrollbar Styling */
 .chat-container::-webkit-scrollbar { width: 6px; }
 .chat-container::-webkit-scrollbar-thumb { background-color: #dce5e8; border-radius: 10px; }
 .chat-container::-webkit-scrollbar-track { background: transparent; }
@@ -122,8 +120,9 @@ body {
   max-width: 75%;
   line-height: 1.5;
   box-shadow: 0 2px 5px rgba(31,122,140,0.2);
-  animation: fadeUp 0.3s ease-out; /* Smooth entry */
+  animation: fadeUp 0.3s ease-out;
   word-wrap: break-word;
+  font-size: 1rem;
 }
 
 .bot-msg {
@@ -134,20 +133,20 @@ body {
   border-radius: 18px 18px 18px 2px;
   max-width: 75%;
   line-height: 1.5;
-  animation: fadeUp 0.3s ease-out; /* Smooth entry */
+  animation: fadeUp 0.3s ease-out;
   word-wrap: break-word;
+  font-size: 1rem;
 }
 
-/* --- 5. TYPING INDICATOR (New) --- */
+/* --- 5. TYPING INDICATOR --- */
 .typing-indicator {
   align-self: flex-start;
   background-color: #f0f7f7;
   padding: 12px 18px;
   border-radius: 18px 18px 18px 2px;
-  display: none; /* Hidden by default */
+  display: none;
   margin-bottom: 10px;
   width: fit-content;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
 .typing-indicator span {
@@ -174,12 +173,13 @@ form {
   gap: 10px;
   padding-top: 15px;
   border-top: 1px solid #f0f0f0;
+  background: #fff;
 }
 
 input {
   flex: 1;
-  padding: 12px 15px;
-  border-radius: 25px;
+  padding: 12px 20px;
+  border-radius: 30px;
   border: 1px solid #dce5e8;
   font-size: 1rem;
   outline: none;
@@ -196,20 +196,16 @@ button[type="submit"] {
   background-color: #1f7a8c;
   color: white;
   border: none;
-  border-radius: 25px;
+  border-radius: 30px; /* Fully rounded */
   padding: 0 25px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1rem;
   transition: background-color 0.3s, transform 0.1s;
 }
 
-button[type="submit"]:hover {
-  background-color: #16697a;
-  transform: scale(1.05);
-}
-button[type="submit"]:active {
-  transform: scale(0.95);
-}
+button[type="submit"]:hover { background-color: #16697a; transform: scale(1.05); }
+button[type="submit"]:active { transform: scale(0.95); }
 
 .footer {
   text-align: center;
@@ -220,78 +216,112 @@ button[type="submit"]:active {
   border-top: 1px solid #eee;
 }
 
-/* --- 7. MOBILE VIEW (Responsive) --- */
+
+/* =========================================
+   7. MOBILE RESPONSIVE FIXES
+   ========================================= */
 @media screen and (max-width: 768px) {
   
-  /* Fix layout for phones */
-  body {
-    height: 100dvh; /* Dynamic Viewport Height */
-    background-color: #ffffff;
-  }
-
-  /* Compact Navbar */
+  /* A. Navbar Layout - Compact Row */
   .navbar {
-     padding: 15px 20px;
-     justify-content: space-between;
+    padding: 10px 15px;
+    height: 60px;
+    box-sizing: border-box;
   }
-   .hamburger { display: flex; }
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    background: white;
-    flex-direction: column;
-    padding: 20px 0;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    z-index: 99;
+  
+  .logo {
+    font-size: 1.2rem; /* Smaller Logo */
   }
 
-  /* Full Screen Chat */
+  /* Hide Text Links (Dashboard/Forum) */
+  .nav-links {
+    display: flex; /* Keep visible */
+    gap: 8px; /* Tighter spacing */
+  }
+
+  .nav-links a {
+    display: none; /* Hide the text links */
+  }
+
+  /* Show Action Buttons with Icons or Short Text */
+  .logout-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .clear-btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  /* B. Chat Section - Full Screen */
   .chat-section {
     width: 100%;
-    max-width:none;
     margin: 0;
     border-radius: 0;
     box-shadow: none;
-    border: none;
-    height: 100%;
-    padding: 15px;
-    padding-bottom: calc(20px + env(safe-area-inset-bottom)); 
+    padding: 10px 15px;
+    /* Important: Leave space at bottom for the fixed input */
+    padding-bottom: 90px; 
   }
 
+  /* C. Message Font Sizing */
+  .user-msg, .bot-msg {
+    font-size: 15px; /* Slightly larger for readability */
+    padding: 10px 15px;
+    max-width: 85%;
+  }
+
+  /* D. Fixed Input Area (Sticks to Bottom) */
   form {
-    /* 1. LAYOUT: Puts Input and Button side-by-side */
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center; 
-    gap: 10px;           /* Space between input and button */
-    
-    /* 2. POSITIONING: Sticks to bottom */
-    position: fixed;     /* Fixed so it floats over content */
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
+    box-sizing: border-box;
+    padding: 10px 15px;
     
-    /* 3. HOME BAR FIX: Lifts it up */
-    padding: 10px 15px; /* Top/Side padding */
-    padding-bottom: calc(10px + env(safe-area-inset-bottom)); /* Bottom Safe Area */
+    /* Safe Area for iPhone Home Bar */
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
     
     background-color: #ffffff;
     box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-    box-sizing: border-box;
     z-index: 100;
-  }
-  
-  form input {
-    flex: 1; /* Grows to fill space, pushing button to the right */
-    margin: 0; /* Remove old margins */
-    width: auto; /* Let flex handle width */
+    
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
-  /* Prevent button from shrinking */
-  form button {
-    flex-shrink: 0; 
+  input {
+    height: 45px; /* Taller touch target */
+    font-size: 16px; /* Prevents auto-zoom on iPhone */
+    padding: 0 15px;
+    width: 100%; /* Ensure it fills space */
   }
+
+  /* E. The "Tiny Button" Fix */
+  button[type="submit"] {
+    width: 50px;       /* Fixed square width */
+    height: 45px;      /* Match input height */
+    padding: 0;        /* Reset padding */
+    border-radius: 50%; /* Make it a circle */
+    font-size: 0;      /* Hide text "Send" */
+    
+    /* Add a send icon via CSS pseudo-element */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Create an Arrow Icon */
+  button[type="submit"]::after {
+    content: "➤";
+    font-size: 18px;
+    color: white;
+    margin-left: 2px; /* Visual centering */
+  }
+
+  /* Hide Footer on Mobile to save space */
+  .footer { display: none; }
 }

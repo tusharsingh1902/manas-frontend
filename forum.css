@@ -59,7 +59,16 @@ body {
 .logout-btn:hover {
   background-color: #16697a;
 }
-
+/* Make the text area look good */
+#postForm textarea {
+  flex: 1; /* specific to your layout */
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical; /* Allows user to drag corner to resize */
+  min-height: 60px;
+  font-family: 'Poppins', sans-serif; /* Match your site font */
+}
 .forum-section {
   max-width: 800px;
   margin: 40px auto;

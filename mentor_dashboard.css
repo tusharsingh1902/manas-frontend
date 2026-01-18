@@ -142,14 +142,13 @@ h2 {
 }
 
 textarea {
-  width: 100%;
-  border: 1px solid #ccc;
+  flex: 1; 
+  padding: 12px;
   border-radius: 8px;
-  padding: 10px;
-  font-size: 0.95rem;
+  border: 1px solid #ccc;
   resize: vertical;
   min-height: 60px;
-  margin-bottom: 10px;
+  font-family: 'Poppins', sans-serif;
 }
 
 .btn-primary {

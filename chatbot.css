@@ -1,565 +1,190 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
-/* --- 1. GLOBAL LAYOUT --- */
+/* =========================================
+   1. GLOBAL LAYOUT (The "Fixed App" Logic)
+   ========================================= */
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   background-color: #f8fdfd;
   color: #2f4858;
+  
+  /* 🚨 KEY FIX: Lock the screen height so header never moves */
+  height: 100vh; 
+  height: 100dvh; /* Mobile viewport support */
   display: flex;
-  flex-direction: column;
-  height: 100vh; /* Fallback */
-  height: 100dvh; /* Mobile viewport fix */
+  flex-direction: column; 
+  overflow: hidden; /* Prevent the whole page from scrolling */
 }
-
-/* --- 2. NAVBAR (Desktop) --- */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 60px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  flex-shrink: 0;
-  z-index: 10; /* Ensure it stays on top */
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1f7a8c;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: #2f4858;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover { color: #1f7a8c; }
-
-/* SHARED BUTTON STYLES */
-.logout-btn {
-  background-color: #1f7a8c;
-  color: white;
-  border: none;
-  padding: 8px 18px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease;
-  white-space: nowrap;
-}
-.logout-btn:hover { background-color: #16697a; }
-
-.clear-btn {
-  background-color: transparent;
-  color: #ff6b6b;
-  border: 1px solid #ff6b6b;
-  padding: 7px 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-.clear-btn:hover { background-color: #ff6b6b; color: white; }
-
-/* --- 3. CHAT AREA --- */
-.chat-section {
-  flex: 1; 
-  max-width: 800px;
-  width: 90%;
-  margin: 30px auto;
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 25px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  position: relative;
-}
-
-.chat-container {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding-right: 10px; 
-  margin-bottom: 15px;
-  scroll-behavior: smooth;
-  padding-bottom: 20px; /* Space above typing indicator */
-}
-
-/* Scrollbar Styling */
-.chat-container::-webkit-scrollbar { width: 6px; }
-.chat-container::-webkit-scrollbar-thumb { background-color: #dce5e8; border-radius: 10px; }
-.chat-container::-webkit-scrollbar-track { background: transparent; }
-
-/* --- 4. MESSAGE BUBBLES --- */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.user-msg {
-  align-self: flex-end;
-  background-color: #1f7a8c;
-  color: white;
-  padding: 12px 18px;
-  border-radius: 18px 18px 2px 18px;
-  max-width: 75%;
-  line-height: 1.5;
-  box-shadow: 0 2px 5px rgba(31,122,140,0.2);
-  animation: fadeUp 0.3s ease-out;
-  word-wrap: break-word;
-  font-size: 1rem;
-}
-
-.bot-msg {
-  align-self: flex-start;
-  background-color: #f0f7f7;
-  color: #2f4858;
-  padding: 12px 18px;
-  border-radius: 18px 18px 18px 2px;
-  max-width: 75%;
-  line-height: 1.5;
-  animation: fadeUp 0.3s ease-out;
-  word-wrap: break-word;
-  font-size: 1rem;
-}
-
-/* --- 5. TYPING INDICATOR --- */
-.typing-indicator {
-  align-self: flex-start;
-  background-color: #f0f7f7;
-  padding: 12px 18px;
-  border-radius: 18px 18px 18px 2px;
-  display: none;
-  margin-bottom: 10px;
-  width: fit-content;
-}
-
-.typing-indicator span {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  background-color: #8898aa;
-  border-radius: 50%;
-  animation: typing 1.4s infinite ease-in-out both;
-  margin: 0 2px;
-}
-
-.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-
-@keyframes typing {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1); }
-}
-
-/* --- 6. INPUT AREA --- */
-form {
-  display: flex;
-  gap: 10px;
-  padding-top: 15px;
-  border-top: 1px solid #f0f0f0;
-  background: #fff;
-}
-
-input {
-  flex: 1;
-  padding: 12px 20px;
-  border-radius: 30px;
-  border: 1px solid #dce5e8;
-  font-size: 1rem;
-  outline: none;
-  background-color: #fcfcfc;
-  transition: border-color 0.3s;
-}
-
-input:focus {
-  border-color: #1f7a8c;
-  background-color: #fff;
-}
-
-button[type="submit"] {
-  background-color: #1f7a8c;
-  color: white;
-  border: none;
-  border-radius: 30px; /* Fully rounded */
-  padding: 0 25px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: background-color 0.3s, transform 0.1s;
-}
-
-button[type="submit"]:hover { background-color: #16697a; transform: scale(1.05); }
-button[type="submit"]:active { transform: scale(0.95); }
-
-.footer {
-  text-align: center;
-  padding: 10px;
-  font-size: 0.75rem;
-  color: #8898aa;
-  background-color: #fff;
-  border-top: 1px solid #eee;
-}
-
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
-
-/* --- 1. GLOBAL LAYOUT --- */
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  background-color: #f8fdfd;
-  color: #2f4858;
-  display: flex;
-  flex-direction: column;
-  height: 100vh; /* Fallback */
-  height: 100dvh; /* Mobile viewport fix */
-}
-
-/* --- 2. NAVBAR (Desktop) --- */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 60px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  flex-shrink: 0;
-  z-index: 10; /* Ensure it stays on top */
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1f7a8c;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: #2f4858;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover { color: #1f7a8c; }
-
-/* SHARED BUTTON STYLES */
-.logout-btn {
-  background-color: #1f7a8c;
-  color: white;
-  border: none;
-  padding: 8px 18px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease;
-  white-space: nowrap;
-}
-.logout-btn:hover { background-color: #16697a; }
-
-.clear-btn {
-  background-color: transparent;
-  color: #ff6b6b;
-  border: 1px solid #ff6b6b;
-  padding: 7px 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-.clear-btn:hover { background-color: #ff6b6b; color: white; }
-
-/* --- 3. CHAT AREA --- */
-.chat-section {
-  flex: 1; 
-  max-width: 800px;
-  width: 90%;
-  margin: 30px auto;
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 25px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  position: relative;
-}
-
-.chat-container {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding-right: 10px; 
-  margin-bottom: 15px;
-  scroll-behavior: smooth;
-  padding-bottom: 20px; /* Space above typing indicator */
-}
-
-/* Scrollbar Styling */
-.chat-container::-webkit-scrollbar { width: 6px; }
-.chat-container::-webkit-scrollbar-thumb { background-color: #dce5e8; border-radius: 10px; }
-.chat-container::-webkit-scrollbar-track { background: transparent; }
-
-/* --- 4. MESSAGE BUBBLES --- */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.user-msg {
-  align-self: flex-end;
-  background-color: #1f7a8c;
-  color: white;
-  padding: 12px 18px;
-  border-radius: 18px 18px 2px 18px;
-  max-width: 75%;
-  line-height: 1.5;
-  box-shadow: 0 2px 5px rgba(31,122,140,0.2);
-  animation: fadeUp 0.3s ease-out;
-  word-wrap: break-word;
-  font-size: 1rem;
-}
-
-.bot-msg {
-  align-self: flex-start;
-  background-color: #f0f7f7;
-  color: #2f4858;
-  padding: 12px 18px;
-  border-radius: 18px 18px 18px 2px;
-  max-width: 75%;
-  line-height: 1.5;
-  animation: fadeUp 0.3s ease-out;
-  word-wrap: break-word;
-  font-size: 1rem;
-}
-
-/* --- 5. TYPING INDICATOR --- */
-.typing-indicator {
-  align-self: flex-start;
-  background-color: #f0f7f7;
-  padding: 12px 18px;
-  border-radius: 18px 18px 18px 2px;
-  display: none;
-  margin-bottom: 10px;
-  width: fit-content;
-}
-
-.typing-indicator span {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  background-color: #8898aa;
-  border-radius: 50%;
-  animation: typing 1.4s infinite ease-in-out both;
-  margin: 0 2px;
-}
-
-.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-
-@keyframes typing {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1); }
-}
-
-/* --- 6. INPUT AREA --- */
-form {
-  display: flex;
-  gap: 10px;
-  padding-top: 15px;
-  border-top: 1px solid #f0f0f0;
-  background: #fff;
-}
-
-input {
-  flex: 1;
-  padding: 12px 20px;
-  border-radius: 30px;
-  border: 1px solid #dce5e8;
-  font-size: 1rem;
-  outline: none;
-  background-color: #fcfcfc;
-  transition: border-color 0.3s;
-}
-
-input:focus {
-  border-color: #1f7a8c;
-  background-color: #fff;
-}
-
-button[type="submit"] {
-  background-color: #1f7a8c;
-  color: white;
-  border: none;
-  border-radius: 30px; /* Fully rounded */
-  padding: 0 25px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: background-color 0.3s, transform 0.1s;
-}
-
-button[type="submit"]:hover { background-color: #16697a; transform: scale(1.05); }
-button[type="submit"]:active { transform: scale(0.95); }
-
-.footer {
-  text-align: center;
-  padding: 10px;
-  font-size: 0.75rem;
-  color: #8898aa;
-  background-color: #fff;
-  border-top: 1px solid #eee;
-}
-
 
 /* =========================================
-   7. MOBILE RESPONSIVE FIXES
+   2. NAVBAR (Stays at Top)
+   ========================================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 60px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  
+  /* 🚨 KEY FIX: Prevent navbar from shrinking or moving */
+  flex-shrink: 0; 
+  z-index: 100;
+}
+
+.logo { font-size: 1.5rem; font-weight: 700; color: #1f7a8c; }
+
+.nav-links { display: flex; align-items: center; gap: 25px; }
+.nav-links a { text-decoration: none; color: #2f4858; font-weight: 500; }
+.nav-links a:hover { color: #1f7a8c; }
+
+/* Buttons */
+.logout-btn {
+  background-color: #1f7a8c; color: white; border: none;
+  padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 0.9rem;
+}
+.clear-btn {
+  background-color: transparent; color: #ff6b6b; border: 1px solid #ff6b6b;
+  padding: 7px 15px; border-radius: 20px; cursor: pointer; font-size: 0.9rem;
+}
+
+/* =========================================
+   3. CHAT SECTION (Takes Remaining Space)
+   ========================================= */
+.chat-section {
+  /* Fills the space between Navbar and bottom of screen */
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  
+  /* Desktop Styling */
+  max-width: 800px;
+  width: 90%;
+  margin: 20px auto; /* Margin on Desktop only */
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  overflow: hidden; /* Keeps scrollbar inside this box */
+  position: relative;
+}
+
+/* =========================================
+   4. SCROLLABLE MESSAGE AREA
+   ========================================= */
+.chat-container {
+  flex: 1; /* Takes all available height inside chat-section */
+  
+  /* 🚨 KEY FIX: Move the scrollbar HERE */
+  overflow-y: auto; 
+  
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  
+  /* 🚨 KEY FIX: Extra space at bottom so last message clears the input bar */
+  padding-bottom: 20px; 
+  
+  scroll-behavior: smooth;
+}
+
+.chat-container::-webkit-scrollbar { width: 6px; }
+.chat-container::-webkit-scrollbar-thumb { background-color: #dce5e8; border-radius: 10px; }
+
+/* Message Styles */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.user-msg {
+  align-self: flex-end; background-color: #1f7a8c; color: white;
+  padding: 12px 18px; border-radius: 18px 18px 2px 18px;
+  max-width: 75%; line-height: 1.5; animation: fadeUp 0.3s ease-out; word-wrap: break-word;
+}
+
+.bot-msg {
+  align-self: flex-start; background-color: #f0f7f7; color: #2f4858;
+  padding: 12px 18px; border-radius: 18px 18px 18px 2px;
+  max-width: 75%; line-height: 1.5; animation: fadeUp 0.3s ease-out; word-wrap: break-word;
+}
+
+/* Typing Indicator */
+.typing-indicator {
+  align-self: flex-start; background-color: #f0f7f7; padding: 12px 18px;
+  border-radius: 18px 18px 18px 2px; display: none; margin-bottom: 10px; width: fit-content;
+}
+.typing-indicator span {
+  display: inline-block; width: 6px; height: 6px; background-color: #8898aa;
+  border-radius: 50%; animation: typing 1.4s infinite ease-in-out both; margin: 0 2px;
+}
+.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+@keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+/* =========================================
+   5. INPUT AREA (Desktop)
+   ========================================= */
+form {
+  display: flex; gap: 10px; padding: 15px 20px; border-top: 1px solid #f0f0f0; background: #fff;
+}
+input {
+  flex: 1; padding: 12px 20px; border-radius: 30px; border: 1px solid #dce5e8;
+  font-size: 1rem; outline: none; background-color: #fcfcfc;
+}
+input:focus { border-color: #1f7a8c; background-color: #fff; }
+button[type="submit"] {
+  background-color: #1f7a8c; color: white; border: none; border-radius: 30px;
+  padding: 0 25px; cursor: pointer; font-weight: 600;
+}
+button[type="submit"]:hover { background-color: #16697a; }
+
+.footer { text-align: center; padding: 10px; font-size: 0.75rem; color: #8898aa; border-top: 1px solid #eee; background: #fff;}
+
+/* =========================================
+   6. MOBILE VIEW FIXES (Strict)
    ========================================= */
 @media screen and (max-width: 768px) {
   
-  /* A. Navbar Layout - Compact Row */
-  .navbar {
-    padding: 10px 15px;
-    height: 60px;
-    box-sizing: border-box;
-  }
-  
-  .logo {
-    font-size: 1.2rem; /* Smaller Logo */
-  }
+  /* Navbar Compact */
+  .navbar { padding: 10px 15px; height: 60px; box-sizing: border-box; }
+  .logo { font-size: 1.2rem; }
+  .nav-links { gap: 8px; }
+  .nav-links a { display: none; } /* Hide text links */
+  .logout-btn, .clear-btn { padding: 5px 10px; font-size: 0.75rem; }
 
-  /* Hide Text Links (Dashboard/Forum) */
-  .nav-links {
-    display: flex; /* Keep visible */
-    gap: 8px; /* Tighter spacing */
+  /* Chat Section Fills Screen */
+  .chat-section {
+    width: 100%; margin: 0; border-radius: 0; box-shadow: none;
+    height: 100%; /* Fill remaining vertical space */
+    border-top: 1px solid #eee;
   }
 
-  .nav-links a {
-    display: none; /* Hide the text links */
+  /* 🚨 KEY FIX: Add huge padding to bottom of messages so they scroll ABOVE input */
+  .chat-container {
+    padding: 15px;
+    padding-bottom: 90px; /* Must be larger than the input bar height */
   }
 
-  /* Show Action Buttons with Icons or Short Text */
-  .logout-btn {
-    padding: 6px 12px;
-    font-size: 0.8rem;
-  }
-  
-  .clear-btn {
-    padding: 6px 10px;
-    font-size: 0.8rem;
-  }
+  /* Smaller Fonts */
+  .user-msg, .bot-msg { font-size: 14px; padding: 8px 12px; max-width: 85%; }
 
-  /* --- 3. CHAT AREA (Fixed Layout) --- */
-.chat-section {
-  flex: 1; 
-  width: 90%;
-  max-width: 800px;
-  margin: 10px auto; 
-  height: calc(100vh - 140px); 
-  
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  
-  display: flex;
-  flex-direction: column; /* Stacks messages on top of input */
-  overflow: hidden; /* Prevents the box itself from scrolling */
-}
-
-.chat-container {
-  flex: 1; /* Grows to fill empty space */
-  overflow-y: auto; /* Only THIS part scrolls */
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding-right: 10px; 
-  margin-bottom: 10px;
-  scroll-behavior: smooth;
-}
-
-  /* C. Message Font Sizing */
-  .user-msg, .bot-msg {
-    font-size: 13.5px; /* Slightly larger for readability */
-    padding: 8px 12px;
-    max-width: 85%;
-    line-height: 1.4;
-  }
-
-  /* D. Fixed Input Area (Sticks to Bottom) */
+  /* Fixed Input Bar */
   form {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px 15px;
-    
-    /* Safe Area for iPhone Home Bar */
-    padding-bottom: calc(10px + env(safe-area-inset-bottom));
-    
-    background-color: #ffffff;
+    position: fixed; bottom: 0; left: 0; width: 100%;
+    padding: 8px 12px;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+    border-top: 1px solid #e0e0e0;
     box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-    z-index: 100;
-    
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    z-index: 200;
   }
 
-  input {
-    height: 45px; 
-    font-size: 16px; 
-    padding: 0 15px;
-    width: 100%; 
-  }
+  input { height: 40px; font-size: 14px; padding: 0 15px; }
 
-  /* E. The "Tiny Button" Fix */
+  /* Circle Send Button */
   button[type="submit"] {
-    width: 50px;       /* Fixed square width */
-    height: 45px;      /* Match input height */
-    padding: 0;        /* Reset padding */
-    border-radius: 50%; /* Make it a circle */
-    font-size: 0;      /* Hide text "Send" */
-    
-    /* Add a send icon via CSS pseudo-element */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 40px; height: 40px; padding: 0; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-size: 0;
   }
+  button[type="submit"]::after { content: "➤"; font-size: 16px; color: white; margin-left: 2px; }
 
-  /* Create an Arrow Icon */
-  button[type="submit"]::after {
-    content: "➤";
-    font-size: 18px;
-    color: white;
-    margin-left: 2px; /* Visual centering */
-  }
-
-  /* Hide Footer on Mobile to save space */
   .footer { display: none; }
 }

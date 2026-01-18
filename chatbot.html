@@ -54,6 +54,20 @@ const form = document.getElementById("chatForm");
 const input = document.getElementById("userInput");
 const typingIndicator = document.getElementById("typingIndicator");
 
+  // Helper to convert Markdown symbols to HTML
+function parseMarkdown(text) {
+  // 1. Convert **text** to <strong>text</strong> (Bold)
+  let html = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  
+  // 2. Convert *text* to <em>text</em> (Italic)
+  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+  // 3. Convert `code` to <code>code</code>
+  html = html.replace(/`(.*?)`/g, '<code>$1</code>');
+  
+  return html;
+}
+
 // 1. Load History on Start
 async function loadHistory() {
   const username = localStorage.getItem("username");
@@ -116,7 +130,7 @@ form.addEventListener("submit", async (e) => {
 function appendMessage(className, text) {
   const div = document.createElement("div");
   div.className = className;
-  div.innerHTML = text;
+  div.innerHTML = parseMarkdown(text);
   
   if (typingIndicator.parentNode === chatContainer) {
     chatContainer.insertBefore(div, typingIndicator);

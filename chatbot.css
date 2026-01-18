@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
+/* --- 1. GLOBAL LAYOUT --- */
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
@@ -7,11 +8,10 @@ body {
   color: #2f4858;
   display: flex;
   flex-direction: column;
-  height: 100dvh;
-  overflow: hidden; /* Prevent body scroll, handle inside chat-container */
+  height: 100vh; /* Full viewport height */
 }
 
-/* --- NAVBAR --- */
+/* --- 2. NAVBAR (Desktop) --- */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -19,9 +19,7 @@ body {
   padding: 15px 60px;
   background-color: #ffffff;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  flex-shrink: 0; 
-  position: relative;
-  z-index: 10;
+  flex-shrink: 0; /* Prevents navbar from shrinking */
 }
 
 .logo {
@@ -40,11 +38,13 @@ body {
   text-decoration: none;
   color: #2f4858;
   font-weight: 500;
+  transition: color 0.3s ease;
 }
 
-.nav-links a:hover { color: #1f7a8c; }
+.nav-links a:hover {
+  color: #1f7a8c;
+}
 
-/* Buttons */
 .logout-btn {
   background-color: #1f7a8c;
   color: white;
@@ -53,6 +53,11 @@ body {
   border-radius: 20px;
   cursor: pointer;
   font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #16697a;
 }
 
 .clear-btn {
@@ -63,24 +68,27 @@ body {
   border-radius: 20px;
   cursor: pointer;
   font-size: 0.9rem;
+  transition: all 0.3s ease;
 }
 
-.clear-btn:hover { background-color: #ff6b6b; color: white; }
+.clear-btn:hover {
+  background-color: #ff6b6b;
+  color: white;
+}
 
-/* --- CHAT SECTION --- */
+/* --- 3. CHAT AREA --- */
 .chat-section {
   flex: 1; 
   max-width: 800px;
   width: 90%;
-  margin: 20px auto;
+  margin: 30px auto;
   background: #ffffff;
   border-radius: 16px;
-  padding: 20px;
+  padding: 25px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.06);
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Important for inner scroll */
-  border: 1px solid #eef6f6;
+  overflow: hidden; /* Keeps scroll inside */
 }
 
 .chat-container {
@@ -89,21 +97,32 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding-right: 5px; 
-  padding-bottom: 10px;
+  padding-right: 10px; 
+  margin-bottom: 15px;
+  scroll-behavior: smooth;
 }
 
-/* Messages */
+/* Custom Scrollbar */
+.chat-container::-webkit-scrollbar { width: 6px; }
+.chat-container::-webkit-scrollbar-thumb { background-color: #dce5e8; border-radius: 10px; }
+.chat-container::-webkit-scrollbar-track { background: transparent; }
+
+/* --- 4. MESSAGE BUBBLES --- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .user-msg {
   align-self: flex-end;
   background-color: #1f7a8c;
   color: white;
-  padding: 10px 16px;
+  padding: 12px 18px;
   border-radius: 18px 18px 2px 18px;
   max-width: 75%;
   line-height: 1.5;
-  font-size: 0.95rem;
   box-shadow: 0 2px 5px rgba(31,122,140,0.2);
+  animation: fadeUp 0.3s ease-out; /* Smooth entry */
   word-wrap: break-word;
 }
 
@@ -111,23 +130,45 @@ body {
   align-self: flex-start;
   background-color: #f0f7f7;
   color: #2f4858;
-  padding: 10px 16px;
+  padding: 12px 18px;
   border-radius: 18px 18px 18px 2px;
   max-width: 75%;
   line-height: 1.5;
-  font-size: 0.95rem;
+  animation: fadeUp 0.3s ease-out; /* Smooth entry */
   word-wrap: break-word;
 }
 
-.typing {
-  font-size: 0.8rem;
-  color: #888;
-  background: none;
-  padding: 0;
-  margin-left: 10px;
+/* --- 5. TYPING INDICATOR (New) --- */
+.typing-indicator {
+  align-self: flex-start;
+  background-color: #f0f7f7;
+  padding: 12px 18px;
+  border-radius: 18px 18px 18px 2px;
+  display: none; /* Hidden by default */
+  margin-bottom: 10px;
+  width: fit-content;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
-/* Input Area */
+.typing-indicator span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background-color: #8898aa;
+  border-radius: 50%;
+  animation: typing 1.4s infinite ease-in-out both;
+  margin: 0 2px;
+}
+
+.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typing {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+/* --- 6. INPUT AREA --- */
 form {
   display: flex;
   gap: 10px;
@@ -137,136 +178,100 @@ form {
 
 input {
   flex: 1;
-  padding: 12px 20px;
+  padding: 12px 15px;
   border-radius: 25px;
   border: 1px solid #dce5e8;
   font-size: 1rem;
   outline: none;
   background-color: #fcfcfc;
+  transition: border-color 0.3s;
 }
 
-input:focus { border-color: #1f7a8c; }
+input:focus {
+  border-color: #1f7a8c;
+  background-color: #fff;
+}
 
-/* Arrow Button Style */
-.send-btn {
+button[type="submit"] {
   background-color: #1f7a8c;
   color: white;
   border: none;
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 25px;
+  padding: 0 25px;
   cursor: pointer;
-  font-size: 1.2rem;
-  padding-bottom: 3px; /* Visual center adjustment */
-  padding-left: 3px;
-  transition: transform 0.2s;
+  font-weight: 500;
+  transition: background-color 0.3s, transform 0.1s;
 }
 
-.send-btn:active { transform: scale(0.95); }
+button[type="submit"]:hover {
+  background-color: #16697a;
+  transform: scale(1.05);
+}
+button[type="submit"]:active {
+  transform: scale(0.95);
+}
 
 .footer {
   text-align: center;
   padding: 10px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #8898aa;
   background-color: #fff;
   border-top: 1px solid #eee;
 }
 
-/* --- HAMBURGER MENU & MOBILE OPTIMIZATION --- */
-
-.hamburger {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  gap: 5px;
-}
-
-.hamburger span {
-  width: 25px;
-  height: 3px;
-  background-color: #1f7a8c;
-  border-radius: 2px;
-}
-
-@media (max-width: 768px) {
-  html, body {
-    font-size: 14px; /* Base size slightly smaller */
-    overflow-x: hidden;
-    width: 100%;
-  }
+/* --- 7. MOBILE VIEW (Responsive) --- */
+@media screen and (max-width: 768px) {
   
-  /* 1. Navbar & Menu */
+  /* Fix layout for phones */
+  body {
+    height: 100dvh; /* Dynamic Viewport Height */
+    background-color: #ffffff;
+  }
+
+  /* Compact Navbar */
   .navbar {
-    padding: 15px 20px;
-    justify-content: space-between;
+    padding: 10px 20px;
   }
   
-  .hamburger { display: flex; }
+  .logo {
+    font-size: 1.2rem;
+  }
 
-  .nav-links {
+  /* Hide secondary links on mobile to save space */
+  .nav-links a {
     display: none;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    background: white;
-    flex-direction: column;
-    padding: 20px 0;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    z-index: 99;
+  }
+  
+  /* Keep clear/logout buttons but make them smaller */
+  .clear-btn, .logout-btn {
+    padding: 5px 10px;
+    font-size: 0.8rem;
   }
 
-  .nav-links.active { display: flex; }
-  
+  /* Full Screen Chat */
   .chat-section {
     width: 100%;
-    max-width: none;
     margin: 0;
     border-radius: 0;
     box-shadow: none;
-    border: none;
     height: 100%;
-    
-    /* CRITICAL FIX: Push content up away from the Home Bar */
     padding: 15px;
-    padding-bottom: calc(20px + env(safe-area-inset-bottom)); 
   }
 
-  /* Inside @media (max-width: 768px) */
+  /* Adjust Bubbles for small screens */
+  .user-msg, .bot-msg {
+    max-width: 85%;
+    font-size: 0.95rem;
+    padding: 10px 14px;
+  }
 
+  /* Sticky Input at Bottom */
   form {
-    /* 1. LAYOUT: Puts Input and Button side-by-side */
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center; 
-    gap: 10px;           /* Space between input and button */
-    
-    /* 2. POSITIONING: Sticks to bottom */
-    position: fixed;     /* Fixed so it floats over content */
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    
-    /* 3. HOME BAR FIX: Lifts it up */
-    padding: 10px 15px; /* Top/Side padding */
-    padding-bottom: calc(10px + env(safe-area-inset-bottom)); /* Bottom Safe Area */
-    
-    background-color: #ffffff;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-    box-sizing: border-box;
-    z-index: 100;
-  }
-  form input {
-    flex: 1; /* Grows to fill space, pushing button to the right */
-    margin: 0; /* Remove old margins */
-    width: auto; /* Let flex handle width */
+    padding-bottom: env(safe-area-inset-bottom, 10px); /* iPhone Home Bar Safety */
   }
 
-  /* Prevent button from shrinking */
-  form button {
-    flex-shrink: 0; 
-  }}
+  input {
+    font-size: 16px; /* Prevents iOS Zoom */
+  }
+}

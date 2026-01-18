@@ -231,47 +231,67 @@ button[type="submit"]:active {
 
   /* Compact Navbar */
   .navbar {
-    padding: 10px 20px;
+     padding: 15px 20px;
+     justify-content: space-between;
   }
-  
-  .logo {
-    font-size: 1.2rem;
-  }
-
-  /* Hide secondary links on mobile to save space */
-  .nav-links a {
+   .hamburger { display: flex; }
+  .nav-links {
     display: none;
-  }
-  
-  /* Keep clear/logout buttons but make them smaller */
-  .clear-btn, .logout-btn {
-    padding: 5px 10px;
-    font-size: 0.8rem;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: white;
+    flex-direction: column;
+    padding: 20px 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    z-index: 99;
   }
 
   /* Full Screen Chat */
   .chat-section {
     width: 100%;
+    max-width:none;
     margin: 0;
     border-radius: 0;
     box-shadow: none;
+    border: none;
     height: 100%;
     padding: 15px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom)); 
   }
 
-  /* Adjust Bubbles for small screens */
-  .user-msg, .bot-msg {
-    max-width: 85%;
-    font-size: 0.95rem;
-    padding: 10px 14px;
-  }
-
-  /* Sticky Input at Bottom */
   form {
-    padding-bottom: env(safe-area-inset-bottom, 10px); /* iPhone Home Bar Safety */
+    /* 1. LAYOUT: Puts Input and Button side-by-side */
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center; 
+    gap: 10px;           /* Space between input and button */
+    
+    /* 2. POSITIONING: Sticks to bottom */
+    position: fixed;     /* Fixed so it floats over content */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    
+    /* 3. HOME BAR FIX: Lifts it up */
+    padding: 10px 15px; /* Top/Side padding */
+    padding-bottom: calc(10px + env(safe-area-inset-bottom)); /* Bottom Safe Area */
+    
+    background-color: #ffffff;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    box-sizing: border-box;
+    z-index: 100;
+  }
+  
+  form input {
+    flex: 1; /* Grows to fill space, pushing button to the right */
+    margin: 0; /* Remove old margins */
+    width: auto; /* Let flex handle width */
   }
 
-  input {
-    font-size: 16px; /* Prevents iOS Zoom */
+  /* Prevent button from shrinking */
+  form button {
+    flex-shrink: 0; 
   }
 }

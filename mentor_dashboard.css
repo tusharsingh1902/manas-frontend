@@ -143,6 +143,7 @@ h2 {
 
 textarea {
   flex: 1; 
+  width: 80%;
   padding: 12px;
   border-radius: 8px;
   border: 1px solid #ccc;

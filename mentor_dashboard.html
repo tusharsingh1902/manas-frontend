@@ -212,7 +212,7 @@
                 ${post.username}
                 ${post.type === "mentor" ? '<span class="badge">Mentor</span>' : ''}
             </h4>
-            <p>${post.message}</p>
+            <p style="white-space: pre-wrap;">${post.message}</p>
             <span>${new Date(post.timestamp).toLocaleString()}</span>
             <div class="reply-section">
                 <textarea id="reply-${post._id}" placeholder="Write a reply..."></textarea>

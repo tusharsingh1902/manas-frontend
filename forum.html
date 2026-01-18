@@ -31,9 +31,9 @@
     <p class="intro">Share your thoughts or experiences anonymously — you’re not alone</p>
 
     <form id="postForm">
-      <input type="text" id="message" name="message" placeholder="Write something..." required />
-      <button type="submit">Post</button>
-    </form>
+  <textarea id="message" name="message" placeholder="Write something..." required rows="3"></textarea>
+  <button type="submit" style="margin-top: 10px;">Post</button>
+  </form>
     
     <div class="filter-bar" style="margin-bottom: 20px; display: flex; gap: 10px;">
       <button onclick="filterPosts('all')" id="btn-all" class="filter-btn active" style="padding: 8px 16px; border-radius: 20px; border: 1px solid #ccc; background: #1f7a8c; color: white;">All Posts</button>

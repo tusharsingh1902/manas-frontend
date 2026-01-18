@@ -145,27 +145,25 @@ button[type="submit"]:hover { background-color: #16697a; }
 @media screen and (max-width: 768px) {
   
   /* Navbar Compact */
-  .navbar { padding: 10px 15px; height: 60px; box-sizing: border-box; }
-  .logo { font-size: 1.2rem; }
+  .navbar { padding: 10px 15px; height: 50px; box-sizing: border-box; }
+  .logo { font-size: 1.1rem; }
   .nav-links { gap: 8px; }
-  .nav-links a { display: none; } /* Hide text links */
-  .logout-btn, .clear-btn { padding: 5px 10px; font-size: 0.75rem; }
+  .nav-links a { display: none; } 
+  .logout-btn, .clear-btn { padding: 5px 10px; font-size: 0.85rem; }
 
   /* Chat Section Fills Screen */
   .chat-section {
     width: 100%; margin: 0; border-radius: 0; box-shadow: none;
-    height: 100%; /* Fill remaining vertical space */
+    height: 100%; 
     border-top: 1px solid #eee;
   }
 
-  /* 🚨 KEY FIX: Add huge padding to bottom of messages so they scroll ABOVE input */
   .chat-container {
     padding: 15px;
-    padding-bottom: 90px; /* Must be larger than the input bar height */
+    padding-bottom: 120px;
   }
 
-  /* Smaller Fonts */
-  .user-msg, .bot-msg { font-size: 14px; padding: 8px 12px; max-width: 85%; }
+  .user-msg, .bot-msg { font-size: 13px; padding: 8px 12px; max-width: 85%; }
 
   /* Fixed Input Bar */
   form {
@@ -177,11 +175,11 @@ button[type="submit"]:hover { background-color: #16697a; }
     z-index: 200;
   }
 
-  input { height: 40px; font-size: 14px; padding: 0 15px; }
+  input { height: 40px; font-size: 14px; padding: 0 15px; width: 80%}
 
-  /* Circle Send Button */
+  
   button[type="submit"] {
-    width: 40px; height: 40px; padding: 0; border-radius: 50%; display: flex;
+    width: 40px; height: 40px; padding-right: 20px; border-radius: 50%; display: flex;
     align-items: center; justify-content: center; font-size: 0;
   }
   button[type="submit"]::after { content: "➤"; font-size: 16px; color: white; margin-left: 2px; }

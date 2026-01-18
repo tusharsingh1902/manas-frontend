@@ -58,23 +58,15 @@ body {
   position: relative;
 }
 
-/* =========================================
-   4. SCROLLABLE MESSAGE AREA
-   ========================================= */
 .chat-container {
   flex: 1; /* Takes all available height inside chat-section */
-  
-  /* 🚨 KEY FIX: Move the scrollbar HERE */
   overflow-y: auto; 
   
   display: flex;
   flex-direction: column;
   gap: 15px;
   padding: 20px;
-  
-  /* 🚨 KEY FIX: Extra space at bottom so last message clears the input bar */
   padding-bottom: 20px; 
-  
   scroll-behavior: smooth;
 }
 
@@ -88,12 +80,14 @@ body {
   align-self: flex-end; background-color: #1f7a8c; color: white;
   padding: 12px 18px; border-radius: 18px 18px 2px 18px;
   max-width: 75%; line-height: 1.5; animation: fadeUp 0.3s ease-out; word-wrap: break-word;
+   white-space: pre-wrap;
 }
 
 .bot-msg {
   align-self: flex-start; background-color: #f0f7f7; color: #2f4858;
   padding: 12px 18px; border-radius: 18px 18px 18px 2px;
   max-width: 75%; line-height: 1.5; animation: fadeUp 0.3s ease-out; word-wrap: break-word;
+   white-space: pre-wrap;
 }
 
 /* Typing Indicator */

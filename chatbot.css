@@ -8,18 +8,12 @@ body {
   margin: 0;
   background-color: #f8fdfd;
   color: #2f4858;
-  
-  /* 🚨 KEY FIX: Lock the screen height so header never moves */
   height: 100vh; 
   height: 100dvh; /* Mobile viewport support */
   display: flex;
   flex-direction: column; 
   overflow: hidden; /* Prevent the whole page from scrolling */
 }
-
-/* =========================================
-   2. NAVBAR (Stays at Top)
-   ========================================= */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -27,8 +21,6 @@ body {
   padding: 15px 60px;
   background-color: #ffffff;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  
-  /* 🚨 KEY FIX: Prevent navbar from shrinking or moving */
   flex-shrink: 0; 
   z-index: 100;
 }
@@ -42,16 +34,13 @@ body {
 /* Buttons */
 .logout-btn {
   background-color: #1f7a8c; color: white; border: none;
-  padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 0.9rem;
+  padding: 7px 15px; border-radius: 20px; cursor: pointer; font-size: 0.9rem;
 }
 .clear-btn {
   background-color: transparent; color: #ff6b6b; border: 1px solid #ff6b6b;
   padding: 7px 15px; border-radius: 20px; cursor: pointer; font-size: 0.9rem;
 }
 
-/* =========================================
-   3. CHAT SECTION (Takes Remaining Space)
-   ========================================= */
 .chat-section {
   /* Fills the space between Navbar and bottom of screen */
   flex: 1; 
@@ -139,9 +128,6 @@ button[type="submit"]:hover { background-color: #16697a; }
 
 .footer { text-align: center; padding: 10px; font-size: 0.75rem; color: #8898aa; border-top: 1px solid #eee; background: #fff;}
 
-/* =========================================
-   6. MOBILE VIEW FIXES (Strict)
-   ========================================= */
 @media screen and (max-width: 768px) {
   
   /* Navbar Compact */
@@ -160,7 +146,7 @@ button[type="submit"]:hover { background-color: #16697a; }
 
   .chat-container {
     padding: 15px;
-    padding-bottom: 120px;
+    padding-bottom: 130px;
   }
 
   .user-msg, .bot-msg { font-size: 13px; padding: 8px 12px; max-width: 85%; }
@@ -175,11 +161,11 @@ button[type="submit"]:hover { background-color: #16697a; }
     z-index: 200;
   }
 
-  input { height: 40px; font-size: 14px; padding: 0 15px; width: 80%}
+  input { height: 40px; font-size: 14px; padding: 0 15px; width: 70%}
 
   
   button[type="submit"] {
-    width: 40px; height: 40px; padding-right: 20px; border-radius: 50%; display: flex;
+    width: 40px; height: 40px; margin-right: 10px; border-radius: 50%; display: flex;
     align-items: center; justify-content: center; font-size: 0;
   }
   button[type="submit"]::after { content: "➤"; font-size: 16px; color: white; margin-left: 2px; }

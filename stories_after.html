@@ -197,7 +197,7 @@ if (!localStorage.getItem("username") && !localStorage.getItem("mentorEmail")) {
                     card.className = "story-card";
                     card.id = story._id;
                     card.innerHTML = `
-                        <p>${story.text}</p>
+                        <p style="white-space: pre-wrap;">${story.text}</p>
                         <span>– ${story.username}</span>
                     `;
                     grid.prepend(card); 

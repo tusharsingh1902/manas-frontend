@@ -1,9 +1,23 @@
 {
-  "redirects": [
+  "rewrites": [
     {
       "source": "/.well-known/assetlinks.json",
-      "destination": "/.well-known/assetlinks.json",
-      "permanent": false
+      "destination": "/.well-known/assetlinks.json"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/.well-known/assetlinks.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
     }
   ]
 }

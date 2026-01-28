@@ -208,6 +208,8 @@ body {
     background-color: #f0f4f8; 
     border-radius: 20px;
     border: 1px solid #e1e8ed;
+    color: #2f4858;
+    font-weight: 500;
   } 
 
   /* 4. Dashboard Content */

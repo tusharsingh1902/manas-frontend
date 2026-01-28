@@ -16,7 +16,8 @@ body {
 .nav-links a, .logout-btn {
   margin-left: 20px;
   text-decoration: none;
-  color: #1f7a8c;
+  /* color: #1f7a8c; */
+  color: #e6f3f4;
   font-weight: 500;
   background: none;
   border: none;

@@ -41,7 +41,7 @@ body {
 
 .logout-btn {
   margin-left: 20px;
-  background-color: #e63946;
+  background-color: #16697a;
   color: #ffffff;
   border: none;
   padding: 8px 14px;
@@ -52,7 +52,8 @@ body {
 }
 
 .logout-btn:hover {
-  background-color: #c62839;
+  background-color: #115361 !important;
+  transform: translateY(-2px);
 }
 
 .unread-badge {

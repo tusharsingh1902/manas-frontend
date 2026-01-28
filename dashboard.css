@@ -60,7 +60,7 @@ body {
   100% { transform: scale(1); }
 }
 
-/* .logout-btn {
+.logout-btn {
   background-color: #1f7a8c;
   color: white;
   border: none;
@@ -72,7 +72,7 @@ body {
 
 .logout-btn:hover {
   background-color: #16697a;
-} */
+}
 
 .dashboard {
   padding: 60px;
@@ -201,13 +201,13 @@ body {
     vertical-align: middle;
   }
 
-  /* Mobile Logout Button */
+  /* /* Mobile Logout Button */
   .logout-btn {
     font-size: 12px;
     padding: 8px 14px;
     background-color: #e63946; /* Red for logout */
     border-radius: 20px;
-  }
+  } */
 
   /* 4. Dashboard Content */
   .dashboard {

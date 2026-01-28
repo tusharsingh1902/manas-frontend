@@ -13,30 +13,30 @@ body {
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.nav-links a, .logout-btn {
+.nav-links a {
   margin-left: 20px;
   text-decoration: none;
-  /* color: #1f7a8c; */
-  color: #e6f3f4;
+  color: #16697a; 
   font-weight: 500;
-  background: none;
-  border: none;
-  cursor: pointer;
 }
 
 .logout-btn {
+  margin-left: 20px;
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
   background-color: #16697a !important; 
-  color: white !important;             
-  padding: 8px 20px;                    
-  border-radius: 6px;                  
+  color: white !important;        
+  padding: 8px 20px;
+  border-radius: 6px;
   transition: 0.3s;
 }
 
 .logout-btn:hover {
-  background-color: #115361; 
+  background-color: #115361 !important;
   transform: translateY(-2px);
 }
-
 .inbox-section {
   padding: 40px;
 }

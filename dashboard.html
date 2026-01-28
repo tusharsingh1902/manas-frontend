@@ -99,6 +99,8 @@
 
   function logout() {
     localStorage.removeItem("username");
+    localStorage.removeItem("userType");
+    localStorage.removeItem("isLoggedIn");
     window.location.href = "login.html";
   }
 

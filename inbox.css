@@ -24,6 +24,19 @@ body {
   cursor: pointer;
 }
 
+.logout-btn {
+  background-color: #16697a !important; 
+  color: white !important;             
+  padding: 8px 20px;                    
+  border-radius: 6px;                  
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #115361; 
+  transform: translateY(-2px);
+}
+
 .inbox-section {
   padding: 40px;
 }

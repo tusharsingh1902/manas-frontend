@@ -201,13 +201,14 @@ body {
     vertical-align: middle;
   }
 
-  /* 
+  
   .logout-btn {
     font-size: 12px;
     padding: 8px 14px;
-    background-color: #e63946; 
+    background-color: #f0f4f8; 
     border-radius: 20px;
-  } */
+    border: 1px solid #e1e8ed;
+  } 
 
   /* 4. Dashboard Content */
   .dashboard {

@@ -64,7 +64,7 @@ if (!username || userType !== "mentor") {
 const mentorEmail = username;
 async function loadProfile() {
   try {
-    const res = await fetch(`/mentor/profile/${mentorEmail}`);
+    const res = await fetch(`${BACKEND_URL}/mentor/profile/${mentorEmail}`);
     if (!res.ok) throw new Error("Failed to load profile");
     
     const data = await res.json();

@@ -6,8 +6,9 @@
   <title>Login | Project Manas</title>
   <link rel="stylesheet" href="login.css" />
   <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1f7a8c">
-<link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="theme-color" content="#1f7a8c">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <header class="navbar">
@@ -65,51 +66,53 @@
           </div>
 
           <form id="mentor-login-form">
-  <input type="email" name="email" placeholder="Email address" required />
-  
-  <div class="password-wrapper">
-    <input type="password" name="password" id="mentor-login-pass" placeholder="Password" required />
-    <img src="show.png" class="toggle-password" data-target="mentor-login-pass" alt="Show Password">
-  </div>
-  
-  <button type="submit" class="btn-primary">Login as Mentor</button>
-</form>
+            <input type="email" name="email" placeholder="Email address" required />
+            <div class="password-wrapper">
+              <input type="password" name="password" id="mentor-login-pass" placeholder="Password" required />
+              <img src="show.png" class="toggle-password" data-target="mentor-login-pass" alt="Show Password">
+            </div>
+            <button type="submit" class="btn-primary">Login as Mentor</button>
+          </form>
 
-<form id="mentor-register-form" class="hidden">
-  <input type="email" name="email" placeholder="Email address" required />
-  
-  <div class="password-wrapper">
-    <input type="password" name="password" id="mentor-reg-pass" placeholder="Create password" required />
-    <img src="show.png" class="toggle-password" data-target="mentor-login-pass" alt="Show Password">
-  </div>
-  
-  <button type="submit" class="btn-primary">Register as Mentor</button>
-</form>
+          <form id="mentor-register-form" class="hidden">
+            <input type="email" name="email" placeholder="Email address" required />
+            <div class="password-wrapper">
+              <input type="password" name="password" id="mentor-reg-pass" placeholder="Create password" required />
+              <img src="show.png" class="toggle-password" data-target="mentor-reg-pass" alt="Show Password">
+            </div>
+            <button type="submit" class="btn-primary">Register as Mentor</button>
+          </form>
+        </div>
 
-<form id="register-form" class="auth-form">
-  <input type="text" name="username" placeholder="Choose a nickname" required />
-  
-  <div class="password-wrapper">
-    <input type="password" name="password" id="student-reg-pass" placeholder="Set a password" required />
-    <img src="show.png" class="toggle-password" data-target="mentor-login-pass" alt="Show Password">
-  </div>
-  
-  <button type="submit" class="btn-primary">Register</button>
-</form>
+        <div id="student-section" class="option anonymous">
+          <h3>Anonymous Login As Student</h3>
+          
+          <div class="toggle-container">
+            <button id="login-tab" class="toggle-btn" onclick="showLogin()">Login</button>
+            <button id="register-tab" class="toggle-btn active" onclick="showRegister()">Register</button>
+          </div>
 
-<form id="login-form" class="auth-form hidden">
-  <input type="text" name="username" placeholder="Enter your nickname" required />
-  
-  <div class="password-wrapper">
-    <input type="password" name="password" id="student-login-pass" placeholder="Enter password" required />
-    <img src="show.png" class="toggle-password" data-target="mentor-login-pass" alt="Show Password">
-  </div>
-  
-  <button type="submit" class="btn-primary">Login</button>
-</form>
+          <form id="register-form" class="auth-form">
+            <input type="text" name="username" placeholder="Choose a nickname" required />
+            <div class="password-wrapper">
+              <input type="password" name="password" id="student-reg-pass" placeholder="Set a password" required />
+              <img src="show.png" class="toggle-password" data-target="student-reg-pass" alt="Show Password">
+            </div>
+            <button type="submit" class="btn-primary">Register</button>
+          </form>
+
+          <form id="login-form" class="auth-form hidden">
+            <input type="text" name="username" placeholder="Enter your nickname" required />
+            <div class="password-wrapper">
+              <input type="password" name="password" id="student-login-pass" placeholder="Enter password" required />
+              <img src="show.png" class="toggle-password" data-target="student-login-pass" alt="Show Password">
+            </div>
+            <button type="submit" class="btn-primary">Login</button>
+          </form>
+
           <p class="note">Your nickname keeps your identity safe. You can return anytime with it.</p>
         </div>
-      </div>
+        </div>
     </div>
   </section>
 
@@ -119,205 +122,184 @@
 
   <script>
     const BACKEND_URL = "https://manas-backend-9gic.onrender.com";
-    /* --- TOGGLE MOBILE MENU --- */
-  function toggleMenu() {
-    const nav = document.getElementById('navLinks');
-    nav.classList.toggle('active');
-  }
-  /* --- NEW: SWITCH STUDENT/MENTOR --- */
-  function switchMainRole(role) {
-    const studentSec = document.getElementById("student-section");
-    const mentorSec = document.getElementById("mentor-section");
-    const btnStudent = document.getElementById("main-btn-student");
-    const btnMentor = document.getElementById("main-btn-mentor");
-
-    if (role === 'student') {
-      studentSec.style.display = "block";
-      mentorSec.style.display = "none";
-      btnStudent.classList.add("active");
-      btnMentor.classList.remove("active");
-    } else {
-      studentSec.style.display = "none";
-      mentorSec.style.display = "block";
-      btnStudent.classList.remove("active");
-      btnMentor.classList.add("active");
-    }
-  }
     
-  function showMentorLogin() {
-    document.getElementById('mentor-login-form').classList.remove('hidden');
-    document.getElementById('mentor-register-form').classList.add('hidden');
-    document.getElementById('mentor-login-tab').classList.add('active');
-    document.getElementById('mentor-register-tab').classList.remove('active');
-  }
-
-  function showMentorRegister() {
-    document.getElementById('mentor-register-form').classList.remove('hidden');
-    document.getElementById('mentor-login-form').classList.add('hidden');
-    document.getElementById('mentor-register-tab').classList.add('active');
-    document.getElementById('mentor-login-tab').classList.remove('active');
-  }
-
-  function showRegister() {
-    document.getElementById('register-form').classList.remove('hidden');
-    document.getElementById('login-form').classList.add('hidden');
-    document.getElementById('register-tab').classList.add('active');
-    document.getElementById('login-tab').classList.remove('active');
-  }
-
-  function showLogin() {
-    document.getElementById('register-form').classList.add('hidden');
-    document.getElementById('login-form').classList.remove('hidden');
-    document.getElementById('login-tab').classList.add('active');
-    document.getElementById('register-tab').classList.remove('active');
-  }
-
-  function showPopup(message, isError = false) {
-    const popup = document.createElement("div");
-    popup.className = "popup-message";
-    popup.textContent = message;
-    if (isError) popup.style.backgroundColor = "#e63946";
-    document.body.appendChild(popup);
-    setTimeout(() => popup.classList.add("show"), 10);
-    setTimeout(() => {
-      popup.classList.remove("show");
-      setTimeout(() => popup.remove(), 300);
-    }, 2500);
-  }
-
-  document.getElementById("mentor-register-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-
-    try {
-      const response = await fetch(`${BACKEND_URL}/register/mentor`, {
-        method: "POST",
-        body: formData
-      });
-      const data = await response.json();
-
-      if (response.ok) {
-        showPopup(`${data.message}`);
-        e.target.reset();
-        showMentorLogin();
-      } else {
-        showPopup(`${data.detail}`, true);
-      }
-    } catch (error) {
-      showPopup("Server unreachable.", true);
+    /* --- TOGGLE MOBILE MENU --- */
+    function toggleMenu() {
+      const nav = document.getElementById('navLinks');
+      nav.classList.toggle('active');
     }
-  });
 
-  document.getElementById("mentor-login-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
+    /* --- SWITCH STUDENT/MENTOR --- */
+    function switchMainRole(role) {
+      const studentSec = document.getElementById("student-section");
+      const mentorSec = document.getElementById("mentor-section");
+      const btnStudent = document.getElementById("main-btn-student");
+      const btnMentor = document.getElementById("main-btn-mentor");
 
-    try {
-      const response = await fetch(`${BACKEND_URL}/login/email`, {
-        method: "POST",
-        body: formData
-      });
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem("username", formData.get("email"));
-        localStorage.setItem("userType", "mentor");
-        localStorage.setItem("isLoggedIn", "true");
-
-        showPopup(`${data.message}`);
-        
-        setTimeout(() => {
-          window.location.href = "mentor_dashboard.html"; 
-        }, 1000);
-
-        e.target.reset();
+      if (role === 'student') {
+        studentSec.style.display = "block";
+        mentorSec.style.display = "none";
+        btnStudent.classList.add("active");
+        btnMentor.classList.remove("active");
       } else {
-        showPopup(`${data.detail}`, true);
+        studentSec.style.display = "none";
+        mentorSec.style.display = "block";
+        btnStudent.classList.remove("active");
+        btnMentor.classList.add("active");
       }
-    } catch (error) {
-      showPopup("Server unreachable.", true);
     }
-  });
+    
+    function showMentorLogin() {
+      document.getElementById('mentor-login-form').classList.remove('hidden');
+      document.getElementById('mentor-register-form').classList.add('hidden');
+      document.getElementById('mentor-login-tab').classList.add('active');
+      document.getElementById('mentor-register-tab').classList.remove('active');
+    }
 
+    function showMentorRegister() {
+      document.getElementById('mentor-register-form').classList.remove('hidden');
+      document.getElementById('mentor-login-form').classList.add('hidden');
+      document.getElementById('mentor-register-tab').classList.add('active');
+      document.getElementById('mentor-login-tab').classList.remove('active');
+    }
 
-  document.getElementById("register-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
+    function showRegister() {
+      document.getElementById('register-form').classList.remove('hidden');
+      document.getElementById('login-form').classList.add('hidden');
+      document.getElementById('register-tab').classList.add('active');
+      document.getElementById('login-tab').classList.remove('active');
+    }
 
-    try {
-      const response = await fetch(`${BACKEND_URL}/register/anonymous`, { 
-        method: "POST",
-        body: formData
-      });
-      const data = await response.json();
+    function showLogin() {
+      document.getElementById('register-form').classList.add('hidden');
+      document.getElementById('login-form').classList.remove('hidden');
+      document.getElementById('login-tab').classList.add('active');
+      document.getElementById('register-tab').classList.remove('active');
+    }
 
-      if (response.ok) {
-        showPopup(`${data.message}`);
-        e.target.reset();
-        showLogin();
-      } else {
-        showPopup(`${data.detail}`, true);
+    function showPopup(message, isError = false) {
+      const popup = document.createElement("div");
+      popup.className = "popup-message";
+      popup.textContent = message;
+      if (isError) popup.style.backgroundColor = "#e63946";
+      document.body.appendChild(popup);
+      setTimeout(() => popup.classList.add("show"), 10);
+      setTimeout(() => {
+        popup.classList.remove("show");
+        setTimeout(() => popup.remove(), 300);
+      }, 2500);
+    }
+
+    // --- FORMS SUBMISSION ---
+    document.getElementById("mentor-register-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      try {
+        const response = await fetch(`${BACKEND_URL}/register/mentor`, {
+          method: "POST",
+          body: formData
+        });
+        const data = await response.json();
+        if (response.ok) {
+          showPopup(`${data.message}`);
+          e.target.reset();
+          showMentorLogin();
+        } else {
+          showPopup(`${data.detail}`, true);
+        }
+      } catch (error) {
+        showPopup("Server unreachable.", true);
       }
-    } catch (error) {
-      showPopup("Server unreachable.", true);
-    }
-  });
+    });
 
-  document.getElementById("login-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-
-    try {
-      const response = await fetch(`${BACKEND_URL}/login/anonymous`, { 
-        method: "POST",
-        body: formData
-      });
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem("username", data.username);
-        localStorage.setItem("userType", "student");
-        localStorage.setItem("isLoggedIn", "true");
-
-        showPopup(`${data.message}`);
-
-        setTimeout(() => {
-          window.location.href = "dashboard.html"; 
-        }, 1000);
-
-        e.target.reset();
-      } else {
-        showPopup(`${data.detail}`, true);
+    document.getElementById("mentor-login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      try {
+        const response = await fetch(`${BACKEND_URL}/login/email`, {
+          method: "POST",
+          body: formData
+        });
+        const data = await response.json();
+        if (response.ok) {
+          localStorage.setItem("username", formData.get("email"));
+          localStorage.setItem("userType", "mentor");
+          localStorage.setItem("isLoggedIn", "true");
+          showPopup(`${data.message}`);
+          setTimeout(() => { window.location.href = "mentor_dashboard.html"; }, 1000);
+          e.target.reset();
+        } else {
+          showPopup(`${data.detail}`, true);
+        }
+      } catch (error) {
+        showPopup("Server unreachable.", true);
       }
-    } catch (error) {
-      showPopup("Server unreachable.", true);
-    }
-  });
+    });
+
+    document.getElementById("register-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      try {
+        const response = await fetch(`${BACKEND_URL}/register/anonymous`, { 
+          method: "POST",
+          body: formData
+        });
+        const data = await response.json();
+        if (response.ok) {
+          showPopup(`${data.message}`);
+          e.target.reset();
+          showLogin();
+        } else {
+          showPopup(`${data.detail}`, true);
+        }
+      } catch (error) {
+        showPopup("Server unreachable.", true);
+      }
+    });
+
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      try {
+        const response = await fetch(`${BACKEND_URL}/login/anonymous`, { 
+          method: "POST",
+          body: formData
+        });
+        const data = await response.json();
+        if (response.ok) {
+          localStorage.setItem("username", data.username);
+          localStorage.setItem("userType", "student");
+          localStorage.setItem("isLoggedIn", "true");
+          showPopup(`${data.message}`);
+          setTimeout(() => { window.location.href = "dashboard.html"; }, 1000);
+          e.target.reset();
+        } else {
+          showPopup(`${data.detail}`, true);
+        }
+      } catch (error) {
+        showPopup("Server unreachable.", true);
+      }
+    });
   </script>
+
   <script>
     /* --- UNIVERSAL PASSWORD TOGGLE (IMAGE VERSION) --- */
-document.querySelectorAll('.toggle-password').forEach(img => {
-  img.addEventListener('click', function() {
-    // 1. Find the input field
-    const targetId = this.getAttribute('data-target');
-    const input = document.getElementById(targetId);
+    document.querySelectorAll('.toggle-password').forEach(img => {
+      img.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-target');
+        const input = document.getElementById(targetId);
+        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+        input.setAttribute('type', type);
 
-    // 2. Toggle Password <-> Text
-    const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-    input.setAttribute('type', type);
-
-    // 3. Swap the Image (Optional: requires hide.png)
-    // If you only have show.png, you can delete these lines
+        // Toggle Opacity if you only have show.png
         if (type === 'text') {
-        this.style.opacity = "1";   // Darker when showing password
-    } else {
-        this.style.opacity = "0.5"; // Faded when hidden
-    }
-  });
-});
+            this.style.opacity = "1";
+        } else {
+            this.style.opacity = "0.5";
+        }
+      });
+    });
   </script>
-
   <script src="auth.js"></script>
-
 </body>
 </html>

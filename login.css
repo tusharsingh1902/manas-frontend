@@ -331,7 +331,7 @@ input {
   .login-card {
     flex-direction: column !important;
     width: 100%;
-    margin-top:20px;
+    margin-top:0 !important;
     border-radius: 0; /* Full width looks better on mobile without corners */
     box-shadow: none; /* Flatter look for mobile */
   }
@@ -392,7 +392,7 @@ input {
   }
 
   .subtitle {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     text-align: center;
   }
 

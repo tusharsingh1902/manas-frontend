@@ -94,63 +94,75 @@
     }
 
     // 2. NEW: Render Logic (Draws the HTML)
-    function renderPosts(postsToRender) {
-      const container = document.getElementById("postsContainer");
-      container.innerHTML = "";
+    // REPLACE your existing renderPosts function with this:
+function renderPosts(postsToRender) {
+  const container = document.getElementById("postsContainer");
+  container.innerHTML = "";
 
-      if (postsToRender.length === 0) {
-        container.innerHTML = "<p style='text-align:center; color:#666;'>No posts found.</p>";
-        return;
-      }
+  if (postsToRender.length === 0) {
+    container.innerHTML = "<p style='text-align:center; color:#666;'>No posts found.</p>";
+    return;
+  }
 
-      postsToRender.forEach(post => {
-        const div = document.createElement("div");
-        div.classList.add("post");
-        
-        let headerHtml = "";
-        if (post.type === "mentor") {
-            headerHtml = `
-                <div class="post-header">
-                    <span class="mentor-link" onclick="fetchAndShowProfile('${post.username}')">
-                        ${post.username.split('@')[0]}
-                    </span>
-                    <span class="badge">Mentor</span>
-                    <button class="chat-icon-btn" onclick="startChatWithMentor('${post.username}', '${post.username.split('@')[0]}')">
-                        Chat
-                    </button>
-                </div>
-            `;
-        } else {
-            headerHtml = `<div class="post-header"><strong>${post.username}</strong></div>`;
-        }
+  postsToRender.forEach(post => {
+    const div = document.createElement("div");
+    div.classList.add("post");
+    // Assign ID to the post div so we can remove it easily later
+    div.id = `post-${post._id}`;
 
-        const timeIST = new Date(post.timestamp).toLocaleString("en-IN", {
-            timeZone: "Asia/Kolkata",
-            day: "2-digit", month: "short", year: "numeric",
-            hour: "2-digit", minute: "2-digit", hour12: true
-        });
+    // CHECK AUTHORSHIP
+    const isAuthor = post.username === username;
+    const deleteBtnHtml = isAuthor 
+        ? `<button class="delete-btn" onclick="deletePost('${post._id}')" title="Delete Post">🗑️</button>` 
+        : '';
 
-        div.innerHTML = `
-          ${headerHtml}
-          <p style="white-space: pre-wrap;">${post.message}</p>
-          <small style="color:#888;">${timeIST}</small>
-          
-          <div style="margin-top:8px;">
-            <button class="reply-btn" onclick="toggleReplyBox('${post._id}')">Reply</button>
-          </div>
-
-          <div class="reply-box" id="reply-box-${post._id}" style="display:none;">
-            <input type="text" id="reply-input-${post._id}" placeholder="Write a reply..." />
-            <button onclick="sendReply('${post._id}')">Send</button>
-          </div>
-          
-          <div class="replies" id="replies-${post._id}"></div>
+    let headerHtml = "";
+    if (post.type === "mentor") {
+        headerHtml = `
+            <div class="post-header">
+                <span class="mentor-link" onclick="fetchAndShowProfile('${post.username}')">
+                    ${post.username.split('@')[0]}
+                </span>
+                <span class="badge">Mentor</span>
+                <button class="chat-icon-btn" onclick="startChatWithMentor('${post.username}', '${post.username.split('@')[0]}')">
+                    Chat
+                </button>
+            </div>
         `;
-
-        container.appendChild(div);
-        loadReplies(post._id);
-      });
+    } else {
+        headerHtml = `<div class="post-header"><strong>${post.username}</strong></div>`;
     }
+
+    const timeIST = new Date(post.timestamp).toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        day: "2-digit", month: "short", year: "numeric",
+        hour: "2-digit", minute: "2-digit", hour12: true
+    });
+
+    div.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+         <div style="flex:1;">${headerHtml}</div>
+         ${deleteBtnHtml} </div>
+      
+      <p style="white-space: pre-wrap;">${post.message}</p>
+      <small style="color:#888;">${timeIST}</small>
+      
+      <div style="margin-top:8px;">
+        <button class="reply-btn" onclick="toggleReplyBox('${post._id}')">Reply</button>
+      </div>
+
+      <div class="reply-box" id="reply-box-${post._id}" style="display:none;">
+        <input type="text" id="reply-input-${post._id}" placeholder="Write a reply..." />
+        <button onclick="sendReply('${post._id}')">Send</button>
+      </div>
+      
+      <div class="replies" id="replies-${post._id}"></div>
+    `;
+
+    container.appendChild(div);
+    loadReplies(post._id);
+  });
+}
 
     // 3. NEW: Filter Logic
     function filterPosts(type) {
@@ -180,34 +192,46 @@
       }
     }
 
-    async function loadReplies(post_id) {
-      const res = await fetch(`${BACKEND_URL}/forum/replies/${post_id}`);
-      const data = await res.json();
-      const container = document.getElementById(`replies-${post_id}`);
-      if (!container) return; // Safety check
-      
-      container.innerHTML = "";
+    // REPLACE your existing loadReplies function with this:
+async function loadReplies(post_id) {
+  const res = await fetch(`${BACKEND_URL}/forum/replies/${post_id}`);
+  const data = await res.json();
+  const container = document.getElementById(`replies-${post_id}`);
+  if (!container) return; 
+  
+  container.innerHTML = "";
 
-      data.replies.forEach(r => {
-        const replyDiv = document.createElement("div");
-        replyDiv.classList.add("reply");
-        
-        const nameHtml = r.type === "mentor" 
-            ? `<span class="mentor-link" onclick="fetchAndShowProfile('${r.username}')">${r.username.split('@')[0]}</span> <span class="badge">Mentor</span>`
-            : `<strong>${r.username}</strong>`;
+  data.replies.forEach(r => {
+    const replyDiv = document.createElement("div");
+    replyDiv.classList.add("reply");
+    // Assign ID to reply div
+    replyDiv.id = `reply-${r._id}`;
+    
+    // CHECK AUTHORSHIP
+    const isMyReply = r.username === username;
+    const deleteReplyHtml = isMyReply
+        ? `<span class="delete-reply-btn" onclick="deleteReply('${r._id}')" title="Delete Reply">🗑️</span>`
+        : '';
 
-        const timeIST = new Date(r.timestamp).toLocaleString("en-IN", {
-            timeZone: "Asia/Kolkata",
-            day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", hour12: true
-        });
+    const nameHtml = r.type === "mentor" 
+        ? `<span class="mentor-link" onclick="fetchAndShowProfile('${r.username}')">${r.username.split('@')[0]}</span> <span class="badge">Mentor</span>`
+        : `<strong>${r.username}</strong>`;
 
-        replyDiv.innerHTML = `
-          <p>${nameHtml} — ${r.reply}</p>
-          <small>${timeIST}</small>
-        `;
-        container.appendChild(replyDiv);
-      });
-    }
+    const timeIST = new Date(r.timestamp).toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", hour12: true
+    });
+
+    replyDiv.innerHTML = `
+      <div style="display:flex; justify-content:space-between;">
+          <p style="margin:0;">${nameHtml} — ${r.reply}</p>
+          ${deleteReplyHtml}
+      </div>
+      <small>${timeIST}</small>
+    `;
+    container.appendChild(replyDiv);
+  });
+}
 
     function toggleReplyBox(id) {
       const box = document.getElementById(`reply-box-${id}`);
@@ -318,10 +342,52 @@
       loadPosts();
     });
 
+    /* --- NEW DELETE FUNCTIONS --- */
+async function deletePost(postId) {
+    if (!confirm("Delete this post?")) return;
+
+    try {
+        const res = await fetch(`${BACKEND_URL}/forum/delete/post/${postId}?username=${username}`, {
+            method: "DELETE"
+        });
+
+        if (res.ok) {
+            // Remove from screen immediately
+            const postDiv = document.getElementById(`post-${postId}`);
+            if (postDiv) postDiv.remove();
+        } else {
+            alert("Failed to delete post.");
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function deleteReply(replyId) {
+    if (!confirm("Delete this reply?")) return;
+
+    try {
+        const res = await fetch(`${BACKEND_URL}/forum/delete/reply/${replyId}?username=${username}`, {
+            method: "DELETE"
+        });
+
+        if (res.ok) {
+            // Remove from screen immediately
+            const replyDiv = document.getElementById(`reply-${replyId}`);
+            if (replyDiv) replyDiv.remove();
+        } else {
+            alert("Failed to delete reply.");
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
     function logout() {
       localStorage.removeItem("username");
       window.location.href = "login.html";
     }
+    
 
     loadPosts();
   </script>

@@ -196,7 +196,6 @@ textarea {
   color: #1f7a8c;
 }
 
-
 .reply-section {
   display: flex;
   gap: 10px;
@@ -238,6 +237,32 @@ textarea {
 .reply p {
   margin: 0;
   font-size: 0.9rem;
+}
+
+/* Delete Button for Posts */
+.delete-post-btn {
+  float: right;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+.delete-post-btn:hover {
+  opacity: 1;
+  filter: grayscale(0%) hue-rotate(-50deg) saturate(500%); /* Turns red */
+}
+
+/* Delete Button for Replies */
+.delete-reply-btn {
+  cursor: pointer;
+  color: #aaa;
+  font-size: 0.9rem;
+  margin-left: 10px;
+}
+.delete-reply-btn:hover {
+  color: #ff4444;
 }
 
 .footer {

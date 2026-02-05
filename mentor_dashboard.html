@@ -114,6 +114,17 @@
     }
 
     // 3. UPDATED: Clear notifications when scrolling
+    function goTo(page) {
+    if (page === 'forum.html') {
+        const user = localStorage.getItem("username");
+        if(user) {
+            // Tell server: "I am reading the forum now, reset my count to 0"
+            fetch(`${BACKEND_URL}/notifications/clear/${user}`, { method: "POST" }).catch(console.error);
+        }
+    }
+    window.location.href = page;
+  }
+    
     function scrollToForum() {
       // Clear badge logic
       fetch(`${BACKEND_URL}/notifications/clear/${mentorEmail}`, { method: "POST" }).catch(console.error);

@@ -245,6 +245,36 @@ form button:hover {
   color: white;
 }
 
+/* --- DELETE BUTTON STYLES --- */
+
+/* Post Delete Button (Top Right) */
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  opacity: 0.5;
+  padding: 0 5px;
+  transition: opacity 0.2s;
+}
+
+.delete-btn:hover {
+  opacity: 1;
+  filter: grayscale(0%) sepia(100%) hue-rotate(-50deg) saturate(400%); /* Makes it red on hover */
+}
+
+/* Reply Delete Icon (Small 'x' or Trash) */
+.delete-reply-btn {
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-left: 10px;
+}
+
+.delete-reply-btn:hover {
+  color: #ff4444;
+}
+
 .modal {
   display: none;
   position: fixed;

@@ -56,3 +56,36 @@ body.dark-mode button {
     color: var(--text-primary);
     border: 1px solid var(--border-color);
 }
+/* --- FIX FOR STUBBORN WHITE AREAS --- */
+
+/* 1. Force the Hero Section to be Dark */
+body.dark-mode .hero, 
+body.dark-mode .hero-section, 
+body.dark-mode .jumbotron,
+body.dark-mode .banner {
+    background-color: #1e1e1e !important; /* Dark Grey */
+    color: #e0e0e0 !important;             /* Light Text */
+    border-bottom: 1px solid #333;         /* Subtle Border */
+}
+
+/* 2. Force Cards to be Dark */
+body.dark-mode .card, 
+body.dark-mode .panel, 
+body.dark-mode .box,
+body.dark-mode .container-white {
+    background-color: #1e1e1e !important; /* Dark Grey */
+    color: #e0e0e0 !important;             /* Light Text */
+    border: 1px solid #333 !important;     /* Darker Border */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5); /* Stronger Shadow for depth */
+}
+
+/* 3. Fix the Text inside those cards */
+/* (Sometimes headings inside cards stay black, so we force them white) */
+body.dark-mode .card h1, 
+body.dark-mode .card h2, 
+body.dark-mode .card h3, 
+body.dark-mode .card p,
+body.dark-mode .hero h1,
+body.dark-mode .hero p {
+    color: #e0e0e0 !important;
+}

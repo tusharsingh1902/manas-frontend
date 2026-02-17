@@ -1,56 +1,58 @@
-/* LIGHT MODE (Default) */
+/* --- LIGHT MODE (Your existing look) --- */
 :root {
-    --bg-color: #f4f6f8;       /* Light Grey Background */
-    --text-color: #212529;     /* Dark Grey Text (Not pure black) */
-    --card-bg: #ffffff;        /* White Cards */
-    --border-color: #dee2e6;   /* Light Borders */
-    --input-bg: #ffffff;       /* White Inputs */
-    --input-text: #212529;
-    --primary-color: #007bff;  /* Blue */
-    --shadow: 0 2px 4px rgba(0,0,0,0.1);
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --border-color: #dee2e6;
+    --accent-color: #0d6efd;
 }
 
-/* DARK MODE (Professional Palette) */
+/* --- DARK MODE (The Fix) --- */
 body.dark-mode {
-    --bg-color: #121212;       /* Very Dark Grey (Better than black) */
-    --text-color: #e0e0e0;     /* Soft White (Easier on eyes) */
-    --card-bg: #1e1e1e;        /* Slightly lighter grey for cards */
-    --border-color: #333333;   /* Dark Borders */
-    --input-bg: #2d2d2d;       /* Dark Inputs */
-    --input-text: #ffffff;     /* White Input Text */
-    --primary-color: #90caf9;  /* Lighter Blue (Better contrast on dark) */
-    --shadow: 0 4px 8px rgba(0,0,0,0.4);
+    --bg-primary: #121212 !important;   /* Very Dark Grey Background */
+    --bg-secondary: #1e1e1e !important; /* Slightly Lighter Grey (Cards/Nav) */
+    --text-primary: #e0e0e0 !important; /* Light Grey Text */
+    --text-secondary: #a0a0a0 !important; /* Dimmer Text */
+    --border-color: #333333 !important; /* Dark Borders */
+    --accent-color: #90caf9 !important; /* Light Blue Accent */
 }
 
-/* APPLYING THE VARIABLES */
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
+/* --- APPLYING THE RULES --- */
+
+/* 1. Backgrounds & Text */
+body.dark-mode {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
 }
 
-/* Fix Cards */
-.card, .post, .comment {
-    background-color: var(--card-bg) !important;
+/* 2. Cards, Navbars, Headers, Footers */
+body.dark-mode .card, 
+body.dark-mode .navbar, 
+body.dark-mode header, 
+body.dark-mode footer,
+body.dark-mode .container {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* 3. Inputs & Textareas (The usual ugly part) */
+body.dark-mode input, 
+body.dark-mode textarea, 
+body.dark-mode select {
+    background-color: #2d2d2d !important;
+    color: #ffffff !important;
+    border: 1px solid #555 !important;
+}
+
+/* 4. Links & Buttons */
+body.dark-mode a {
+    color: var(--accent-color) !important;
+}
+
+body.dark-mode button {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
     border: 1px solid var(--border-color);
-    box-shadow: var(--shadow);
-    color: var(--text-color);
-}
-
-/* Fix Inputs (The most common ugly part) */
-input, textarea, select {
-    background-color: var(--input-bg) !important;
-    color: var(--input-text) !important;
-    border: 1px solid var(--border-color) !important;
-}
-
-/* Fix Links */
-a {
-    color: var(--primary-color);
-}
-
-/* Fix Headers/Navbars */
-nav, header {
-    background-color: var(--card-bg) !important;
-    border-bottom: 1px solid var(--border-color);
 }

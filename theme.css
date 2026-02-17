@@ -1,38 +1,56 @@
-/* theme.css */
+/* LIGHT MODE (Default) */
 :root {
-    --bg-color: #ffffff;
-    --text-color: #333333;
-    --card-bg: #f8f9fa;
-    --border-color: #ddd;
-    --btn-bg: #e0e0e0;
+    --bg-color: #f4f6f8;       /* Light Grey Background */
+    --text-color: #212529;     /* Dark Grey Text (Not pure black) */
+    --card-bg: #ffffff;        /* White Cards */
+    --border-color: #dee2e6;   /* Light Borders */
+    --input-bg: #ffffff;       /* White Inputs */
+    --input-text: #212529;
+    --primary-color: #007bff;  /* Blue */
+    --shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+/* DARK MODE (Professional Palette) */
 body.dark-mode {
-    --bg-color: #121212;
-    --text-color: #e0e0e0;
-    --card-bg: #1e1e1e;
-    --border-color: #333;
-    --btn-bg: #333;
+    --bg-color: #121212;       /* Very Dark Grey (Better than black) */
+    --text-color: #e0e0e0;     /* Soft White (Easier on eyes) */
+    --card-bg: #1e1e1e;        /* Slightly lighter grey for cards */
+    --border-color: #333333;   /* Dark Borders */
+    --input-bg: #2d2d2d;       /* Dark Inputs */
+    --input-text: #ffffff;     /* White Input Text */
+    --primary-color: #90caf9;  /* Lighter Blue (Better contrast on dark) */
+    --shadow: 0 4px 8px rgba(0,0,0,0.4);
 }
 
+/* APPLYING THE VARIABLES */
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Style for the button we will inject */
-#theme-toggle-btn {
-    position: fixed;
-    bottom: 20px;       /* Keeps it at the bottom right */
-    right: 20px;
-    padding: 10px 15px;
-    border-radius: 30px;
+/* Fix Cards */
+.card, .post, .comment {
+    background-color: var(--card-bg) !important;
     border: 1px solid var(--border-color);
-    background-color: var(--card-bg);
+    box-shadow: var(--shadow);
     color: var(--text-color);
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    z-index: 9999;      /* Ensures it floats on top of everything */
+}
+
+/* Fix Inputs (The most common ugly part) */
+input, textarea, select {
+    background-color: var(--input-bg) !important;
+    color: var(--input-text) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+/* Fix Links */
+a {
+    color: var(--primary-color);
+}
+
+/* Fix Headers/Navbars */
+nav, header {
+    background-color: var(--card-bg) !important;
+    border-bottom: 1px solid var(--border-color);
 }

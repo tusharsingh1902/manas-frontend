@@ -89,3 +89,23 @@ body.dark-mode .hero h1,
 body.dark-mode .hero p {
     color: #e0e0e0 !important;
 }
+/* FORCE TRANSPARENCY ON CONTAINERS */
+body.dark-mode div, 
+body.dark-mode section, 
+body.dark-mode article, 
+body.dark-mode main, 
+body.dark-mode .container, 
+body.dark-mode .row, 
+body.dark-mode .col {
+    background-color: transparent !important;
+    color: inherit !important;
+}
+
+/* BUT KEEP CARDS & INPUTS DARK (Not Transparent) */
+body.dark-mode .card, 
+body.dark-mode .panel,
+body.dark-mode input,
+body.dark-mode textarea {
+    background-color: #1e1e1e !important; /* Dark Grey */
+    color: #e0e0e0 !important;
+}
